@@ -1,0 +1,171 @@
+#pagePreview h1 {
+    color:#000;
+}
+#pagePreview a {
+    text-decoration:none;
+}
+#pagePreview img {
+    border:none;
+}
+#pagePreview p {
+    font:normal 11px Verdana;
+    text-align:justify;
+    line-height:14px;
+    color:#666;
+}
+.list_view, .list_view p {
+    text-align:left;
+}
+.list_view, .list_view a {
+    text-decoration:none;
+}
+.list_view a:hover {
+    text-decoration:underline;
+}
+.list_view article {
+    margin:10px 0px;
+    padding:10px;
+    background:#f3f3f3;
+    border-radius: 4px;
+    float:left;
+}
+.list_view div:nth-child(1) {
+    min-height:100px;
+    height:auto;
+}
+.list_view h1 {
+    margin:0px;
+    font:bold 24px Arial;
+    color:#DE7312;
+}
+.list_view h1:hover {
+    color:#333;
+}
+.post-footer {
+    margin-top:20px;
+    border-top:solid 1px #e0e0e0;
+}
+.post-footer ul {
+    margin: 0px;
+    padding:0px;
+    list-style:none;
+}
+.post-footer li {
+    margin: 10px 5px 0px 5px;
+    padding-left: 20px;
+    width:70px;
+    height:24px;
+    display:block;
+    font:normal 10px Verdana;
+    text-decoration:none;
+    text-align:left;
+    color:#666;
+    float:left;
+}
+.post-footer li:first-child {
+    margin-right:100px;
+}
+.post-follow { background: url(../images/review_follow.png) transparent left top no-repeat; }
+.post-likes { background:url(../images/like.png) transparent left top no-repeat; }
+.post-dislikes { background: url(../images/dislike.png) transparent left top no-repeat; }
+.post-visits { background: url(../images/visits.png) transparent left top no-repeat; }
+
+/** page reviews **/
+.star_review, .star_clicked{
+    margin:0 1px;
+    background-image:url(../images/star_review.png);
+    background-repeat:no-repeat;
+    width:16px;
+    height:16px;
+    display:block;
+    float:left;
+}
+.star_review {
+    background-position:right top;
+}
+.star_clicked {
+    background-position:left top;
+}
+#_comments textarea {
+    padding:10px;
+    width:90%;
+    height:40px;
+}
+/** page reviews **/
+
+/** page comments **/
+#review ul {
+    list-style:none;
+}
+.review-reply, .review-delete, .review-follow {
+    margin: 10px 10px 5px 10px;
+    padding-left: 20px;
+    width:auto;
+    height:16px;
+    display:block;
+    font:normal 10px Verdana;
+    text-decoration:none;
+    color:#333;
+    float:left;
+}
+.review-reply:hover, .review-delete:hover, .review-follow:hover {
+    color:#000;
+}
+.review-reply {
+    background: url(../images/review_repply.png) transparent left top no-repeat;
+}
+.review-follow {
+    background: url(../images/review_follow.png) transparent left top no-repeat;
+}
+.review-delete {
+    background: url(../images/review_delete.png) transparent left top no-repeat;
+}
+.review-like, .review-dislike, .dislikes, .likes {
+    margin: 5px;
+    width:24px;
+    height:24px;
+    display:block;
+    float:right;
+}
+.likes {
+    margin-top:5px;
+    color: #7CB63F;
+}
+.dislikes {
+    margin-top:5px;
+    color: #900;
+}
+.review-like {
+    background: url(../images/like.png) transparent left top no-repeat;
+}
+.review-dislike {
+    background: url(../images/dislike.png) transparent left top no-repeat;
+}
+#review li {
+    margin:5px auto;
+    padding:10px;
+    background:#f0f0f0;
+    width:auto;
+    height:auto;
+    display:block;
+    border-radius: 4px;
+}
+#review li li {
+    margin-top:10px;
+    margin-left:10%;
+    padding:2px;
+    background:#e0e0e0;
+    width:85%;
+    height:auto;
+    display:block;
+    border-radius: 4px;
+}
+.review-buttons {
+    padding:2px;
+    background: #fbfbfb;
+    border-radius: 2px;
+}
+/** page comments **/
+small {
+    font:normal 9px Verdana;
+}

@@ -1,0 +1,36 @@
+
+.product-images-widget {
+    margin-bottom: 1.125rem;
+}
+
+.product-images-widget .zoomWrapper {
+    margin:auto;
+    margin-bottom: 0;
+}
+
+@media only screen and (max-width: 40em) {
+    .product-images-widget .zoomWrapper {
+        margin-bottom: 0.875rem;
+    }
+}
+
+@media only screen and (min-width: 40.063em) {
+    .product-images-widget-control {
+        left: 50%;
+        display: block;
+        margin: 0 !important;
+        right: auto !important;
+        transform-origin: center center;
+    }
+
+    .product-gallery-control {
+        top: -45%;
+        transform: rotate(90deg) translateY(1.375rem);
+    }
+
+    .product-gallery-control {
+        top: auto !important;
+        bottom: -45%;
+        transform: rotate(90deg) translateY(1.375rem);
+    }
+}

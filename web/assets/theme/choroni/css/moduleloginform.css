@@ -1,0 +1,7 @@
+.login_form-widget, .login_form-widget * {
+    z-index: 99 !important;
+}
+.login_form-widget input {
+    background:#ddd;
+    border:solid 1px #cbcbcb;
+}

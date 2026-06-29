@@ -1,0 +1,170 @@
+.banner-hhe-09 ul {
+    position: relative;
+    clear: both;
+    margin: 0 auto;
+    padding: 1em 0 1em;
+    list-style: none;
+    text-align: center;
+}
+
+.banner-hhe-09 li {
+    position: relative;
+    float: left;
+    overflow: hidden;
+    margin: 12px 3px;
+    height: auto;
+    text-align: center;
+    position: relative;
+    display: block;
+}
+
+.banner-hhe-09 .details {
+    margin-top:2%;
+    text-transform: uppercase;
+    text-align:left;
+    position:relative;
+    font-size: 1.25em;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+.banner-hhe-09 .details::before,
+.banner-hhe-09 .details::after {
+    pointer-events: none;
+}
+
+.banner-hhe-09 .details {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.banner-hhe-09 .title {
+    word-spacing: -0.15em;
+    font-weight: bold;
+    font-size: 26px;
+    color: #323232;
+}
+
+.banner-hhe-09 .details * {
+    margin: 0;
+}
+
+.banner-hhe-09 .body {
+    letter-spacing: 1px;
+    font-size: 68.5%;
+}
+
+.banner-hhe-09 img {
+    opacity: 0.95;
+    width:100%;
+    -webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
+    transition: opacity 0.35s, transform 0.35s;
+    -webkit-transform: scale3d(1.05, 1.05, 1);
+    transform: scale3d(1.05, 1.05, 1);
+}
+
+.banner-hhe-09 .details::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.5);
+    content: '';
+    -webkit-transition: -webkit-transform 0.6s;
+    transition: transform 0.6s;
+    -webkit-transform: scale3d(1.9, 1.4, 1) rotate3d(0, 0, 1, 45deg) translate3d(0, -100%, 0);
+    transform: scale3d(1.9, 1.4, 1) rotate3d(0, 0, 1, 45deg) translate3d(0, -100%, 0);
+}
+
+.banner-hhe-09 .body {
+    background:rgba(0,0,0,0.8);
+    color:#fff;
+    font-weight:bold;
+    text-shadow:#000 2px 2px 2px;
+    font-size:0.65785rem;
+    position: absolute;
+    top:0;
+    right: 0;
+    bottom: 0;
+    padding: 1em;
+    max-width: 150px;
+    height:85%;
+    display:block;
+    border-right: 4px solid #000;
+    text-align: right;
+    opacity: 0;
+    -webkit-transition: opacity 0.35s;
+    transition: opacity 0.35s;
+}
+
+.banner-hhe-09 .link a {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 5px 8px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    width:90px;
+    margin:auto;
+    z-index: 1000;
+    position: absolute;;
+    right: 2%;
+    bottom:10%;
+}
+
+.banner-hhe-09 .link a:hover {
+    background: #ff8800;
+}
+
+.banner-hhe-09 li:hover img {
+    opacity: 0.6;
+    -webkit-transform: scale3d(1, 1, 1);
+    transform: scale3d(1, 1, 1);
+}
+
+.banner-hhe-09 li:hover .details::before {
+    -webkit-transform: scale3d(1.9, 1.4, 1) rotate3d(0, 0, 1, 45deg) translate3d(0, 100%, 0);
+    transform: scale3d(1.9, 1.4, 1) rotate3d(0, 0, 1, 45deg) translate3d(0, 100%, 0);
+}
+
+.banner-hhe-09 li:hover .title {
+    background:rgb(76, 175, 80);
+    color:#fff;
+    font-weight:bold;
+    text-shadow:#347737 2px 2px 2px;
+    font-size:2rem;
+    padding-left:30px;
+    padding-right:30px;
+}
+.banner-hhe-09 li:hover .body {
+    opacity: 1;
+    -webkit-transition-delay: 0.1s;
+    transition-delay: 0.1s;
+}
+
+@media screen and (max-width: 50em) {
+    .banner-hhe-09 li {
+        display: inline-block;
+        float: none;
+        margin: 10px auto;
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .banner-hhe-09 .title {
+        font-size: 20px;
+    }
+    .banner-hhe-09 li:hover .title {
+        font-size: 23px;
+    }
+    .banner-hhe-09 .body {
+        display: none;
+    }
+}

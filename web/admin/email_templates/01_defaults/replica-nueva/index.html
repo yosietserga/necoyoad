@@ -1,0 +1,31 @@
+<style media="screen" type="text/css">body {background-color:#fff;margin:0px;padding:0px;}table {background-color:#fff;margin:25px 0px 0px 0px;}</style>
+<div style="width: 700px;margin:0px auto;padding:0px;">
+    <a href="{%store_url%}" title="{%store_name%}">{%store_logo%}</a><hr /><br />
+    <h1>R&eacute;plica Nueva</h1>
+    <p>Han realizado una r&eacute;plica a tu comentario en el producto <a href="{%product_url%}" title="{%product_name%}">{%product_name%}</a></p>
+    <p>Para ver todos tus comentarios y preguntas, ingresa a <a href="{%url_account%}">Tu Cuenta</a></p>
+    <hr style="float: none;clear:both" /><br /><br /><br /><br />
+    <table style="border:none;padding:0px;margin:0px auto;width: 100%;">
+        <tbody>
+            <tr>
+                <td>{%barcode_39_order_id%}</td>
+                <td>{%qr_code_store%}</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <table style="border:none;padding:0px;margin:0px auto;width: 575px;" class="footer">
+        <tbody>
+            <tr>
+                <td style="text-align:center">
+                    <p style="color: #373737; font-family: Arial, Helvetica, sans-serif; font-size: 11px; font-weight: normal; margin: 10px 0 25px 0;">
+                        Este email fue enviado a {%email%}<br />
+    					{%store_name%}<br />
+    					{%store_address%}<br />
+    					{%store_telephone%} | E-mail: <a href="mailto:{%store_email%}" style="color: #006cbb; text-decoration: none;" title="{%store_email%}">{%store_email%}</a></p>
+                    <p style="color: #373737; font-family: Arial, Helvetica, sans-serif; font-size: 11px; font-weight: normal; margin: 10px 0 25px 0;">Todos los derechos reservados por {%store_owner%}</p>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

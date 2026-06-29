@@ -1,0 +1,139 @@
+<style media="screen" type="text/css">
+body {
+background-color:#ffffff;
+margin:0;
+padding:0;
+}
+table {
+background-color:#ffffff;
+margin:25px 0 0 0;
+}
+</style>
+<div style="width: 700px;margin:0px auto;padding:0px;">
+<table>
+    <tr>
+        <td style="width: 520px;">{%store_logo%}</td>
+        <td>Fecha de Emisi&oacute;n: {%date_added%}</td>
+    </tr>
+    <tr>
+        <td>{%store_rif%}</td>
+        <td>Pedido N&deg; {%order_id%}</td>
+    </tr>
+    <tr>
+        <td>{%store_address%}<br />{%store_telephone%}</td>
+    </tr>
+</table>
+
+<br style="float: none;clear:both;" />
+<table style="border:none;padding:0px;margin:0px auto;width: 575px;">
+    <tbody>
+        <tr>
+            <td>{%qr_code_order%}</td>
+            <td>{%barcode_39_order_id%}</td>
+            <td>{%qr_code_store%}</td>
+        </tr>
+    </tbody>
+</table>
+
+<hr />       
+<table style="width: 45%;float:left;border:none;">
+    <tr>
+        <td colspan="2"><h1>Datos de Facturaci&oacute;n</h1></td>
+    </tr>
+    <tr>
+        <td style="width: 120px;"><b>Cliente:</b></td>
+        <td>{%company%}</td>
+    </tr>
+    <tr>
+        <td><b>RIF:</td>
+        <td>{%rif%}</td>
+    </tr>
+    <tr>
+        <td><b>Direcci&oacute;n:</b></td>
+        <td>{%payment_address%}</td>
+    </tr>
+    <tr>
+        <td><b>Contacto:</b></td>
+        <td>{%fullname%}</td>
+    </tr>
+    <tr>
+        <td><b>Email:</b></td>
+        <td>{%email%}</td>
+    </tr>
+    <tr>
+        <td><b>Tel&eacute;fono:</b></td>
+        <td>{%telephone%}</td>
+    </tr>
+    <tr>
+        <td><b>Direcci&oacute;n IP:</b></td>
+        <td>{%ip%}</td>
+    </tr>
+</table>   
+<table style="width: 45%;float:right;border:none;">
+    <tr>
+        <td colspan="2"><h1>Datos de Env&iacute;o</h1></td>
+    </tr>
+    <tr>
+        <td><b>Direcci&oacute;n de Entrega:</b></td>
+        <td>{%shipping_address%}</td>
+    </tr>
+    <tr>
+        <td><b>M&eacute;todo de Env&iacute;o:</b></td>
+        <td>{%shipping_method%}</td>
+    </tr>
+    <tr>
+        <td><b>Email:</b></td>
+        <td>{%email%}</td>
+    </tr>
+    <tr>
+        <td><b>Tel&eacute;fono:</b></td>
+        <td>{%telephone%}</td>
+    </tr>
+</table>
+<hr style="float: none;clear:both" />
+<br />
+<h1>Detalles del Pedido</h1><br />
+{%products%}
+{%totals%}
+
+<hr />
+<table style="border:none;padding:0px;margin:0px auto;width: 575px;">
+    <tbody>
+        <tr>
+            <td>{%qr_code_order%}</td>
+            <td>{%barcode_39_order_id%}</td>
+            <td>{%qr_code_store%}</td>
+        </tr>
+    </tbody>
+</table>
+
+<table style="border:none;padding:0px;margin:0px auto;width: 575px;">
+    <tbody>
+        <tr>
+            <td>Comentarios:</td>
+        </tr>
+        <tr>
+            <td>{%comment%}</td>
+        </tr>
+        <tr>
+            <td>Los precios y condiciones reflejados en esta cotizaci&oacute;n ser&aacute;n v&aacute;lidos solo por los pr&oacute;ximos cinco (5) d&iacute;as despu&eacute;s de la fecha de su 
+emisi&oacute;n. Los precios reflejados est&aacute;n sometidas a cambio de acuerdo a la tasa referencial Bs. /$ 6,3. El cliente acepta pagar cualquier incremento proporcional que pudiera sufrir la mencionada tasa de cambio, a trav&eacute;s de la correspondiente nota de d&eacute;bito al momento del pago definitivo y que se har&aacute; efectiva en caso de ocurrir una devaluaci&oacute;n entre la fecha de la presente cotizaci&oacute;n y la fecha de pago de su(s) importe(s), este ser&aacute; ajustado autom&aacute;ticamente con base al nuevo valor de la tasa oficial de cambio para la compra de divisas (D&oacute;lares Americanos). </td>
+        </tr>
+    </tbody>
+</table>
+
+<table style="border:none;padding:0px;margin:0px auto;width: 575px;" class="footer">
+    <tbody>
+        <tr>
+            <td style="text-align:center">
+                <p style="color: #373737; font-family: Arial, Helvetica, sans-serif; font-size: 11px; font-weight: normal; margin: 10px 0 25px 0;">
+                    Este email fue enviado a {%email%}<br />
+					{%store_name%}<br />
+					{%store_address%}<br />
+					{%store_telephone%} | E-mail: <a href="mailto:{%store_email%}" style="color: #006cbb; text-decoration: none;" title="{%store_email%}">{%store_email%}</a></p>
+                <p style="color: #373737; font-family: Arial, Helvetica, sans-serif; font-size: 11px; font-weight: normal; margin: 10px 0 25px 0;">Todos los derechos reservados por {%store_owner%}</p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</div>

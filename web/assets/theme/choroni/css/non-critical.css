@@ -1,0 +1,73 @@
+@charset "UTF-8";
+.ui-datepicker {
+    z-index: 100 !important;
+    background: #ffffff;
+    min-width: 16.5rem;
+}
+
+.ui-datepicker * {
+    font-family: "Raleway", "Roboto", serif;
+}
+
+.ui-datepicker-header {
+    position: relative;
+    width: 100%;
+    border-width: 1px 1px 0px 1px;
+    border-color: #bdc3c7;
+    border-style: solid;
+}
+
+.ui-datepicker-header .ui-datepicker-prev, .ui-datepicker-header .ui-datepicker-next {
+    position: absolute;
+    top: 0;
+    padding: 0.875rem 0.875rem 0 0.875rem !important;
+    display: block;
+}
+
+.ui-datepicker-header .ui-datepicker-prev {
+    left: 0;
+}
+
+.ui-datepicker-header .ui-datepicker-next {
+    right: 0;
+}
+
+.ui-datepicker-header, .ui-datepicker-title {
+    display: block;
+}
+
+.ui-datepicker-calendar {
+    width: 100% !important;
+    height: auto;
+    padding: 0 0.875rem 0.875rem 0.875rem;
+    border-width: 0px 1px 1px 1px;
+    border-color: #bdc3c7;
+    border-style: solid;
+}
+
+.ui-datepicker-title {
+    padding: 0.875rem;
+    font-size: 0;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0;
+    margin-bottom: 0;
+    max-width: 75rem;
+}
+
+.ui-datepicker-title select {
+    margin-top: 2.75rem;
+    font-size: 1rem !important;
+    display: inline-block !important;
+    vertical-align: top;
+    position: relative;
+    padding-left: 0.9375rem;
+    padding-right: 0.9375rem;
+    width: 50%;
+}
+
+.ui-datepicker-calendar {
+    width: 100% !important;
+    height: auto;
+}

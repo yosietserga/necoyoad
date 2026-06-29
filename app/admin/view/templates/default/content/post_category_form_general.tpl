@@ -1,0 +1,1 @@
+<?php require_once(dirname(__FILE__)."/../shared/form/general_descriptions.tpl"); ?>

@@ -1,0 +1,48 @@
+@charset "utf-8";
+/* neco-color-picker */
+.neco-tips-container {
+    position:fixed;
+    top:30%;
+    left:40%;
+    background:#fff;
+    box-shadow:0px 0px 12px #222;
+    border-radius: 4px;
+    min-height:200px;
+    min-width:300px;
+    height:auto;
+    width:auto;
+    display:none;
+    z-index:9020;
+}
+.neco-tips-modal {
+    position:fixed;
+    top:0px;
+    left:0px;
+    margin:0px;
+    padding:0px;
+    background:rgba(0,0,0,0.5);
+    z-index:9010;
+    width:100%;
+    height:100%;
+    display:none;
+}
+.neco-tips-window-btn {
+    position:absolute;
+    top:4px;
+    right:0px;
+    margin:0px;
+    padding:0px;
+    list-style:none;
+    z-index: 9030;
+}
+.neco-tips-window-btn li {float:left;}
+.neco-tips-window-btn a {
+    padding:2px 4px;
+    font:normal 12px Verdana;
+    color:#ccc;
+    text-decoration:none;
+    border:solid 1px #ccc;
+}
+.neco-tips-close {
+    border-radius:0px 4px 0px 0px;
+}

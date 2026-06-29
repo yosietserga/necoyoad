@@ -1,0 +1,31 @@
+li[data-icon] {
+    display:flex-column;
+    background:#fff;
+    margin:2px 3px;
+    padding:2px;
+    float:left;
+    width:80px;
+    min-height:80px;
+    height:auto;
+    border:solid 1px #eee;
+    text-align:center;
+    cursor:pointer;
+}
+li[data-icon] small {
+    width:80px;
+    clear:both;
+    display: block;
+}
+li[data-icon] span {
+    font-size:40px;
+}
+li[data-icon]:hover {
+    background:#d3f9d3;
+}
+li[data-icon].selected {
+    background:#6dd26d;
+}
+li[data-icon].selected small,
+li[data-icon].selected span {
+    color:#fff;
+}

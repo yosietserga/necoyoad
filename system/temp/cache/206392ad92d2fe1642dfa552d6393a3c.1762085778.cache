@@ -1,0 +1,511 @@
+s:20492:"<!doctype html>
+<head>
+
+    
+    <base href="https://www.mudancer.com/web/">
+
+    <meta charset="UTF-8" />
+    <title>Lo sentimos pero no hemos encontrado la p&aacute;gina solicitada!</title>
+    
+    <meta name="author" content="Necoyoad">
+
+    
+    <!-- Mobile viewport optimized: h5bp.com/viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+            <link href="https://www.mudancer.com/web/assets/images/data/favicon.png" rel="icon" />
+    
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+
+        <link href="https://www.mudancer.com/web/assets/css/icons/fontawesome-icons.css" rel='stylesheet' type='text/css' media="all">
+        <link href="https://www.mudancer.com/web/assets/css/animate.css" rel='stylesheet' type='text/css' media="all">
+        <link href="https://www.mudancer.com/web/assets/theme/choroni/css/fonts.stylesheet.css" rel='stylesheet' type='text/css' media="all">
+        <link href="https://www.mudancer.com/web/assets/theme/choroni/css/vendor/fancybox/jquery.fancybox.css" rel='stylesheet' type='text/css' media="all">
+        <link href="https://www.mudancer.com/web/assets/theme/choroni/css/non-critical.css" rel='stylesheet' type='text/css' media="only x">
+        <link href="https://www.mudancer.com/web/assets/theme/choroni/css/print.css" rel='stylesheet' type='text/css' media="all">
+        <link href="https://www.mudancer.com/web/assets/theme/choroni/css/grids.css" rel='stylesheet' type='text/css' media="all">
+        <link href="https://www.mudancer.com/web/assets/theme/choroni/css/fonts.css" rel='stylesheet' type='text/css' media="all">
+        <link href="https://www.mudancer.com/web/assets/theme/choroni/css/color-default.css" rel='stylesheet' type='text/css' media="all">
+        <link href="https://www.mudancer.com/web/assets/theme/choroni/css/theme.css" rel='stylesheet' type='text/css' media="all">
+        <link href="https://www.mudancer.com/web/assets/theme/choroni/css/responsive.css" rel='stylesheet' type='text/css' media="all">
+    
+    
+    <link rel="dns-prefetch" href="www.necoyoad.com">
+
+<style>
+    .oferta:before {
+        content: "sticker_offer";
+    }
+    .nuevo:before {
+        content: "sticker_new";
+    }
+    .descuento:before {
+        content: "sticker_special";
+    }
+</style>
+
+<script type="text/javascript" src="https://www.mudancer.com/web/assets/theme/choroni/js/vendor/jquery.min.js"></script>
+<script type="text/javascript" src="https://www.mudancer.com/web/assets/theme/choroni/js/vendor/modernizr.min.js"></script>
+
+<script>
+    (function (w) {
+        w.I18n = Object.freeze({
+            Common: Object.freeze({
+                addToCart: 'add_to_cart',
+                goToCart: 'go_to_cart',
+                accept: 'accept',
+                cancel: 'cancel',
+            }),
+            Product: Object.freeze({
+                model: 'product_model',
+                successfulAddToCart: ' successful_add_to_cart',
+
+            }),
+            Form: Object.freeze({
+                Warnings: Object.freeze({
+                    alphaNumeric: 'form_warning_alphanumeric',
+                    rif: 'form_warning_rif',
+                    date: 'form_warning_date',
+                    float: 'form_warning_float',
+                    email: 'Dirección inválida',
+                    numeric: 'form_warning_numeric',
+                    phone: 'form_warning_phone',
+                    password: 'form_warning_password',
+                    confirm: 'form_warning_confirm',
+                    plain: 'Este campo es obligatorio',
+                    empty: 'Este campo es obligatorio',
+                })
+            })
+        });
+        w.Context = Object.freeze({
+            User: {
+                name: '',
+                lastname: '',
+                isLogged: '',
+            },
+            Product: {
+                id: '0',
+            },
+        });
+        w.Constants = Object.freeze({
+                CSS_PATH: 'https://www.mudancer.com/web/assets/css/',
+                JS_PATH : 'https://www.mudancer.com/web/assets/js/',
+                IMAGES_PATH : 'https://www.mudancer.com/web/assets/images/',
+
+                THEMECSS_PATH: 'https://www.mudancer.com/web/assets/theme/%theme%/css/',
+                THEMEJS_PATH: 'https://www.mudancer.com/web/assets/theme/%theme%/js/',
+                THEMEFONTS_PATH : 'https://www.mudancer.com/web/assets/theme/%theme%/fonts/',
+                THEMEIMAGES_PATH : 'https://www.mudancer.com/web/assets/theme/%theme%/images/',
+                THEMESVG_PATH : 'https://www.mudancer.com/web/assets/themes//svg-build/',
+                IS_STORE: Number('1')
+    });
+        w.Requests = Object.freeze({
+            QUICK_VIEW: "https://www.mudancer.com/web/index.php?r=store/product/quickviewjson"
+        });
+        w.Mq = Object.freeze({
+            small: window.matchMedia("only screen and (max-width: 39.9375em)").matches,
+            smallUp: window.matchMedia("only screen").matches,
+            mediumUp: window.matchMedia("only screen and (min-width: 40em)").matches,
+            medium: window.matchMedia("only screen and (min-width: 40em) and (max-width: 63.9375em)").matches,
+            smallToMedium: window.matchMedia("only screen and (max-width: 63.9375em)").matches,
+            large: window.matchMedia("only screen and (min-width: 64em) and (max-width: 74.9375em)").matches,
+            largeUp: window.matchMedia("only screen and (min-width: 64em)").matches,
+        });
+    })(window);
+
+
+    
+
+    
+
+    (function () {
+        var x;
+        var lastTime = 0;
+        var vendors = ['ms', 'moz', 'webkit', 'o'];
+        for (x = 0; x < vendors.length && !window.requestAnimationFrame; x++) {
+            window.requestAnimationFrame = window[vendors[x] + 'RequestAnimationFrame'];
+            window.cancelAnimationFrame = window[vendors[x] + 'CancelAnimationFrame'] || window[vendors[x] + 'CancelRequestAnimationFrame'];
+        }
+
+        if (!window.requestAnimationFrame) {
+            window.requestAnimationFrame = function (callback, element) {
+                var currTime = new Date().getTime();
+                var timeToCall = Math.max(0, 16 - (currTime - lastTime));
+                var id = window.setTimeout(function () {
+                            callback(currTime + timeToCall);
+                        },
+                        timeToCall);
+                lastTime = currTime + timeToCall;
+                return id;
+            };
+        }
+
+        if (!window.cancelAnimationFrame) {
+            window.cancelAnimationFrame = function (id) {
+                clearTimeout(id);
+            };
+        }
+        window.useRAF = (window.requestAnimationFrame !== undefined);
+
+        window.popupWindow = function (url, title, w, h) {
+            var dualScreenLeft = screen.left;
+            var dualScreenTop = screen.top;
+
+            var width = screen.width;
+            var height = screen.height;
+
+            var left = ((width / 2) - (w / 2)) + dualScreenLeft;
+            var top = ((height / 2) - (h / 2)) + dualScreenTop;
+
+            var newWindow = window.open(url, title, 'scrollbars=yes, width=' + w + ', height=' + h + ', top=' + top + ', left=' + left);
+            newWindow.focus();
+        };
+    })();
+
+
+    (function (styleSheetLinks, documentStyleSheets, w) {
+        'use strict';
+
+        var mobileFactor = "(max-width: 64em)";
+        w.isModernBrowser = ("querySelector" in document && "addEventListener" in w && "localStorage" in w && "sessionStorage" in w && "bind" in Function && ( ("XMLHttpRequest" in w && "withCredentials" in new XMLHttpRequest()) || "XDomainRequest" in w ) );
+
+        w.doSync = function () {
+            var fn = [].slice.call(arguments, 0, 1)[0];
+            var args = [].slice.call(arguments, 1);
+            if (w.useRAF) {
+                w.requestAnimationFrame(function () {
+                    fn.apply(this, args);
+                });
+            } else {
+                setTimeout(fn, null, args);
+            }
+        };
+
+        w.deferjQuery = function (fn) {
+            if (w.$) {
+                $(function () {
+                    fn();
+                    return true;
+                });
+            } else {
+                w.doSync(w.deferjQuery, fn);
+            }
+        };
+
+        w.deferPlugin = function (context, fn) {
+            w.deferjQuery(function deferPlugin() {
+                if (jQuery[context] || jQuery.fn[context]) {
+                    fn();
+                    return true;
+                } else {
+                    w.doSync(w.deferPlugin, context, fn);
+                }
+            });
+        };
+
+        w.makeStyle = function (href, media) {
+            var l = document.createElement("link");
+            l.setAttribute('href', href);
+            l.setAttribute('rel', 'stylesheet');
+            l.setAttribute('media', media);
+            return l;
+        };
+
+        w.appendStyle = function (style) {
+            document.head.appendChild(style);
+        };
+
+        w.inStyleSheets = function (href) {
+            return [].some.call(document.styleSheets, function (s) {
+                var sh = s.href;
+                return (sh && sh.indexOf(href) > -1);
+            });
+        };
+
+        w.setMedia = function (style, media) {
+            var setIn = w.inStyleSheets(style.href);
+            if (setIn) {
+                style.media = media;
+                return true;
+            }
+            w.doSync(setMedia, style, media);
+        };
+
+        w.setMediaMobile = function (style) {
+            w.setMedia(style, mobileFactor);
+        };
+
+        w.setMediaDesktop = function (style) {
+            w.setMedia(style, "screen");
+        };
+
+        w.fetchStyle = function (href) {
+            var style;
+            if (w.inStyleSheets(href)) {
+                return true;
+            }
+            style = w.makeStyle(href, 'only x');
+            w.appendStyle(style);
+            w.setMediaDesktop(style);
+        };
+
+        
+        w.inScripts = function (src) {
+            return [].some.call(document.scripts, function (s) {
+                var ss = s.src;
+                return (ss && ss.indexOf(src) > -1);
+            });
+        };
+
+        w.makeScript = function () {
+            var sp = document.createElement("script");
+            sp.async = true;
+            return sp;
+        };
+
+        w.makeScriptWithText = function (text) {
+            var sp = w.makeScript();
+            sp.text = text;
+            return sp;
+        };
+
+        w.makeScriptWithSrc = function (src) {
+            var sp;
+            sp = w.makeScript();
+            sp.src = src;
+            return sp;
+        };
+
+        w.appendToHead = function (el) {
+            try {
+                document.head.appendChild(el);
+                return true;
+            } catch (e) {
+                console.log(e);
+                return false;
+            }
+        };
+        w.appendToBody = function (el) {
+            try {
+                document.body.appendChild(el);
+                return true;
+            } catch (e) {
+                console.log(e);
+                return false;
+            }
+        };
+
+        w.appendScriptSource = function (src) {
+            if (w.inScripts(src)) {
+                return true;
+            }
+            w.appendToBody(w.makeScriptWithSrc(src));
+            return true;
+        };
+
+        w.fetchScript = (function (src) {
+            if (w.inScripts(src)) {
+                return true;
+            }
+            var req = new XMLHttpRequest();
+
+            if (w.isModernBrowser) {
+                w.appendToHead(w.makeScriptWithSrc(src));
+            } else {
+                req.open('GET', src, true);
+                req.onreadystatechange = function (e) {
+                    if (req.readyState === 4) {
+                        if (req.status === 200) {
+                            w.appendToHead(makeScriptWithText(req.responseText));
+                        } else {
+                            console.log("Error: couldn't load script from: " + src);
+                        }
+                    }
+                };
+                req.send(null);
+            }
+        });
+
+        [].forEach.call(styleSheetLinks, function (s) {
+            var media = s.media;
+            if (media === 'only x') w.setMediaDesktop(s);
+            if (media === 'only m') w.setMediaMobile(s);
+        });
+    })(document.getElementsByTagName('link'), window.document.styleSheets, window);
+</script>
+    <script>
+        window.nt = {};
+        window.nt.sid = '0';
+        window.nt.http_home = 'https://www.mudancer.com/web/';
+        window.nt.http_image = 'https://www.mudancer.com/web/assets/images/';
+        window.nt.http_theme_image = 'https://www.mudancer.com/web/assets/theme/choroni/images/';
+        window.nt.http_theme_js = 'https://www.mudancer.com/web/assets/theme/choroni/js/';
+        window.nt.route = 'error/not_found';
+
+            </script>
+</head>
+
+<body nt-editable="1">
+
+
+<!--mainContainer -->
+<div id="mainContainer" class="container" nt-editable="1"><!--opening tag for <div id="mainContainer"> in footer.tpl-->
+
+    <!--headerContainer -->
+    <div id="headerContainer" nt-editable="1">
+
+        <!--header -->
+        <div id="header" nt-editable>
+                        
+            
+    <div data-row="widgetRow_69d653ecf0b7" data-position="header" data-sticky="1" class="row container" id="header_widgetRow_69d653ecf0b7" nt-editable>
+
+                    
+                        
+            <div data-column="widgetColumn_0a124fb362fd" data-position="header" class="large-3 medium-3 small-12" id="header_widgetColumn_0a124fb362fd" nt-editable>
+                <ul class="widgets">
+                     <li data-necotienda_module="image" data-landing_page="all" data-widget="widget_image_332123257" nt-editable="1" movable="1" removable="1" configurable="1" class="box image-widget" id="widget_image_332123257" > 
+    <figure class="picture">
+    <img data-image="https://www.mudancer.com/web/assets/images/data/favicon.png" itemprop="image" itemscope itemtype="https://schema.org/Thing" src="https://www.mudancer.com/web/assets/images/data/favicon.png" />
+</figure></li>                 </ul>
+            </div>
+
+                    
+                        
+            <div data-column="widgetColumn_f6c0f2ff1802" data-position="header" class="large-6 medium-6 small-12" id="header_widgetColumn_f6c0f2ff1802" nt-editable>
+                <ul class="widgets">
+                                    </ul>
+            </div>
+
+                    
+                        
+            <div data-column="widgetColumn_9573e2927c66" data-position="header" class="large-3 medium-3 small-12" id="header_widgetColumn_9573e2927c66" nt-editable>
+                <ul class="widgets">
+                     <li data-necotienda_module="link_button" data-landing_page="all" data-widget="widget_link_button_1790527816" nt-editable="1" movable="1" removable="1" configurable="1" class="box link_button-widget" id="widget_link_button_1790527816" > 
+    <button onclick="location.href = '';">
+    Messages</button></li>  <li data-necotienda_module="link_button" data-landing_page="all" data-widget="widget_link_button_1753049018" nt-editable="1" movable="1" removable="1" configurable="1" class="box link_button-widget" id="widget_link_button_1753049018" > 
+    <button onclick="location.href = '';">
+    Notifications</button></li>  <li data-necotienda_module="link_button" data-landing_page="all" data-widget="widget_link_button_780926425" nt-editable="1" movable="1" removable="1" configurable="1" class="box link_button-widget" id="widget_link_button_780926425" > 
+    <button onclick="location.href = '';">
+    Account</button></li>                 </ul>
+            </div>
+
+        
+    </div>
+        </div>
+        <!--/header -->
+
+    <!--/headerContainer -->
+    </div>
+ 
+
+<div class="container">
+    <section id="maincontent" class="row">
+        
+        <span class="error-content"></span>
+
+        <!-- widgets -->
+        <div class="large-12 medium-12 small-12 columns">
+                    </div>
+        <!-- widgets -->
+
+           </section>
+</div>
+ 
+<!--footerContainer -->
+<div id="footerContainer" nt-editable>
+
+    <!--footer -->
+    <div id="footer" nt-editable>
+                    </div>
+    <!--/footer -->
+
+    <!-- terms -->
+    <div id="copyright" nt-editable>
+        <div class="row">
+            <div class="medium-12 column">
+                Todos los derechos reservados por &copy; Necoyoad 2025.<br />Soluci&oacute;n Web por <a href="https://www.necoyoad.com">NecoYoad</a> Powered By <a href="https://necotienda.necoyoad.com">NecoTienda</a>            </div>
+        </div>
+    </div>
+    <!-- /terms -->
+
+<!--/footerContainer -->
+</div>
+
+<script type="text/javascript" src="https://www.mudancer.com/web/assets/theme/choroni/js/vendor/jquery.easing.1.3.js"></script>
+<script type="text/javascript" src="https://www.mudancer.com/web/assets/theme/choroni/js/vendor/mmenu/jquery.mmenu.oncanvas.js"></script>
+<script type="text/javascript" src="https://www.mudancer.com/web/assets/theme/choroni/js/theme.js"></script>
+<script type="text/javascript" src="https://www.mudancer.com/web/assets/theme/choroni/js/vendor/elevatezoom/jquery.elevateZoom-3.0.8.min.js"></script>
+<script type="text/javascript" src="https://www.mudancer.com/web/assets/theme/choroni/js/vendor/slick.min.js"></script>
+<script type="text/javascript" src="https://www.mudancer.com/web/assets/theme/choroni/js/vendor/rrssb/js/rrssb.min.js"></script>
+<script type="text/javascript" src="https://www.mudancer.com/web/assets/theme/choroni/js/commoncolumnright.js"></script>
+<script> 
+ function moduleSearch(keyword) {
+            var url = 'https://www.mudancer.com/web/buscar/';
+            var form = $(keyword).closest('form');
+            var category = $('#'+ $(keyword).attr('id').replace('Keyword','Category')).val();
+            var store = $('#'+ $(keyword).attr('id').replace('Keyword','Store')).val();
+            var zone = $('#'+ $(keyword).attr('id').replace('Keyword','Zone')).val();
+            
+            url += $(keyword).val()
+                .replace(/_/g,'-')
+                .replace('+','-')
+                .replace(/\s+/g,'-');
+            
+            if (typeof category != 'undefined') {
+                url += '_Cat_'+ category
+                    .replace(/_/g,'-')
+                    .replace('+','-')
+                    .replace(/\s+/g,'-');
+            }
+            
+            if (typeof zone != 'undefined') {
+                url += '_Estado_'+ zone
+                    .replace(/_/g,'-')
+                    .replace('+','-')
+                    .replace(/\s+/g,'-');
+            }
+            
+            if (typeof store != 'undefined') {
+                url += '_Tienda_'+ store
+                    .replace(/_/g,'-')
+                    .replace('+','-')
+                    .replace(/\s+/g,'-');
+            }
+            
+            window.location = url;
+        }
+
+        function moduleSearchFilters(data) {
+            var url = data.baseUrl;
+            var form = data.form;
+            $(form).find('input').each(function(i,item){
+                url += '_Filtro_';
+                url += $(item).attr('name')
+                        .replace(/_/g,'-')
+                        .replace(/\//g,'-')
+                        .replace('+','-')
+                        .replace(/\s+/g,'-');
+                url += '+';
+                url += $(item).val()
+                    .replace(/_/g,'-')
+                    .replace(/\//g,'-')
+                    .replace('+','-')
+                    .replace(/\s+/g,'-');
+                console.log(url);
+            });
+            window.location = url;
+        } </script>
+
+
+<script>
+$(function() {
+    $().UItoTop();
+});
+</script>
+
+
+<!--/mainContainer -->
+</div><!--closing tag for <div id="mainContainer"> in header.tpl-->
+</body>
+</html>";

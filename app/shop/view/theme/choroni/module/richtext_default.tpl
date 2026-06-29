@@ -1,0 +1,1 @@
+<div id="<?php echo $widgetName; ?>Content"><?php echo $description??""; ?></div>

@@ -1,0 +1,52 @@
+.neco-wizard-controls {
+    list-style: none;
+    overflow: hidden;
+    float: left;
+    width: 100%;
+    display: block;
+}
+
+.neco-wizard-controls > li {
+    padding: 1rem 0;
+    list-style: none;
+    float: left;
+    margin: 0;
+    text-align: center;
+}
+
+.neco-wizard-controls li span {
+    color: #333;
+    font-family: "Raleway", "Roboto",serif;
+    font-size: .825rem;
+    font-weight: normal;
+}
+
+.neco-wizard-control-active *,
+.neco-wizard-control-done * {
+    color: #fff !important;
+    font-weight: bold;
+}
+
+.neco-wizard-control-active {
+    background: #3498db;
+}
+
+.neco-wizard-control-done {
+    background: #2ecc71;
+}
+
+@media screen and (max-width:870px) {
+    .neco-wizard-controls li span {
+        font-size: .625rem;
+    }
+}
+@media screen and (max-width:777px) {
+    .neco-wizard-controls li span {
+        font-size: .56rem;
+    }
+}
+@media screen and (max-width:677px) {
+    .neco-wizard-controls li span {
+        display:none;
+    }
+}

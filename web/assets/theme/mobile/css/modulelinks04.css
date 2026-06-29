@@ -1,0 +1,19 @@
+.links-widget .links-04 .heading {
+    float:left;
+}
+.links-widget .links-04 .heading h3 {
+    font-size: .92857em;
+    margin:0;
+    margin-right: 20px;
+}
+.links-widget .links-04 ul,
+.links-widget .links-04 li {
+    float:left;
+}
+.links-widget .links-04 span {
+    margin-right:10px;
+}
+.links-widget .links-04 a {
+    color: #222;
+    font-size: .92857em;
+}

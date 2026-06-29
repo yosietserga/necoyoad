@@ -1,0 +1,16 @@
+.banner.horizontal ul, .banner.horizontal li {
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+}
+
+.banner.horizontal li {
+    float: left;
+}
+
+.banner.horizontal figure, .banner.horizontal img {
+    margin: 0px;
+    padding: 0px;
+    max-width: 100%;
+    height: auto;
+}

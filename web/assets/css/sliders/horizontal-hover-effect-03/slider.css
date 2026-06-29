@@ -1,0 +1,158 @@
+/*
+@author https://tympanus.net/codrops/author/crnacura/
+@article https://tympanus.net/codrops/2012/08/08/circle-hover-effects-with-css-transitions/
+ */
+.banner-hhe-03 ul {
+    margin: 20px 0 0 0;
+    padding: 0;
+    list-style: none;
+    display: block;
+    text-align: center;
+    width: 100%;
+}
+
+.banner-hhe-03 ul:after,
+.banner-hhe-03 .ch-item:before {
+    content: '';
+    display: table;
+}
+
+.banner-hhe-03 ul:after {
+    clear: both;
+}
+
+.banner-hhe-03 ul li {
+    width: 220px;
+    height: 220px;
+    display: inline-block;
+    margin: 20px;
+}
+
+.banner-hhe-03 .ch-item {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    position: relative;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    cursor: default;
+}
+
+.banner-hhe-03 .ch-info-wrap,
+.banner-hhe-03 .ch-info {
+    position: absolute;
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+
+    -webkit-transition: all 0.4s ease-in-out;
+    -moz-transition: all 0.4s ease-in-out;
+    -o-transition: all 0.4s ease-in-out;
+    -ms-transition: all 0.4s ease-in-out;
+    transition: all 0.4s ease-in-out;
+
+    -webkit-perspective: 800px;
+    -moz-perspective: 800px;
+    -o-perspective: 800px;
+    -ms-perspective: 800px;
+    perspective: 800px;
+}
+
+.banner-hhe-03 .ch-info-wrap {
+    top: 20px;
+    left: 20px;
+    background: #f9f9f9 url(../images/bg.jpg);
+    box-shadow: 0 0 0 20px rgba(255, 255, 255, 0.2),
+    inset 0 0 3px rgba(115, 114, 23, 0.8);
+
+}
+
+.banner-hhe-03 .ch-info {
+    -webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+    -o-transform-style: preserve-3d;
+    -ms-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+}
+
+.banner-hhe-03 .ch-info > div {
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-position: center center;
+    -webkit-transition: all 0.6s ease-in-out;
+    -moz-transition: all 0.6s ease-in-out;
+    -o-transition: all 0.6s ease-in-out;
+    -ms-transition: all 0.6s ease-in-out;
+    transition: all 0.6s ease-in-out;
+}
+
+.banner-hhe-03 .ch-info .ch-info-front {
+    -webkit-transform-origin: 50% 100%;
+    -moz-transform-origin: 50% 100%;
+    -o-transform-origin: 50% 100%;
+    -ms-transform-origin: 50% 100%;
+    transform-origin: 50% 100%;
+
+    z-index: 100;
+    box-shadow: inset 2px 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.banner-hhe-03 .ch-info .ch-info-back {
+    background: rgba(230, 132, 107, 0);
+}
+
+.banner-hhe-03 .ch-info .title * {
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 14px;
+    margin: 5px 25px;
+    padding: 30px 0 0 0;
+    font-family: 'Open Sans', Arial, sans-serif;
+    text-shadow: 0 0 1px #fff,
+    0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.banner-hhe-03 .ch-info .body {
+    color: #fff;
+    padding: 10px 5px;
+    font-style: italic;
+    margin: 0 30px;
+    font-size: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.banner-hhe-03 .ch-info .link a {
+    display: block;
+    color: #fff;
+    color: rgba(255, 255, 255, 0.7);
+    font-style: normal;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 10px;
+    letter-spacing: 1px;
+    padding-top: 4px;
+    font-family: 'Open Sans', Arial, sans-serif;
+}
+
+.banner-hhe-03 .ch-info .link a:hover {
+    color: #fff222;
+    color: rgba(255, 242, 34, 0.8);
+}
+
+.banner-hhe-03 .ch-item:hover .ch-info-front {
+    -webkit-transform: rotate3d(1, 0, 0, -180deg);
+    -moz-transform: rotate3d(1, 0, 0, -180deg);
+    -o-transform: rotate3d(1, 0, 0, -180deg);
+    -ms-transform: rotate3d(1, 0, 0, -180deg);
+    transform: rotate3d(1, 0, 0, -180deg);
+
+    box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.2),
+    inset 0 0 3px rgba(0, 0, 0, 0.3);
+}
+
+.banner-hhe-03 .ch-item:hover .ch-info-back {
+    background: rgb(123, 176, 0);
+}

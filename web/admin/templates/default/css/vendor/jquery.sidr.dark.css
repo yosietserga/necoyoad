@@ -1,0 +1,165 @@
+.sidr{
+    background:#24292D;
+    display:none;
+    position:absolute;
+    position:fixed;
+    top:0;
+    height:100%;
+    z-index:999999;
+    width:220px;
+    overflow-x:hidden;
+    overflow-y:auto;
+    font-family:verdana,arial,sans-serif;
+    font-size:11px;
+    color:#fff;
+}
+.sidr .sidr-inner{
+    padding:0 0 15px
+}
+.sidr .sidr-inner>p{
+    margin-left:15px;
+    margin-right:15px
+}
+.sidr.right{
+    left:auto;
+    right:-260px
+}
+.sidr.left{
+    left:-260px;
+    right:auto
+}
+.sidr h1,
+.sidr h2,
+.sidr h3,
+.sidr h4,
+.sidr h5,
+.sidr h6{
+    margin-top:15px;
+    padding:0 15px;
+    background:#222;
+    font-size:11px;
+    font-weight:bold;
+    color:#fff;
+    line-height:24px;
+    border-bottom:solid 1px #ccc;
+}
+.sidr p{
+    font-size:10px;
+    margin:0 0 12px
+}
+.sidr>p{
+    margin-left:15px;
+    margin-right:15px
+}
+.sidr ul{
+    display:block;
+    margin:0 0 15px;
+    padding:0;
+}
+.sidr li{
+    background: transparent;
+    display:block;
+    margin:0;
+    line-height:38px;
+    transition:all 0.5s ease-out;
+}
+.sidr li:hover{
+    background: #222;
+    line-height:39px;
+    margin-left:+5px;
+}
+.sidr li.active,
+.sidr li.sidr-class-active{
+    background: #101014;
+    line-height:39px;
+}
+.sidr li a,
+.sidr li span{
+    padding:0 15px;
+    text-decoration:none;
+    color:#fff
+}
+.sidr > ul > li a {
+    width:260px;
+    float:left;
+}
+.sidr li ul{
+    border-bottom:none;
+    margin:0;
+    float:left;
+}
+.sidr li li{
+    line-height:30px;
+    float:left;
+}
+.sidr li li:last-child{
+    border-bottom:none
+}
+.sidr li li:hover,
+.sidr li li.active,
+.sidr li li.sidr-class-active{
+    background: #1B1B21;
+    line-height:31px;
+}
+.sidr li li a,
+.sidr li li span{
+    color:rgba(255,255,255,0.8);
+    padding-left:30px;
+    width:260px;
+}
+.sidr li li a {
+    width:255px;
+    display: block;
+}
+.sidr li li:hover a {
+    color:#F3AD06;
+}
+.sidr form{
+    margin:0 15px
+}
+.sidr label{
+    font-size:13px
+}
+.sidr input[type="text"],
+.sidr input[type="password"],
+.sidr input[type="date"],
+.sidr input[type="datetime"],
+.sidr input[type="email"],
+.sidr input[type="number"],
+.sidr input[type="search"],
+.sidr input[type="tel"],
+.sidr input[type="time"],
+.sidr input[type="url"],
+.sidr textarea,
+.sidr select{
+    width:100%;
+    font-size:13px;
+    padding:5px;
+    -webkit-box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    box-sizing:border-box;
+    margin:0 0 10px;
+    -webkit-border-radius:2px;
+    -moz-border-radius:2px;
+    -ms-border-radius:2px;
+    -o-border-radius:2px;
+    border-radius:2px;
+    border:none;
+    background:rgba(0,0,0,0.1);
+    color:rgba(255,255,255,0.6);
+    display:block;clear:both
+}
+.sidr input[type=checkbox]{
+    width:auto;
+    display:inline;
+    clear:none
+}
+.sidr input[type=button],
+.sidr input[type=submit]{
+    color:#333;
+    background:#fff
+}
+.sidr input[type=button]:hover,
+.sidr input[type=submit]:hover{
+    background:rgba(255,255,255,0.9)
+}

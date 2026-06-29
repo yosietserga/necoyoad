@@ -1,0 +1,41 @@
+h1 {
+    font-size:24px;
+}
+h2 {
+    font-size:18px;
+}
+label {
+    width:300px !important;
+}
+.row:hover {
+    background:#EEE798;
+}
+.guide {
+    margin:5px;
+    padding:5px;
+    background:#f6f6f6;
+    width: 96%;
+    border: solid 1px #e0e0e0;
+    border-radius:4px;
+    overflow:hidden;
+}
+#paymentMethods {
+    margin:5px;
+    padding: 5px;
+}
+#paymentMethods li {
+    padding: 4px 0px;
+    border-bottom:solid 1px #e7e7e7;
+}
+#paymentMethods li:nth-child(even) {
+    background:#f4f4f4;
+}
+#paymentMethods li:nth-child(odd) {
+    background:#fff;
+}
+#paymentMethods li:hover {
+    background:#e7e7e7;
+}
+.chzn-results li:hover {
+    background:#0066FF !important;
+}

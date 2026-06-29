@@ -1,0 +1,3 @@
+<figure class="picture">
+    <img data-image="<?php echo $image; ?>" itemprop="image" itemscope itemtype="https://schema.org/Thing" src="<?php echo $settings['width'] ? $thumb : $image; ?>" <?php echo $settings['width'] ? ' width="'. $settings['width'] .'"' : ''; ?><?php echo $settings['height'] ? ' height="'. $settings['height'] .'"' : ''; ?><?php echo $heading_title ? ' alt="'. $heading_title .'"' : ''; ?>/>
+</figure>

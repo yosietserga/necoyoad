@@ -1,0 +1,12 @@
+.language_selector-widget 
+{
+    padding: 3px 10px;
+    max-width:90%;
+}
+@media screen and (max-width:768px) {
+    .language_selector-widget li span,
+    .language_selector-widget .current span
+    {
+        display:none;
+    }
+}

@@ -1,0 +1,27 @@
+#wrapperLi {
+    width:740px;
+    height:auto;
+}
+#sitemap {
+    position: relative;
+    margin: 0px;
+    padding:0px;
+}
+#sitemap li {
+    width:200px;
+    min-height:30px;
+    height:auto;
+    float:left;
+}
+#sitemap p {
+    margin-left:20px;
+    float:none;
+    clear:both;
+    line-height: 18px;
+}
+#sitemap p {
+    margin-left:20px;
+    float:none;
+    clear:both;
+    line-height: 18px;
+}

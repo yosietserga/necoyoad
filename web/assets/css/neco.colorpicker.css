@@ -1,0 +1,92 @@
+@charset "utf-8";
+/* neco-color-picker */
+.neco-color-picker-launch {
+    position:relative;
+    background:url(../images/necocss/pickerbox.png) no-repeat;
+    width:22px;
+    height:22px;
+    box-shadow: 0px 0px 3px #666;
+    display:block;
+    cursor:pointer;
+    float:left;
+}
+.neco-color-picker-sample {
+    margin-left:5px;
+    background:#fff;
+    width:18px;
+    height:18px;
+    border: solid 1px #000;
+    display:block;
+    float:left;
+}
+.neco-color-picker-wrapper {
+    position:absolute;
+    top:auto;
+    left:auto;
+    background:#f3f3f3;
+    display:none;
+    width:230px;
+    height:230px;
+    border-radius:5px;
+    z-index:9999;
+}
+.neco-color-picker {
+    position:relative;
+    top:auto;
+    left:auto;
+    background:#234d22;
+    z-index:1001;
+}
+.neco-color-picker * {
+    position:absolute;
+    cursor:crosshair;
+    z-index:1002;
+}
+.neco-color-picker,.neco-color-picker .wheel {
+    width:195px;
+    height:195px;
+    background:#ccc;
+}
+.neco-color-picker .color,.neco-color-picker .overlay {
+    top:47px;
+    left:47px;
+    width:101px;
+    height:101px;
+    background:#eee;
+}
+.neco-color-picker .wheel {
+    background:url(../images/necocss/wheel.png) no-repeat;
+    width:195px;
+    height:195px;
+}
+.neco-color-picker .overlay {
+    background:url(../images/necocss/mask.png) no-repeat;
+}
+.neco-color-picker .marker {
+    width:17px;
+    height:17px;
+    margin:-8px 0 0 -8px;
+    overflow:hidden;
+    background:url(../images/necocss/marker.png) no-repeat;
+}
+.neco-color-picker-buttons {
+    position:absolute;
+    top:200px;
+    right:0px;
+    width:80px;
+    z-index:1000;
+}
+.neco-color-picker-buttons a {
+    margin-left:5px;
+    padding:5px !important;
+    height:20px !important;
+    width:20px !important;
+    float:left !important;
+    display:block;
+}
+.neco-color-picker-submit {
+    background:#233BBD;
+}
+.neco-color-picker-cancel {
+    background:#900;
+}

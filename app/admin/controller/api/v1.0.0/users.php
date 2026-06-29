@@ -1,0 +1,153 @@
+<?php
+
+$this->load->auto('user/user');
+$this->load->auto('json');
+
+$return = [];
+$request_type = $this->request->server['REQUEST_METHOD'];
+
+switch(strtolower($request_type)) {
+    case 'get':
+    default:
+        $this->load->auto('pagination');
+
+        $filters = [];
+        $items = [];
+
+        $_filters = array(
+            //unique indexes
+            'id'=>'',
+            'user_id'=>'',
+
+            //int indexes
+            'user_group_id'=>'',
+            'store_id'=>'',
+            'status'=>'',
+
+            //text filters
+            'username'=>'',
+            'email'=>'',
+            'name'=>'',
+            'user_group'=>'',
+
+            //date filters
+            'date_start'=>'',
+            'date_end'=>'',
+
+            //array filters
+            'properties'=>'',
+
+            //not null
+            'page'=>1,
+            'sort'=>'t.username',
+            'order'=>'ASC',
+            'limit'=>$this->config->get('config_admin_limit'),
+        );
+
+        foreach ($_filters as $k=>$v) {
+            $p = $this->request->getQuery($k);
+
+            if (!empty($p)) {
+                $filters[$k] = $p;
+            } else if (!empty($v)) {
+                $filters[$k] = $v;
+            }
+        }
+
+        $url = '';
+        foreach ($filters as $k=>$v) {
+            if ($this->request->hasQuery($k) && !empty($v)) $url .= "&{$k}=" . $v;
+        }
+
+        $total = $this->modelUser->getAllTotal($filters);
+        $results = $this->modelUser->getAll($filters);
+
+        foreach ($results as $l => $result) {
+            $id = $result['user_id'];
+
+            $items[$l] = $result;
+            $items[$l]['id'] = $id;
+        }
+
+        $pagination = new Pagination();
+        $pagination->total = $total;
+        $pagination->page = $filters['page'];
+        $pagination->limit = $filters['limit'];
+        $pagination->text = $this->language->get('text_pagination');
+        $pagination->url = Url::createAdminUrl('api/v1/users') . $url . '&page={page}';
+
+        $return['status'] = array(
+            'code'=>200,
+            'message'=>'OK'
+        );
+
+        $return['error'] = array(
+            'code'=>null,
+            'message'=>''
+        );
+
+        $return['payload'] = array(
+            'results'=>$items,
+            'filters'=>$filters,
+            'pagination'=>$pagination->render(),
+            'total'=>$total
+        );
+    break;
+
+    case 'post':
+        $this->request->post = json_decode(file_get_contents('php://input'), true);
+
+        $id = $this->modelUser->add($this->prepareData('users', $this->request->post));
+
+        $return['status'] = array(
+            'code'=>200,
+            'message'=>'OK'
+        );
+
+        $return['error'] = array(
+            'code'=>null,
+            'message'=>''
+        );
+
+        $return['payload'] = array(
+            'user_id'=>$id,
+            'id'=>$id
+        );
+        break;
+    case 'put':
+
+        $query = $this->db->query("SELECT * FROM ". DB_PREFIX ."user WHERE user_id = '". (int)$this->request->getQuery('id') ."'");
+        $query->row['sc'] = $this->request->getQuery('sc');
+        $user = $query->row;
+        $this->request->post = json_decode(file_get_contents('php://input'), true);
+        if ($user['user_id']) {
+            $this->modelUser->update($user['user_id'], $this->prepareData('users', $user));
+
+            $return['status'] = array(
+                'code'=>200,
+                'message'=>'OK'
+            );
+
+            $return['error'] = array(
+                'code'=>null,
+                'message'=>''
+            );
+
+            $return['payload'] = array(
+                'user_id'=>$user['user_id'],
+                'id'=>$user['user_id']
+            );
+        } else {
+            $this->error404();
+            return;
+        }
+        break;
+    case 'delete':
+        $this->request->post = json_decode(file_get_contents('php://input'), true);
+        $id = $this->request->hasPost('id') ? $this->request->getPost('id') : $this->request->getQuery('id');
+        $ids = (is_array($id)) ? $id : array($id);
+        foreach ($ids as $id) {
+            $this->modelUser->delete($id);
+        }
+        break;
+}

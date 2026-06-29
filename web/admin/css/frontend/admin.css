@@ -1,0 +1,113 @@
+@charset "utf-8";
+.placeholder {
+    background:#e7e7e7 !important;
+    border:dashed 2px #900 !important;
+    height: 40px !important;
+    padding: 10px !important;
+    text-align:center;
+    font:normal 12px Arial;
+}
+ul.widgets li {
+    position:relative;
+    z-index:0;
+    border:inset 1px transparent;
+}
+body.admin_tools ul.widgets > li:hover,
+body.admin_tools ul.widgets > li.hover {
+    border-color: #900;
+}
+
+body.admin_tools ul.widgets > li:hover > :after,
+body.admin_tools ul.widgets > li.hover > :after {
+    content:" ";
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    display:block;
+    background:rgba(199, 0, 0, 0.2);
+    z-index:-1;
+}
+
+.actions {
+    position: absolute !important;
+    top:auto !important;
+    left:auto !important;
+    background:#ccc !important;
+    border: solid 1px #999 !important;
+    display:none;
+    z-index:999 !important;
+}
+.actions p {
+    color:#000 !important;
+    font:normal 10px arial !important;
+    float:none !important;
+}
+.actions ul {
+    padding:0px !important;
+    margin:0px !important;
+    list-style:none !important;
+}
+.admin-icons {
+    margin:3px !important;
+    width:16px !important;
+    height:16px !important;
+    display:block !important;
+    float:left !important;
+}
+.move { background: url(../../images/icons/color/arrow-in-out.png) left top no-repeat !important;}
+.lock { background: url(../../images/icons/color/pin.png) left top no-repeat !important;}
+.style { background: url(../../images/icons/color/palette.png) left top no-repeat !important;}
+.config { background: url(../../images/icons/color/wrench-screwdriver.png) left top no-repeat !important;}
+.delete { background: url(../../images/icons/color/cross.png) left top no-repeat !important;}
+.config { cursor: pointer; }
+.move { cursor: move; }
+.delete { cursor: no-drop; }
+
+[data-widget] .attributes .container {
+    overflow:visible;
+}
+[data-widget] .attributes .row {
+    float:left;
+    border-bottom:solid 1px #eee;
+}
+[data-widget] .attributes label,
+[data-widget] .attributes input,
+[data-widget] .attributes select,
+[data-widget] .attributes textarea {
+    display: inline;
+    float: left;
+    margin: 13px;
+    width:60%;
+}
+[data-widget] .attributes label {
+    width:20%;
+}
+
+@media only screen and (max-width: 764px) {
+    [data-widget] .attributes label,
+    [data-widget] .attributes input,
+    [data-widget] .attributes select,
+    [data-widget] .attributes textarea {
+        margin: 0px;
+        width:100%;
+    }
+}
+[data-widget] .attributes {
+    position:relative;
+    text-align:left;
+    display:none;
+}
+[data-widget] .attributes ul {
+    border:none !important;
+    width:90% !important;
+}
+[data-widget] .attributes li {
+    margin:0px !important;
+    padding:4px !important;
+    border:none !important;
+    min-height:20px !important;
+    box-shadow:none !important;
+    border-radius:0px !important;
+}

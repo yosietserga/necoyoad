@@ -1,0 +1,23 @@
+.separatorWidget {
+    margin: 5px auto;
+    width:98%;
+}
+.separatorWidget hr {
+    border:none;
+    border-bottom:solid 1px #ccc;
+    width:100%;
+    height:1px;
+    display:inline-block;
+}
+.separatorWidget hr:after, #header .separatorWidget hr:before {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0;
+    width:100%;
+    height:1px;
+    display:block;
+    float:none;
+}

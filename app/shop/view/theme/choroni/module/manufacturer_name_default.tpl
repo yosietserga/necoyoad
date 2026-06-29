@@ -1,0 +1,1 @@
+<h1 itemprop="name" itemscope itemtype="https://schema.org/Thing"><?php echo $name; ?></h1>

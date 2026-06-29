@@ -1,0 +1,10 @@
+.currency_selector-widget
+{
+    padding: 3px 10px;
+    max-width:90%;
+}
+.currency_selector-widget.shrinked li span.currency_symbol,
+.currency_selector-widget.shrinked .current span.currency_symbol
+{
+    display:none;
+}

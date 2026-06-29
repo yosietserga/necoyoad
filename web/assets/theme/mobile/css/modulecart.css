@@ -1,0 +1,26 @@
+/* cartWidget */
+.cartWidgetTotal {
+    margin-top:5px;
+    padding: 0 3px 0 3px;
+    font-size: 0.9em;
+    color: #222;
+    float:left;
+}
+.cartRemove {
+    margin-top: 3px;
+    padding:3px;
+    background: url(../images/list_remove_btn.gif) no-repeat left center transparent;
+    padding-right:10px;
+    cursor:pointer;
+}
+.cartRemoveLoading {
+    margin-top: 3px;
+    background: url(../images/ajax_load.gif) no-repeat transparent;
+    padding-right:10px;
+}
+.cartLinks {
+    padding-top:5px;
+    text-align:center;
+    clear:both;
+}
+/* /cartWidget */

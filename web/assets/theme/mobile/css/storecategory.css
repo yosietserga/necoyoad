@@ -1,0 +1,11 @@
+.catalog-grid li {
+    list-style:none;
+    float:left;
+    margin:10px;
+    text-align: center;
+    background:#fdfdfd;
+}
+.catalog-grid a {
+    text-decoration: none;
+    text-transform:uppercase;
+}

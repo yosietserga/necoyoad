@@ -1,0 +1,229 @@
+.banner-hhe-15 ul {
+    clear: both;
+    margin: 10px auto 10px auto;
+    padding: 1em 0 .7em;
+    max-width: 1228px;
+    list-style: none;
+    text-align: center;
+}
+
+.banner-hhe-15 li {
+    position: relative;
+    float: left;
+    overflow: hidden;
+    margin: 0px;
+    padding: 0;
+    height: auto;
+    text-align: center;
+    cursor: pointer;
+    background:#000;
+}
+
+.banner-hhe-15 .thumb,
+.banner-hhe-15 .thumb img {
+    margin:0;
+    position: relative;
+    display: block;
+    min-height: 100%;
+    max-width: 100%;
+    width: 100%;
+}
+
+.banner-hhe-15 li .thumb {
+    -webkit-transition: opacity 0.45s;
+    transition: opacity 0.45s;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+.banner-hhe-15 .details {
+    padding: .52em;
+    color: #fff;
+    text-transform: uppercase;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    text-align:left;
+}
+
+.banner-hhe-15 .details::before,
+.banner-hhe-15 .details::after {
+    pointer-events: none;
+}
+.banner-hhe-15 .title {
+    word-spacing: -0.15em;
+    font-weight: bold;
+    font-size:0px;
+    -webkit-transition: all 0.35s ease-in-out;
+    -moz-transition: all 0.35s ease-in-out;
+    transition: all 0.35s ease-in-out;
+    -webkit-transform: translateX(-100%);
+    -moz-transform: translateX(-100%);
+    -ms-transform: translateX(-100%);
+    -o-transform: translateX(-100%);
+    transform: translateX(-100%);
+}
+.banner-hhe-15 .body {
+    display:none;
+    font-size:0px;
+}
+
+.banner-hhe-15 li .details::before {
+    position: absolute;
+    top: -69px;
+    left: 110px;
+    width: 100%;
+    height: 500px;
+    opacity:0.7;
+    background: url(../images/triangle.svg) no-repeat center center;
+    background-size: 100% 100%;
+    content: '';
+    -webkit-transition: opacity 0.45s, -webkit-transform 0.45s;
+    transition: opacity 0.45s, transform 0.45s;
+    -webkit-transform: rotate3d(0,0,1,45deg);
+    transform: rotate3d(0,0,1,45deg);
+    -webkit-transform-origin: 0 100%;
+    transform-origin: 0 100%;
+}
+
+.banner-hhe-15 .link {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    width:100%;
+    height:80%;
+}
+
+.banner-hhe-15 .link a {
+    position: absolute;
+    text-indent: 200%;
+    color: #fff;
+    font-size:13px;
+    bottom:-50px;
+    right:-40px;
+    width:30%;
+    height:55%;
+}
+
+.banner-hhe-15 .link a i {
+    margin: 0;
+    padding: 0;
+    background:#222;
+    width:50%;
+    height:60%;
+    border-radius:50%;
+    display:flex;
+    flex-wrap: wrap;
+    font-size: 3vw;
+}
+.banner-hhe-15 .link a i::before {
+    margin-top:24%;
+    margin-left:-164%;
+}
+
+.banner-hhe-15 li:hover .title {
+    -webkit-transform: translate3d(0,0,0);
+    transform: translate3d(0,0,0);
+    font-size:23px !important;
+    background:rgb(76, 175, 80);
+    color:#fff;
+    font-weight:bold;
+    text-shadow:#347737 2px 2px 2px;
+    padding-left:50px;
+    padding-right:50px;
+}
+.banner-hhe-15 li:hover .details::before {
+    transform: rotate3d(0,0,1,0deg);
+}
+.banner-hhe-15 li:hover .thumb {
+    opacity:0.6;
+}
+.banner-hhe-15 a:hover i {
+    background:#111;
+}
+
+@media screen and (max-width: 40em) {
+    .banner-hhe-15 li {
+        display: inline-block;
+        float: none;
+        margin: 10px auto;
+        width: 100%;
+    }
+
+
+    .banner-hhe-15 li .details::before {
+        top: -119px;
+        left: 70px;
+    }
+
+}
+
+@media screen and (max-width: 1050px) {
+    
+    .banner-hhe-15 .link {
+        width:78%;
+        height:62%;
+    }
+
+    .banner-hhe-15 .link a {
+        right:-90px;
+    }
+
+    .banner-hhe-15 li:hover .details::before {
+        top: -149px;
+        left: 110px;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    
+    .banner-hhe-15 .link a {
+        top:70px;
+        right:-60px;
+    }
+
+    .banner-hhe-15 li:hover .details::before {
+        top: -199px;
+    }
+}
+@media screen and (max-width: 640px) {
+    
+    .banner-hhe-15 .link a {
+        top:130px;
+        right:-110px;
+    }
+
+    .banner-hhe-15 .link a i {
+        font-size:5vw;
+    }
+
+    .banner-hhe-15 li:hover .details::before {
+        top: -89px;
+    }
+}
+@media screen and (max-width: 500px) {
+    
+    .banner-hhe-15 .link a {
+        top:80px;
+        right:-80px;
+    }
+
+    .banner-hhe-15 li:hover .details::before {
+        top: -159px;
+    }
+}
+@media screen and (max-width: 400px) {
+    
+    .banner-hhe-15 .link a {
+        top:50px;
+        right:-60px;
+    }
+
+    .banner-hhe-15 li:hover .details::before {
+        top: -199px;
+    }
+}

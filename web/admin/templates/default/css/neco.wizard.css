@@ -1,0 +1,43 @@
+@charset "utf-8";
+.neco-wizard-controls {
+    margin:0px;
+    padding:0px;
+    list-style:none;
+}
+.neco-wizard-control {
+    margin:0px 2px;
+    padding:5px;
+    background:#e3e3e3;
+    font:bold 12px Arial;
+    color:#222;
+    width:150px;
+    height:80px;
+    display: block;
+    float:left;
+    border:solid 1px #ccc;
+    border-radius:4px;
+    -webkit-border-radius:4px;
+    -moz-border-radius:4px;
+    behavior:url(ie-css3.htc);
+}
+.neco-wizard-control span {
+    font:normal 10px Arial;
+    color:#666;
+}
+.neco-wizard-control span:before {
+    clear:both;
+    float:none;
+    width:1px;
+    height:1px;
+    display:block;
+    content:".";
+    color:transparent;
+}
+.neco-wizard-control-active {
+    background:#E4F4AD !important;
+    border-color:#CEF24B !important;
+}
+.neco-wizard-control-done {
+    background:#1A70F2 !important;
+    border-color:transparent !important;
+}

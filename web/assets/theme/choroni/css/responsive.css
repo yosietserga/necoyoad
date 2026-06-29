@@ -1,0 +1,29 @@
+@media only screen
+and (max-width: 510px) {
+    .dd-content {
+        right:auto;
+    }
+}
+
+@media only screen
+and (min-width: 510px)
+and (max-width: 767px) {
+    .dd-content {
+        right:0px;
+    }
+}
+
+@media only screen
+and (min-width : 768px) {
+    .dd-content {
+        right:auto;
+    }
+}
+
+/* Desktops and laptops ----------- */
+@media only screen  and (min-width : 1200px) {
+}
+
+/* Large screens ----------- */
+@media only screen  and (min-width : 1824px) {
+}

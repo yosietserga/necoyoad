@@ -1,0 +1,116 @@
+$(function(){
+    
+});
+
+var app = app || {};
+
+app.controllers;
+app.models;
+app.collections;
+app.views;
+app.components;
+app.events;
+
+app.registry;
+app.registry.get;
+app.registry.set;
+
+app.data;
+app.data.get;
+app.data.set;
+app.data.clear;
+
+app.webdb;
+app.webdb.get;
+app.webdb.set;
+app.webdb.clear;
+app.webdb.map;
+app.webdb.reduce;
+
+app.cache;
+app.cache.get;
+app.cache.set;
+app.cache.clear;
+
+app.request;
+app.request.get;
+app.request.post;
+app.request.file;
+app.request.put;
+app.request.delete;
+
+app.route;
+app.route.createUrl;
+app.route.createAdminUrl;
+app.route.rewrite;
+
+app.tools.toJson;
+app.tools.toArray;
+
+productModel = $.ntProductModel({ id:1 });
+productModel.create();
+productModel.read();
+productModel.update();
+productModel.delete();
+productModel.getProperty();
+productModel.setProperty();
+productModel.deleteProperty();
+
+(function($) {
+    
+    $.fn.ntProductModel = function(method) {
+        var defaults = {
+            baseUrl:    '',
+            url:        '',
+            type:       'get',
+            dataType:   'json',
+            classname:  'neco-carousel',
+            image:      {
+                classname: 'neco-carousel-image',
+                height: 100,
+                width: 100
+            },
+            next:       {
+                classname:'neco-carousel-next'
+            },
+            prev:       {
+                classname:'neco-carousel-prev'
+            },
+            pager:      {
+                classname:'neco-carousel-pager'
+            },
+            addButton:  {
+                show: false,
+                classname: '',
+                text: 'Comprar'
+            },
+            seeButton:  {
+                show: false,
+                classname: '',
+                text: 'Ver Detalles'
+            },
+            loading:    {
+                title:'Cargando...',
+                image:'../loader.gif',
+                classname:'neco-carousel-loading'
+            },
+            error:      {
+                classname:'neco-carousel-error',
+                text:'Lo sentimos pero no se pudo cargar esta informaci\u00F3n'
+            },
+            options:    {},
+            create:     function(){},
+            beforeSend: function(){},
+            stop:       function(){},
+            complete:   function(){},
+            success:    function(){},
+            mouseenter: function(){},
+            mouseleave: function(){},
+            click:      function(){}
+        };
+        
+        var settings = {};
+        var data = {};
+        var methods = {};
+    };
+})(jQuery);

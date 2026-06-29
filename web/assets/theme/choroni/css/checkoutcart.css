@@ -1,0 +1,45 @@
+h1 {
+    font-size:24px;
+}
+.delete-product {
+    background:url(../images/delete.png) transparent left top no-repeat;
+    width:16px;
+    height: 16px;
+    display:block;
+}
+.update-product {
+    background:url(../images/refresh.png) transparent left top no-repeat;
+    width:16px;
+    height: 16px;
+    display:block;
+    float:left;
+}
+.cart {
+    border-collapse: collapse;
+    width: 100%;
+    border: 1px solid #EEEEEE;
+    margin-bottom: 10px;
+}
+.cart thead {
+    background:#ccc
+}
+.cart th {
+    text-align:left
+}
+.guide {
+    margin-bottom: 10px;
+    padding: 10px; 
+    background: #F7F7F7;
+    display:none;
+    border: 1px solid #DDDDDD;
+}
+#totals, #totalsConfirm {
+    width:300px;
+    float:right;
+}
+#totals tr b, #totals tr td, #totalsConfirm tr b, #totalsConfirm tr td {
+    font-size:16px;
+}
+#totals tr:last-child b, #totals tr:last-child td, #totalsConfirm tr:last-child b, #totalsConfirm tr:last-child td  {
+    font-size:24px;
+}

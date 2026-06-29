@@ -1,0 +1,44 @@
+<?php
+define('PACKAGE','standalone');
+define('VERSION','2.0.1');
+define('PATH','m');
+
+$config_path = dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR;
+if (!file_exists($config_path . 'cconfig.php')) {
+    $protocol       = strpos(strtolower($_SERVER['SERVER_PROTOCOL']),'https') === FALSE ? 'https://' : 'https://';
+    $httpDefaultPath= isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'] : substr($_SERVER['PHP_SELF'],0,strrpos($_SERVER['PHP_SELF'],"/")+1);
+    $httpPath = str_replace('/index.php',"",$httpDefaultPath);
+    $httpPath = str_replace('/web/',"",$httpPath);
+	header('Location: '. $protocol . $httpPath .'/install/index.php');
+	exit;
+} elseif (file_exists($config_path . 'app/'. PATH .'/config.php')) {
+    require_once($config_path . 'app/'. PATH .'/config.php');
+}
+
+// Startup
+require_once(DIR_SYSTEM . 'startup.php');
+
+// App Libs and Configs Preload
+require_once(DIR_APPLICATION . 'map.php');
+
+// Front Controller 
+$controller = new Front($registry);
+
+// Maintenance Mode
+$controller->addPreAction(new Action('common/maintenance/check'));
+
+// SEO URL's
+$controller->addPreAction(new Action('common/seo_url'));
+// Router
+if (isset($request->get['r'])) {
+    if (!isset($controller->ClassName)) $controller->ClassName = $request->get['r'];
+	$action = new Action($request->get['r']);
+} else {
+	$action = new Action('common/home');
+}
+
+// Dispatch
+$controller->dispatch($action, new Action('error/not_found'));
+
+// Output
+$response->output();

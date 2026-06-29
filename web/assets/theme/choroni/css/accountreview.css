@@ -1,0 +1,24 @@
+.review_item {
+    background:#fafafa;
+    flex: 0 0 30%;
+    margin: 1%;
+    padding: .5%;
+    border:solid 1px #eee;
+}
+.review-date {
+    font-size: 0.835rem;font-style:italic;
+}
+@media screen and (max-width: 64em) {
+    .review_item {
+        flex: 0 0 45%;
+        max-width:45%;
+    }
+}
+@media screen and (max-width: 40em) {
+    .review_item {
+        flex: 0 0 99%;
+        max-width:99%;
+        margin: 10px 0;
+        padding: 2%;
+    }
+}

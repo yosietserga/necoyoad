@@ -1,0 +1,117 @@
+.banner-hhe-10 li {
+    position: relative;
+    height: auto;
+    border: 5px solid #fff;
+    box-shadow: 0 0 18px #bbb;
+    float:left;
+    margin:1%;
+}
+.banner-hhe-10 .details {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    overflow: hidden;
+    background: #333333;
+    opacity: 0;
+    padding:8px 2px;
+    -webkit-transition: all 0.35s ease-in-out;
+    -moz-transition: all 0.35s ease-in-out;
+    transition: all 0.35s ease-in-out;
+}
+
+.banner-hhe-10 .thumb {
+    margin:0;
+    padding:0;
+    -webkit-transform: translateY(0);
+    -moz-transform: translateY(0);
+    -ms-transform: translateY(0);
+    -o-transform: translateY(0);
+    transform: translateY(0);
+    -webkit-transition: all 0.35s ease-in-out;
+    -moz-transition: all 0.35s ease-in-out;
+    transition: all 0.35s ease-in-out;
+}
+
+.banner-hhe-10 .thumb img {
+    width:100%;
+    margin:0;
+}
+
+.banner-hhe-10 .title {
+    text-transform: uppercase;
+    color: #fff;
+    text-align: center;
+    font-size: 17px;
+    padding: 10px 10px 0 4px;
+    margin: 4px 0 0 0;
+}
+.banner-hhe-10 .body {
+    font-style: italic;
+    font-size: 12px;
+    position: relative;
+    color: #bbb;
+    padding: 5px;
+    text-align: center;
+}
+.banner-hhe-10 li:hover .details {
+    visibility: visible;
+    opacity: 1;
+    top: auto;
+    -webkit-transform: translateY(100%);
+    -moz-transform: translateY(100%);
+    -ms-transform: translateY(100%);
+    -o-transform: translateY(100%);
+    transform: translateY(100%);
+}
+.banner-hhe-10 li:hover .thumb {
+    -webkit-transform: translateY(-50px);
+    -moz-transform: translateY(-50px);
+    -ms-transform: translateY(-50px);
+    -o-transform: translateY(-50px);
+    transform: translateY(-50px);
+}
+.banner-hhe-10 li:hover  .details {
+    -webkit-transform: translateY(0);
+    -moz-transform: translateY(0);
+    -ms-transform: translateY(0);
+    -o-transform: translateY(0);
+    transform: translateY(0);
+}
+
+.banner-hhe-10 .link a {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 5px 8px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    width:100px;
+    margin:auto;
+}
+
+.banner-hhe-10 .link a:hover {
+    background: #ff8800;
+}
+
+@media screen and (max-width: 1200px) {
+    .banner-hhe-10 li {
+        margin: 10px 1px;
+        width: 48%;
+    }
+}
+
+@media screen and (max-width: 50em) {
+    .banner-hhe-10 li {
+        display: inline-block;
+        float: none;
+        margin: 10px auto;
+        width: 100%;
+    }
+}

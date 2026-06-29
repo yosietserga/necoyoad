@@ -1,0 +1,10 @@
+.login_form-widget .dd-content {
+    width:300px;
+    left:-285px;
+}
+.login_form-widget .dd-trigger {
+    border: solid 1px #ccc;
+    padding: 10px;
+    margin: 0;
+    border-radius: 3px;
+}

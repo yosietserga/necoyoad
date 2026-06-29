@@ -1,0 +1,2742 @@
+2023-07-24 7:57:00 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: blog in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 51
+IP: 127.0.0.1 
+Time Exec: 0.027567148208618 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.027567148208618 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-07-24 7:57:00 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: website in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 52
+IP: 127.0.0.1 
+Time Exec: 0.0011708736419678 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.028738021850586 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-07-24 7:57:00 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: profesion in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 54
+IP: 127.0.0.1 
+Time Exec: 0.0078041553497314 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.036542177200317 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-07-24 7:57:00 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: titulo in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 55
+IP: 127.0.0.1 
+Time Exec: 0.0068478584289551 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.043390035629272 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-07-24 7:57:00 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: msn in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 56
+IP: 127.0.0.1 
+Time Exec: 0.0070481300354004 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.050438165664673 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-07-24 7:57:00 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: gmail in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 57
+IP: 127.0.0.1 
+Time Exec: 0.0065128803253174 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.05695104598999 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-07-24 7:57:00 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: yahoo in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 58
+IP: 127.0.0.1 
+Time Exec: 0.0077121257781982 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.064663171768188 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-07-24 7:57:00 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: skype in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 59
+IP: 127.0.0.1 
+Time Exec: 0.0066699981689453 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.071333169937134 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-07-24 7:57:00 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: facebook in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 60
+IP: 127.0.0.1 
+Time Exec: 0.0072908401489258 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.07862401008606 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-07-24 7:57:00 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: twitter in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 61
+IP: 127.0.0.1 
+Time Exec: 0.007296085357666 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.085920095443726 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-07-24 7:57:00 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: 2e60cc0bc800e273869ff55f558b9562 in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\request.php on line 66
+IP: 127.0.0.1 
+Time Exec: 0.0076889991760254 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.093609094619751 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-07-24 7:57:00 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined offset: 1 in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\request.php on line 117
+IP: 127.0.0.1 
+Time Exec: 0.0077791213989258 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.10138821601868 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-07-24 7:57:00 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\controller\common\home.php 
+Line: 54 
+Class: Controller 
+Function: render 
+DATA:
+Loading child Controllercommoncolumnleft for Controllercommonhome
+IP: 127.0.0.1 
+Time Exec: 0.077179908752441 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.17856812477112 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-07-24 7:57:00 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\controller\common\home.php 
+Line: 54 
+Class: Controller 
+Function: render 
+DATA:
+Loaded child Controllercommoncolumnleft for Controllercommonhome
+IP: 127.0.0.1 
+Time Exec: 0.010788917541504 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.18935704231262 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-07-24 7:57:00 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\controller\common\home.php 
+Line: 54 
+Class: Controller 
+Function: render 
+DATA:
+Loading child Controllercommoncolumnright for Controllercommonhome
+IP: 127.0.0.1 
+Time Exec: 0.0086491107940674 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.19800615310669 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-07-24 7:57:00 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\controller\common\home.php 
+Line: 54 
+Class: Controller 
+Function: render 
+DATA:
+Loaded child Controllercommoncolumnright for Controllercommonhome
+IP: 127.0.0.1 
+Time Exec: 0.010670900344849 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.20867705345154 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-07-24 7:57:00 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\controller\common\home.php 
+Line: 54 
+Class: Controller 
+Function: render 
+DATA:
+Loading child Controllercommonheader for Controllercommonhome
+IP: 127.0.0.1 
+Time Exec: 0.0075581073760986 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.21623516082764 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-07-24 7:57:00 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\controller\common\home.php 
+Line: 54 
+Class: Controller 
+Function: render 
+DATA:
+Loaded child Controllercommonheader for Controllercommonhome
+IP: 127.0.0.1 
+Time Exec: 0.020777940750122 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.23701310157776 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-07-24 7:57:00 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\controller\common\home.php 
+Line: 54 
+Class: Controller 
+Function: render 
+DATA:
+Loading child Controllercommonfooter for Controllercommonhome
+IP: 127.0.0.1 
+Time Exec: 0.0073609352111816 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.24437403678894 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-07-24 7:57:00 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\controller\common\home.php 
+Line: 54 
+Class: Controller 
+Function: render 
+DATA:
+Loaded child Controllercommonfooter for Controllercommonhome
+IP: 127.0.0.1 
+Time Exec: 0.014461040496826 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.25883507728577 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-07-24 7:57:06 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: blog in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 51
+IP: 127.0.0.1 
+Time Exec: 0.03101921081543 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.03101921081543 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-07-24 7:57:06 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: website in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 52
+IP: 127.0.0.1 
+Time Exec: 0.0070188045501709 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.038038015365601 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-07-24 7:57:06 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: profesion in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 54
+IP: 127.0.0.1 
+Time Exec: 0.0073561668395996 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.0453941822052 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-07-24 7:57:06 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: titulo in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 55
+IP: 127.0.0.1 
+Time Exec: 0.0077459812164307 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.053140163421631 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-07-24 7:57:06 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: msn in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 56
+IP: 127.0.0.1 
+Time Exec: 0.007896900177002 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.061037063598633 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-07-24 7:57:06 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: gmail in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 57
+IP: 127.0.0.1 
+Time Exec: 0.0080859661102295 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.069123029708862 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-07-24 7:57:06 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: yahoo in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 58
+IP: 127.0.0.1 
+Time Exec: 0.0076100826263428 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.076733112335205 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-07-24 7:57:06 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: skype in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 59
+IP: 127.0.0.1 
+Time Exec: 0.0080780982971191 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.084811210632324 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-07-24 7:57:06 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: facebook in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 60
+IP: 127.0.0.1 
+Time Exec: 0.0070939064025879 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.091905117034912 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-07-24 7:57:06 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: twitter in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 61
+IP: 127.0.0.1 
+Time Exec: 0.0072939395904541 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.099199056625366 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-07-24 7:57:06 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\controller\error\not_found.php 
+Line: 43 
+Class: Controller 
+Function: render 
+DATA:
+Loading child Controllercommoncolumnleft for Controllererrornotfound
+IP: 127.0.0.1 
+Time Exec: 0.078896999359131 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.1780960559845 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-07-24 7:57:06 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\controller\error\not_found.php 
+Line: 43 
+Class: Controller 
+Function: render 
+DATA:
+Loaded child Controllercommoncolumnleft for Controllererrornotfound
+IP: 127.0.0.1 
+Time Exec: 0.016839981079102 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.1949360370636 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-07-24 7:57:06 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\controller\error\not_found.php 
+Line: 43 
+Class: Controller 
+Function: render 
+DATA:
+Loading child Controllercommoncolumnright for Controllererrornotfound
+IP: 127.0.0.1 
+Time Exec: 0.0077199935913086 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.20265603065491 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-07-24 7:57:06 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\controller\error\not_found.php 
+Line: 43 
+Class: Controller 
+Function: render 
+DATA:
+Loaded child Controllercommoncolumnright for Controllererrornotfound
+IP: 127.0.0.1 
+Time Exec: 0.011664152145386 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.21432018280029 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-07-24 7:57:06 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\controller\error\not_found.php 
+Line: 43 
+Class: Controller 
+Function: render 
+DATA:
+Loading child Controllercommonheader for Controllererrornotfound
+IP: 127.0.0.1 
+Time Exec: 0.0078580379486084 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.2221782207489 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-07-24 7:57:06 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\controller\error\not_found.php 
+Line: 43 
+Class: Controller 
+Function: render 
+DATA:
+Loaded child Controllercommonheader for Controllererrornotfound
+IP: 127.0.0.1 
+Time Exec: 0.029969930648804 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.25214815139771 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-07-24 7:57:06 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\controller\error\not_found.php 
+Line: 43 
+Class: Controller 
+Function: render 
+DATA:
+Loading child Controllercommonfooter for Controllererrornotfound
+IP: 127.0.0.1 
+Time Exec: 0.0080339908599854 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.26018214225769 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-07-24 7:57:06 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\controller\error\not_found.php 
+Line: 43 
+Class: Controller 
+Function: render 
+DATA:
+Loaded child Controllercommonfooter for Controllererrornotfound
+IP: 127.0.0.1 
+Time Exec: 0.01589298248291 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.2760751247406 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-07-24 7:57:06 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Warning:  include(C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\m\..\shop\view/theme/choroni/shared/page-start.tpl): failed to open stream: No such file or directory in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\view\theme\choroni\error\not_found.tpl on line 6
+IP: 127.0.0.1 
+Time Exec: 0.032278060913086 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.30835318565369 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-07-24 7:57:06 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Warning:  include(): Failed opening 'C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\m\..\shop\view/theme/choroni/shared/page-start.tpl' for inclusion (include_path='.;C:\php\pear') in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\view\theme\choroni\error\not_found.tpl on line 6
+IP: 127.0.0.1 
+Time Exec: 0.0075609683990479 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.31591415405273 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-07-24 7:57:06 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined variable: text_error in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\view\theme\choroni\error\not_found.tpl on line 8
+IP: 127.0.0.1 
+Time Exec: 0.0081908702850342 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.32410502433777 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-07-24 7:57:06 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined variable: widgets in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\view\theme\choroni\error\not_found.tpl on line 12
+IP: 127.0.0.1 
+Time Exec: 0.0071179866790771 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.33122301101685 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-07-24 7:57:06 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Warning:  include(C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\m\..\shop\view/theme/choroni/shared/columns-end.tpl): failed to open stream: No such file or directory in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\view\theme\choroni\error\not_found.tpl on line 16
+IP: 127.0.0.1 
+Time Exec: 0.0075960159301758 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.33881902694702 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-07-24 7:57:06 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Warning:  include(): Failed opening 'C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\m\..\shop\view/theme/choroni/shared/columns-end.tpl' for inclusion (include_path='.;C:\php\pear') in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\view\theme\choroni\error\not_found.tpl on line 16
+IP: 127.0.0.1 
+Time Exec: 0.0073790550231934 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.34619808197021 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-07-24 8:07:40 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: blog in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 51
+IP: 127.0.0.1 
+Time Exec: 0.038108825683594 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.038108825683594 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-07-24 8:07:40 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: website in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 52
+IP: 127.0.0.1 
+Time Exec: 0.031028032302856 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.06913685798645 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-07-24 8:07:40 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: profesion in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 54
+IP: 127.0.0.1 
+Time Exec: 0.011306047439575 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.080442905426025 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-07-24 8:07:40 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: titulo in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 55
+IP: 127.0.0.1 
+Time Exec: 0.010097026824951 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.090539932250977 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-07-24 8:07:40 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: msn in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 56
+IP: 127.0.0.1 
+Time Exec: 0.011825084686279 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.10236501693726 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-07-24 8:07:40 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: gmail in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 57
+IP: 127.0.0.1 
+Time Exec: 0.01085901260376 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.11322402954102 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-07-24 8:07:40 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: yahoo in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 58
+IP: 127.0.0.1 
+Time Exec: 0.0095858573913574 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.12280988693237 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-07-24 8:07:40 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: skype in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 59
+IP: 127.0.0.1 
+Time Exec: 0.011412143707275 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.13422203063965 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-07-24 8:07:40 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: facebook in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 60
+IP: 127.0.0.1 
+Time Exec: 0.011492967605591 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.14571499824524 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-07-24 8:07:40 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: twitter in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 61
+IP: 127.0.0.1 
+Time Exec: 0.0085949897766113 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.15430998802185 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-07-24 8:07:40 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\controller\common\home.php 
+Line: 54 
+Class: Controller 
+Function: render 
+DATA:
+Loading child Controllercommoncolumnleft for Controllercommonhome
+IP: 127.0.0.1 
+Time Exec: 0.070359945297241 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.22466993331909 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-07-24 8:07:40 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\controller\common\home.php 
+Line: 54 
+Class: Controller 
+Function: render 
+DATA:
+Loaded child Controllercommoncolumnleft for Controllercommonhome
+IP: 127.0.0.1 
+Time Exec: 0.016017913818359 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.24068784713745 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-07-24 8:07:40 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\controller\common\home.php 
+Line: 54 
+Class: Controller 
+Function: render 
+DATA:
+Loading child Controllercommoncolumnright for Controllercommonhome
+IP: 127.0.0.1 
+Time Exec: 0.011198997497559 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.25188684463501 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-07-24 8:07:40 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\controller\common\home.php 
+Line: 54 
+Class: Controller 
+Function: render 
+DATA:
+Loaded child Controllercommoncolumnright for Controllercommonhome
+IP: 127.0.0.1 
+Time Exec: 0.014631032943726 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.26651787757874 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-07-24 8:07:40 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\controller\common\home.php 
+Line: 54 
+Class: Controller 
+Function: render 
+DATA:
+Loading child Controllercommonheader for Controllercommonhome
+IP: 127.0.0.1 
+Time Exec: 0.0080170631408691 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.2745349407196 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-07-24 8:07:40 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\controller\common\home.php 
+Line: 54 
+Class: Controller 
+Function: render 
+DATA:
+Loaded child Controllercommonheader for Controllercommonhome
+IP: 127.0.0.1 
+Time Exec: 0.033554077148438 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.30808901786804 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-07-24 8:07:40 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\controller\common\home.php 
+Line: 54 
+Class: Controller 
+Function: render 
+DATA:
+Loading child Controllercommonfooter for Controllercommonhome
+IP: 127.0.0.1 
+Time Exec: 0.013334989547729 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.32142400741577 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-07-24 8:07:40 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\controller\common\home.php 
+Line: 54 
+Class: Controller 
+Function: render 
+DATA:
+Loaded child Controllercommonfooter for Controllercommonhome
+IP: 127.0.0.1 
+Time Exec: 0.021193027496338 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.34261703491211 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-11-05 5:45:03 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: blog in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 51
+IP: 127.0.0.1 
+Time Exec: 0.016255855560303 seconds 
+Memory Usage: 2097152 Bytes 
+Time Accum: 0.016255855560303 seconds 
+Memory Accum: 2048KB
+
+--------------------
+
+2023-11-05 5:45:03 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: website in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 52
+IP: 127.0.0.1 
+Time Exec: 0.0095319747924805 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.025787830352783 seconds 
+Memory Accum: 2048KB
+
+--------------------
+
+2023-11-05 5:45:03 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: profesion in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 54
+IP: 127.0.0.1 
+Time Exec: 0.0078721046447754 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.033659934997559 seconds 
+Memory Accum: 2048KB
+
+--------------------
+
+2023-11-05 5:45:03 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: titulo in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 55
+IP: 127.0.0.1 
+Time Exec: 0.0082499980926514 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.04190993309021 seconds 
+Memory Accum: 2048KB
+
+--------------------
+
+2023-11-05 5:45:03 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: msn in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 56
+IP: 127.0.0.1 
+Time Exec: 0.0072739124298096 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.04918384552002 seconds 
+Memory Accum: 2048KB
+
+--------------------
+
+2023-11-05 5:45:03 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: gmail in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 57
+IP: 127.0.0.1 
+Time Exec: 0.0072951316833496 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.056478977203369 seconds 
+Memory Accum: 2048KB
+
+--------------------
+
+2023-11-05 5:45:03 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: yahoo in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 58
+IP: 127.0.0.1 
+Time Exec: 0.0074059963226318 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.063884973526001 seconds 
+Memory Accum: 2048KB
+
+--------------------
+
+2023-11-05 5:45:03 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: skype in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 59
+IP: 127.0.0.1 
+Time Exec: 0.0069930553436279 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.070878028869629 seconds 
+Memory Accum: 2048KB
+
+--------------------
+
+2023-11-05 5:45:03 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: facebook in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 60
+IP: 127.0.0.1 
+Time Exec: 0.0097417831420898 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.080619812011719 seconds 
+Memory Accum: 2048KB
+
+--------------------
+
+2023-11-05 5:45:03 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: twitter in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 61
+IP: 127.0.0.1 
+Time Exec: 0.0094461441040039 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.090065956115723 seconds 
+Memory Accum: 2048KB
+
+--------------------
+
+2023-11-05 5:45:03 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: 2e60cc0bc800e273869ff55f558b9562 in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\request.php on line 66
+IP: 127.0.0.1 
+Time Exec: 0.011029958724976 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.1010959148407 seconds 
+Memory Accum: 2048KB
+
+--------------------
+
+2023-11-05 5:45:03 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined offset: 1 in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\request.php on line 117
+IP: 127.0.0.1 
+Time Exec: 0.0069489479064941 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.10804486274719 seconds 
+Memory Accum: 2048KB
+
+--------------------
+
+2023-11-05 5:45:03 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\controller\common\home.php 
+Line: 54 
+Class: Controller 
+Function: render 
+DATA:
+Loading child Controllercommoncolumnleft for Controllercommonhome
+IP: 127.0.0.1 
+Time Exec: 0.080650091171265 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.18869495391846 seconds 
+Memory Accum: 2048KB
+
+--------------------
+
+2023-11-05 5:45:03 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\controller\common\home.php 
+Line: 54 
+Class: Controller 
+Function: render 
+DATA:
+Loaded child Controllercommoncolumnleft for Controllercommonhome
+IP: 127.0.0.1 
+Time Exec: 0.012623071670532 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.20131802558899 seconds 
+Memory Accum: 2048KB
+
+--------------------
+
+2023-11-05 5:45:03 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\controller\common\home.php 
+Line: 54 
+Class: Controller 
+Function: render 
+DATA:
+Loading child Controllercommoncolumnright for Controllercommonhome
+IP: 127.0.0.1 
+Time Exec: 0.0090599060058594 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.21037793159485 seconds 
+Memory Accum: 2048KB
+
+--------------------
+
+2023-11-05 5:45:03 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\controller\common\home.php 
+Line: 54 
+Class: Controller 
+Function: render 
+DATA:
+Loaded child Controllercommoncolumnright for Controllercommonhome
+IP: 127.0.0.1 
+Time Exec: 0.013955116271973 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.22433304786682 seconds 
+Memory Accum: 2048KB
+
+--------------------
+
+2023-11-05 5:45:03 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\controller\common\home.php 
+Line: 54 
+Class: Controller 
+Function: render 
+DATA:
+Loading child Controllercommonheader for Controllercommonhome
+IP: 127.0.0.1 
+Time Exec: 0.0076529979705811 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.2319860458374 seconds 
+Memory Accum: 2048KB
+
+--------------------
+
+2023-11-05 5:45:03 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\controller\common\home.php 
+Line: 54 
+Class: Controller 
+Function: render 
+DATA:
+Loaded child Controllercommonheader for Controllercommonhome
+IP: 127.0.0.1 
+Time Exec: 0.024531841278076 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.25651788711548 seconds 
+Memory Accum: 2048KB
+
+--------------------
+
+2023-11-05 5:45:03 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\controller\common\home.php 
+Line: 54 
+Class: Controller 
+Function: render 
+DATA:
+Loading child Controllercommonfooter for Controllercommonhome
+IP: 127.0.0.1 
+Time Exec: 0.0095329284667969 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.26605081558228 seconds 
+Memory Accum: 2048KB
+
+--------------------
+
+2023-11-05 5:45:03 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\controller\common\home.php 
+Line: 54 
+Class: Controller 
+Function: render 
+DATA:
+Loaded child Controllercommonfooter for Controllercommonhome
+IP: 127.0.0.1 
+Time Exec: 0.020050048828125 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.2861008644104 seconds 
+Memory Accum: 2048KB
+
+--------------------
+
+2023-11-05 5:45:07 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: blog in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 51
+IP: 127.0.0.1 
+Time Exec: 0.014709949493408 seconds 
+Memory Usage: 2097152 Bytes 
+Time Accum: 0.014709949493408 seconds 
+Memory Accum: 2048KB
+
+--------------------
+
+2023-11-05 5:45:07 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: website in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 52
+IP: 127.0.0.1 
+Time Exec: 0.0099761486053467 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.024686098098755 seconds 
+Memory Accum: 2048KB
+
+--------------------
+
+2023-11-05 5:45:07 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: profesion in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 54
+IP: 127.0.0.1 
+Time Exec: 0.0077998638153076 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.032485961914062 seconds 
+Memory Accum: 2048KB
+
+--------------------
+
+2023-11-05 5:45:07 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: titulo in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 55
+IP: 127.0.0.1 
+Time Exec: 0.0082080364227295 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.040693998336792 seconds 
+Memory Accum: 2048KB
+
+--------------------
+
+2023-11-05 5:45:07 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: msn in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 56
+IP: 127.0.0.1 
+Time Exec: 0.0079140663146973 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.048608064651489 seconds 
+Memory Accum: 2048KB
+
+--------------------
+
+2023-11-05 5:45:07 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: gmail in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 57
+IP: 127.0.0.1 
+Time Exec: 0.0079050064086914 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.056513071060181 seconds 
+Memory Accum: 2048KB
+
+--------------------
+
+2023-11-05 5:45:07 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: yahoo in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 58
+IP: 127.0.0.1 
+Time Exec: 0.0078408718109131 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.064353942871094 seconds 
+Memory Accum: 2048KB
+
+--------------------
+
+2023-11-05 5:45:07 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: skype in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 59
+IP: 127.0.0.1 
+Time Exec: 0.0086331367492676 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.072987079620361 seconds 
+Memory Accum: 2048KB
+
+--------------------
+
+2023-11-05 5:45:07 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: facebook in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 60
+IP: 127.0.0.1 
+Time Exec: 0.0085198879241943 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.081506967544556 seconds 
+Memory Accum: 2048KB
+
+--------------------
+
+2023-11-05 5:45:07 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: twitter in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 61
+IP: 127.0.0.1 
+Time Exec: 0.0071971416473389 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.088704109191895 seconds 
+Memory Accum: 2048KB
+
+--------------------
+
+2023-11-05 5:45:07 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\controller\error\not_found.php 
+Line: 43 
+Class: Controller 
+Function: render 
+DATA:
+Loading child Controllercommoncolumnleft for Controllererrornotfound
+IP: 127.0.0.1 
+Time Exec: 0.025977849960327 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.11468195915222 seconds 
+Memory Accum: 2048KB
+
+--------------------
+
+2023-11-05 5:45:07 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\controller\error\not_found.php 
+Line: 43 
+Class: Controller 
+Function: render 
+DATA:
+Loaded child Controllercommoncolumnleft for Controllererrornotfound
+IP: 127.0.0.1 
+Time Exec: 0.019066095352173 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.13374805450439 seconds 
+Memory Accum: 2048KB
+
+--------------------
+
+2023-11-05 5:45:07 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\controller\error\not_found.php 
+Line: 43 
+Class: Controller 
+Function: render 
+DATA:
+Loading child Controllercommoncolumnright for Controllererrornotfound
+IP: 127.0.0.1 
+Time Exec: 0.0099530220031738 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.14370107650757 seconds 
+Memory Accum: 2048KB
+
+--------------------
+
+2023-11-05 5:45:07 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\controller\error\not_found.php 
+Line: 43 
+Class: Controller 
+Function: render 
+DATA:
+Loaded child Controllercommoncolumnright for Controllererrornotfound
+IP: 127.0.0.1 
+Time Exec: 0.012631893157959 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.15633296966553 seconds 
+Memory Accum: 2048KB
+
+--------------------
+
+2023-11-05 5:45:07 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\controller\error\not_found.php 
+Line: 43 
+Class: Controller 
+Function: render 
+DATA:
+Loading child Controllercommonheader for Controllererrornotfound
+IP: 127.0.0.1 
+Time Exec: 0.0077300071716309 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.16406297683716 seconds 
+Memory Accum: 2048KB
+
+--------------------
+
+2023-11-05 5:45:07 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\controller\error\not_found.php 
+Line: 43 
+Class: Controller 
+Function: render 
+DATA:
+Loaded child Controllercommonheader for Controllererrornotfound
+IP: 127.0.0.1 
+Time Exec: 0.027918100357056 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.19198107719421 seconds 
+Memory Accum: 2048KB
+
+--------------------
+
+2023-11-05 5:45:07 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\controller\error\not_found.php 
+Line: 43 
+Class: Controller 
+Function: render 
+DATA:
+Loading child Controllercommonfooter for Controllererrornotfound
+IP: 127.0.0.1 
+Time Exec: 0.0081658363342285 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.20014691352844 seconds 
+Memory Accum: 2048KB
+
+--------------------
+
+2023-11-05 5:45:07 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\controller\error\not_found.php 
+Line: 43 
+Class: Controller 
+Function: render 
+DATA:
+Loaded child Controllercommonfooter for Controllererrornotfound
+IP: 127.0.0.1 
+Time Exec: 0.017817974090576 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.21796488761902 seconds 
+Memory Accum: 2048KB
+
+--------------------
+
+2023-11-05 5:45:07 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Warning:  include(C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\m\..\shop\view/theme/choroni/shared/page-start.tpl): failed to open stream: No such file or directory in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\view\theme\choroni\error\not_found.tpl on line 6
+IP: 127.0.0.1 
+Time Exec: 0.0092201232910156 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.22718501091003 seconds 
+Memory Accum: 2048KB
+
+--------------------
+
+2023-11-05 5:45:07 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Warning:  include(): Failed opening 'C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\m\..\shop\view/theme/choroni/shared/page-start.tpl' for inclusion (include_path='.;C:\php\pear') in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\view\theme\choroni\error\not_found.tpl on line 6
+IP: 127.0.0.1 
+Time Exec: 0.0089130401611328 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.23609805107117 seconds 
+Memory Accum: 2048KB
+
+--------------------
+
+2023-11-05 5:45:07 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined variable: text_error in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\view\theme\choroni\error\not_found.tpl on line 8
+IP: 127.0.0.1 
+Time Exec: 0.008699893951416 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.24479794502258 seconds 
+Memory Accum: 2048KB
+
+--------------------
+
+2023-11-05 5:45:07 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined variable: widgets in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\view\theme\choroni\error\not_found.tpl on line 12
+IP: 127.0.0.1 
+Time Exec: 0.0077681541442871 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.25256609916687 seconds 
+Memory Accum: 2048KB
+
+--------------------
+
+2023-11-05 5:45:07 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Warning:  include(C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\m\..\shop\view/theme/choroni/shared/columns-end.tpl): failed to open stream: No such file or directory in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\view\theme\choroni\error\not_found.tpl on line 16
+IP: 127.0.0.1 
+Time Exec: 0.0089828968048096 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.26154899597168 seconds 
+Memory Accum: 2048KB
+
+--------------------
+
+2023-11-05 5:45:07 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Warning:  include(): Failed opening 'C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\m\..\shop\view/theme/choroni/shared/columns-end.tpl' for inclusion (include_path='.;C:\php\pear') in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\view\theme\choroni\error\not_found.tpl on line 16
+IP: 127.0.0.1 
+Time Exec: 0.0076839923858643 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.26923298835754 seconds 
+Memory Accum: 2048KB
+
+--------------------
+
+2023-11-05 17:35:03 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: blog in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 51
+IP: 127.0.0.1 
+Time Exec: 0.045328140258789 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.045328140258789 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-11-05 17:35:03 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: website in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 52
+IP: 127.0.0.1 
+Time Exec: 0.023516893386841 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.06884503364563 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-11-05 17:35:03 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: profesion in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 54
+IP: 127.0.0.1 
+Time Exec: 0.034876108169556 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.10372114181519 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-11-05 17:35:03 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: titulo in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 55
+IP: 127.0.0.1 
+Time Exec: 0.049543857574463 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.15326499938965 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-11-05 17:35:03 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: msn in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 56
+IP: 127.0.0.1 
+Time Exec: 0.041558980941772 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.19482398033142 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-11-05 17:35:03 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: gmail in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 57
+IP: 127.0.0.1 
+Time Exec: 0.055351972579956 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.25017595291138 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-11-05 17:35:03 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: yahoo in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 58
+IP: 127.0.0.1 
+Time Exec: 0.035551071166992 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.28572702407837 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-11-05 17:35:03 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: skype in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 59
+IP: 127.0.0.1 
+Time Exec: 0.026063919067383 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.31179094314575 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-11-05 17:35:03 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: facebook in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 60
+IP: 127.0.0.1 
+Time Exec: 0.037803173065186 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.34959411621094 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-11-05 17:35:03 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: twitter in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 61
+IP: 127.0.0.1 
+Time Exec: 0.030957937240601 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.38055205345154 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-11-05 17:35:04 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\controller\common\home.php 
+Line: 54 
+Class: Controller 
+Function: render 
+DATA:
+Loading child Controllercommoncolumnleft for Controllercommonhome
+IP: 127.0.0.1 
+Time Exec: 0.30564403533936 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.68619608879089 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-11-05 17:35:04 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\controller\common\home.php 
+Line: 54 
+Class: Controller 
+Function: render 
+DATA:
+Loaded child Controllercommoncolumnleft for Controllercommonhome
+IP: 127.0.0.1 
+Time Exec: 0.048215866088867 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.73441195487976 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-11-05 17:35:04 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\controller\common\home.php 
+Line: 54 
+Class: Controller 
+Function: render 
+DATA:
+Loading child Controllercommoncolumnright for Controllercommonhome
+IP: 127.0.0.1 
+Time Exec: 0.024279117584229 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.75869107246399 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-11-05 17:35:04 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\controller\common\home.php 
+Line: 54 
+Class: Controller 
+Function: render 
+DATA:
+Loaded child Controllercommoncolumnright for Controllercommonhome
+IP: 127.0.0.1 
+Time Exec: 0.043041944503784 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.80173301696777 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-11-05 17:35:04 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\controller\common\home.php 
+Line: 54 
+Class: Controller 
+Function: render 
+DATA:
+Loading child Controllercommonheader for Controllercommonhome
+IP: 127.0.0.1 
+Time Exec: 0.026181936264038 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.82791495323181 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-11-05 17:35:04 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\controller\common\home.php 
+Line: 54 
+Class: Controller 
+Function: render 
+DATA:
+Loaded child Controllercommonheader for Controllercommonhome
+IP: 127.0.0.1 
+Time Exec: 0.082935094833374 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.91085004806519 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-11-05 17:35:04 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\controller\common\home.php 
+Line: 54 
+Class: Controller 
+Function: render 
+DATA:
+Loading child Controllercommonfooter for Controllercommonhome
+IP: 127.0.0.1 
+Time Exec: 0.024758100509644 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.93560814857483 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-11-05 17:35:04 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\controller\common\home.php 
+Line: 54 
+Class: Controller 
+Function: render 
+DATA:
+Loaded child Controllercommonfooter for Controllercommonhome
+IP: 127.0.0.1 
+Time Exec: 0.092297792434692 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 1.0279059410095 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-11-05 18:02:10 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: blog in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 51
+IP: 127.0.0.1 
+Time Exec: 0.043912887573242 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.043912887573242 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-11-05 18:02:10 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: website in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 52
+IP: 127.0.0.1 
+Time Exec: 0.047089099884033 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.091001987457275 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-11-05 18:02:10 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: profesion in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 54
+IP: 127.0.0.1 
+Time Exec: 0.015120983123779 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.10612297058105 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-11-05 18:02:10 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: titulo in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 55
+IP: 127.0.0.1 
+Time Exec: 0.014266967773438 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.12038993835449 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-11-05 18:02:10 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: msn in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 56
+IP: 127.0.0.1 
+Time Exec: 0.017746925354004 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.1381368637085 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-11-05 18:02:10 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: gmail in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 57
+IP: 127.0.0.1 
+Time Exec: 0.017450094223022 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.15558695793152 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-11-05 18:02:10 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: yahoo in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 58
+IP: 127.0.0.1 
+Time Exec: 0.019380807876587 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.17496776580811 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-11-05 18:02:10 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: skype in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 59
+IP: 127.0.0.1 
+Time Exec: 0.01457405090332 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.18954181671143 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-11-05 18:02:10 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: facebook in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 60
+IP: 127.0.0.1 
+Time Exec: 0.014155149459839 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.20369696617126 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-11-05 18:02:10 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: twitter in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 61
+IP: 127.0.0.1 
+Time Exec: 0.014683961868286 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.21838092803955 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-11-05 18:02:10 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\controller\common\home.php 
+Line: 54 
+Class: Controller 
+Function: render 
+DATA:
+Loading child Controllercommoncolumnleft for Controllercommonhome
+IP: 127.0.0.1 
+Time Exec: 0.12025690078735 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.3386378288269 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-11-05 18:02:10 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\controller\common\home.php 
+Line: 54 
+Class: Controller 
+Function: render 
+DATA:
+Loaded child Controllercommoncolumnleft for Controllercommonhome
+IP: 127.0.0.1 
+Time Exec: 0.023422002792358 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.36205983161926 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-11-05 18:02:10 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\controller\common\home.php 
+Line: 54 
+Class: Controller 
+Function: render 
+DATA:
+Loading child Controllercommoncolumnright for Controllercommonhome
+IP: 127.0.0.1 
+Time Exec: 0.010959148406982 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.37301898002625 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-11-05 18:02:10 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\controller\common\home.php 
+Line: 54 
+Class: Controller 
+Function: render 
+DATA:
+Loaded child Controllercommoncolumnright for Controllercommonhome
+IP: 127.0.0.1 
+Time Exec: 0.02925181388855 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.40227079391479 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-11-05 18:02:10 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\controller\common\home.php 
+Line: 54 
+Class: Controller 
+Function: render 
+DATA:
+Loading child Controllercommonheader for Controllercommonhome
+IP: 127.0.0.1 
+Time Exec: 0.020172119140625 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.42244291305542 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-11-05 18:02:11 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\controller\common\home.php 
+Line: 54 
+Class: Controller 
+Function: render 
+DATA:
+Loaded child Controllercommonheader for Controllercommonhome
+IP: 127.0.0.1 
+Time Exec: 0.05597186088562 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.47841477394104 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-11-05 18:02:11 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\controller\common\home.php 
+Line: 54 
+Class: Controller 
+Function: render 
+DATA:
+Loading child Controllercommonfooter for Controllercommonhome
+IP: 127.0.0.1 
+Time Exec: 0.016980171203613 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.49539494514465 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-11-05 18:02:11 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\controller\common\home.php 
+Line: 54 
+Class: Controller 
+Function: render 
+DATA:
+Loaded child Controllercommonfooter for Controllercommonhome
+IP: 127.0.0.1 
+Time Exec: 0.037726879119873 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.53312182426453 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-11-06 21:03:29 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: blog in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 51
+IP: 127.0.0.1 
+Time Exec: 0.034837007522583 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.034837007522583 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-11-06 21:03:29 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: website in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 52
+IP: 127.0.0.1 
+Time Exec: 0.011630773544312 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.046467781066895 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-11-06 21:03:29 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: profesion in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 54
+IP: 127.0.0.1 
+Time Exec: 0.012034177780151 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.058501958847046 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-11-06 21:03:29 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: titulo in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 55
+IP: 127.0.0.1 
+Time Exec: 0.0098028182983398 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.068304777145386 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-11-06 21:03:29 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: msn in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 56
+IP: 127.0.0.1 
+Time Exec: 0.010841131210327 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.079145908355713 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-11-06 21:03:29 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: gmail in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 57
+IP: 127.0.0.1 
+Time Exec: 0.010608911514282 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.089754819869995 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-11-06 21:03:29 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: yahoo in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 58
+IP: 127.0.0.1 
+Time Exec: 0.010028123855591 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.099782943725586 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-11-06 21:03:29 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: skype in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 59
+IP: 127.0.0.1 
+Time Exec: 0.011648893356323 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.11143183708191 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-11-06 21:03:29 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: facebook in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 60
+IP: 127.0.0.1 
+Time Exec: 0.0086071491241455 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.12003898620605 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-11-06 21:03:29 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: twitter in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 61
+IP: 127.0.0.1 
+Time Exec: 0.0082910060882568 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.12832999229431 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-11-06 21:03:29 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\controller\common\home.php 
+Line: 54 
+Class: Controller 
+Function: render 
+DATA:
+Loading child Controllercommoncolumnleft for Controllercommonhome
+IP: 127.0.0.1 
+Time Exec: 0.1238968372345 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.25222682952881 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-11-06 21:03:29 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\controller\common\home.php 
+Line: 54 
+Class: Controller 
+Function: render 
+DATA:
+Loaded child Controllercommoncolumnleft for Controllercommonhome
+IP: 127.0.0.1 
+Time Exec: 0.015158176422119 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.26738500595093 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-11-06 21:03:29 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\controller\common\home.php 
+Line: 54 
+Class: Controller 
+Function: render 
+DATA:
+Loading child Controllercommoncolumnright for Controllercommonhome
+IP: 127.0.0.1 
+Time Exec: 0.0091078281402588 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.27649283409119 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-11-06 21:03:29 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\controller\common\home.php 
+Line: 54 
+Class: Controller 
+Function: render 
+DATA:
+Loaded child Controllercommoncolumnright for Controllercommonhome
+IP: 127.0.0.1 
+Time Exec: 0.016983032226562 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.29347586631775 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-11-06 21:03:29 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\controller\common\home.php 
+Line: 54 
+Class: Controller 
+Function: render 
+DATA:
+Loading child Controllercommonheader for Controllercommonhome
+IP: 127.0.0.1 
+Time Exec: 0.010484933853149 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.3039608001709 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-11-06 21:03:29 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\controller\common\home.php 
+Line: 54 
+Class: Controller 
+Function: render 
+DATA:
+Loaded child Controllercommonheader for Controllercommonhome
+IP: 127.0.0.1 
+Time Exec: 0.037600994110107 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.34156179428101 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-11-06 21:03:29 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\controller\common\home.php 
+Line: 54 
+Class: Controller 
+Function: render 
+DATA:
+Loading child Controllercommonfooter for Controllercommonhome
+IP: 127.0.0.1 
+Time Exec: 0.010017156600952 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.35157895088196 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-11-06 21:03:29 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\controller\common\home.php 
+Line: 54 
+Class: Controller 
+Function: render 
+DATA:
+Loaded child Controllercommonfooter for Controllercommonhome
+IP: 127.0.0.1 
+Time Exec: 0.021651983261108 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.37323093414307 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-11-07 0:46:36 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: blog in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 51
+IP: 127.0.0.1 
+Time Exec: 0.032726049423218 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.032726049423218 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-11-07 0:46:36 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: website in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 52
+IP: 127.0.0.1 
+Time Exec: 0.051453828811646 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.084179878234863 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-11-07 0:46:37 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: profesion in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 54
+IP: 127.0.0.1 
+Time Exec: 0.022574186325073 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.10675406455994 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-11-07 0:46:37 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: titulo in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 55
+IP: 127.0.0.1 
+Time Exec: 0.016820907592773 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.12357497215271 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-11-07 0:46:37 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: msn in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 56
+IP: 127.0.0.1 
+Time Exec: 0.016556024551392 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.1401309967041 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-11-07 0:46:37 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: gmail in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 57
+IP: 127.0.0.1 
+Time Exec: 0.010024070739746 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.15015506744385 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-11-07 0:46:37 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: yahoo in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 58
+IP: 127.0.0.1 
+Time Exec: 0.016098976135254 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.1662540435791 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-11-07 0:46:37 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: skype in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 59
+IP: 127.0.0.1 
+Time Exec: 0.013648986816406 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.17990303039551 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-11-07 0:46:37 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: facebook in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 60
+IP: 127.0.0.1 
+Time Exec: 0.013828039169312 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.19373106956482 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-11-07 0:46:37 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\automation\events.php 
+Line: 62 
+Function: {closure} 
+DATA:
+PHP Notice:  Undefined index: twitter in C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\system\library\customer.php on line 61
+IP: 127.0.0.1 
+Time Exec: 0.02196192741394 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.21569299697876 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-11-07 0:46:37 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\controller\common\home.php 
+Line: 54 
+Class: Controller 
+Function: render 
+DATA:
+Loading child Controllercommoncolumnleft for Controllercommonhome
+IP: 127.0.0.1 
+Time Exec: 0.11960101127625 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.335294008255 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-11-07 0:46:37 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\controller\common\home.php 
+Line: 54 
+Class: Controller 
+Function: render 
+DATA:
+Loaded child Controllercommoncolumnleft for Controllercommonhome
+IP: 127.0.0.1 
+Time Exec: 0.028883934020996 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.364177942276 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-11-07 0:46:37 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\controller\common\home.php 
+Line: 54 
+Class: Controller 
+Function: render 
+DATA:
+Loading child Controllercommoncolumnright for Controllercommonhome
+IP: 127.0.0.1 
+Time Exec: 0.013980150222778 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.37815809249878 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-11-07 0:46:37 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\controller\common\home.php 
+Line: 54 
+Class: Controller 
+Function: render 
+DATA:
+Loaded child Controllercommoncolumnright for Controllercommonhome
+IP: 127.0.0.1 
+Time Exec: 0.021191835403442 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.39934992790222 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-11-07 0:46:37 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\controller\common\home.php 
+Line: 54 
+Class: Controller 
+Function: render 
+DATA:
+Loading child Controllercommonheader for Controllercommonhome
+IP: 127.0.0.1 
+Time Exec: 0.012295007705688 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.41164493560791 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-11-07 0:46:37 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\controller\common\home.php 
+Line: 54 
+Class: Controller 
+Function: render 
+DATA:
+Loaded child Controllercommonheader for Controllercommonhome
+IP: 127.0.0.1 
+Time Exec: 0.043331146240234 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.45497608184814 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-11-07 0:46:37 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\controller\common\home.php 
+Line: 54 
+Class: Controller 
+Function: render 
+DATA:
+Loading child Controllercommonfooter for Controllercommonhome
+IP: 127.0.0.1 
+Time Exec: 0.012673854827881 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.46764993667603 seconds 
+Memory Accum: 0KB
+
+--------------------
+
+2023-11-07 0:46:37 - 
+--------------------
+File: C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\projects\necoyoad\app\shop\controller\common\home.php 
+Line: 54 
+Class: Controller 
+Function: render 
+DATA:
+Loaded child Controllercommonfooter for Controllercommonhome
+IP: 127.0.0.1 
+Time Exec: 0.024189949035645 seconds 
+Memory Usage: 0 Bytes 
+Time Accum: 0.49183988571167 seconds 
+Memory Accum: 0KB
+
+--------------------
+

@@ -1,0 +1,91 @@
+.layer-slider {
+    position: relative;
+    width: 100%;
+    text-align: center;
+    margin: 0 auto;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.layer-slider .layer-slider-inner {
+    position: absolute;
+}
+
+.layer-slider .layer-slider-inner:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.layer-slider .layer-slider-inner .layer-slide {
+    position: relative;
+    float: left;
+    box-sizing: border-box;
+    background-size: 100% auto;
+    background-attachment: fixed;
+    background-position: center center;
+}
+
+.layer-slider .layer-slider-inner .layer-slide img {
+    display: block;
+    width: 100%;
+}
+
+.dots-wrapper {
+    position: absolute;
+    width: 100px;
+    left: 50%;
+    margin-left: -50px;
+    bottom: 20px;
+    text-align: center;
+}
+
+.dots-wrapper li {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background-color: black;
+    border-radius: 50%;
+    margin: 0 4px;
+    opacity: 0.5;
+    cursor: pointer;
+    transition: opacity 0.3s;
+}
+
+.dots-wrapper li.active,
+.dots-wrapper li:hover {
+    opacity: 1;
+}
+
+a[class|="arrow"] {
+    position: absolute;
+    display: none;
+    top: 50%;
+    margin-top: -20px;
+    width: 40px;
+    height: 40px;
+}
+
+.arrow-left {
+    left: 20px;
+    border-bottom: 6px solid #000;
+    border-left: 6px solid #000;
+    transform: rotate(45deg);
+    transition: left 0.5s;
+}
+
+.arrow-left:hover {
+    left: 15px;
+}
+
+.arrow-right {
+    right: 20px;
+    border-bottom: 6px solid #000;
+    border-right: 6px solid #000;
+    transform: rotate(-45deg);
+    transition: right 0.5s;
+}
+
+.arrow-right:hover {
+    right: 15px;
+}
