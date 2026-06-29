@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    @page { size: 794px 1123px; margin: 0; }
+    :root {
+      --c-bg: #162032;
+      --c-accent: #4A90C4;
+      --c-text: #FFFFFF;
+      --c-muted: #90A8C0;
+      --c-mono: #B8C8D8;
+    }
+    html, body {
+      margin: 0; padding: 0;
+      width: 794px; height: 1123px;
+      background: var(--c-bg);
+      color: var(--c-text);
+      font-family: 'Inter', sans-serif;
+    }
+    @media screen {
+      html { height: auto; display: flex; justify-content: center; min-height: 100vh; background: var(--c-bg); }
+      body { transform-origin: top center; scale: min(1, calc(100vw / 794), calc(100vh / 1123)); margin: 0 auto; box-shadow: 0 0 60px rgba(0,0,0,0.3); }
+    }
+    .cover {
+      width: 794px; height: 1123px;
+      position: relative;
+      display: flex; flex-direction: column;
+      align-items: center;
+      box-sizing: border-box;
+    }
+    .rule-top, .rule-bottom {
+      position: absolute;
+      left: 114px; right: 114px;
+      height: 2px;
+      background: var(--c-accent);
+    }
+    .rule-top { top: 114px; }
+    .rule-bottom { bottom: 114px; }
+
+    .center-block {
+      position: absolute;
+      top: 0; bottom: 0;
+      left: 114px; right: 114px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+    }
+    .label {
+      font-size: 9pt;
+      color: var(--c-accent);
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      margin-bottom: 32px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 500;
+    }
+    .title {
+      font-size: 30pt;
+      font-weight: 700;
+      line-height: 1.2;
+      font-family: 'Playfair Display', serif;
+      margin-bottom: 20px;
+      max-width: 540px;
+    }
+    .subtitle {
+      font-size: 13pt;
+      color: var(--c-muted);
+      margin-bottom: 32px;
+      max-width: 480px;
+      line-height: 1.55;
+      font-style: italic;
+    }
+    .meta-table {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9pt;
+      color: var(--c-mono);
+      margin-bottom: 28px;
+      line-height: 1.7;
+    }
+    .meta-table .k {
+      color: var(--c-accent);
+      margin-right: 8px;
+    }
+    .authors {
+      font-size: 11pt;
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+    .institution {
+      font-size: 9pt;
+      color: var(--c-muted);
+      line-height: 1.4;
+      max-width: 440px;
+    }
+    .footer {
+      position: absolute;
+      bottom: 57px;
+      left: 114px; right: 114px;
+      text-align: center;
+      font-size: 9pt;
+      color: var(--c-muted);
+      letter-spacing: 1px;
+    }
+  </style>
+</head>
+<body>
+  <div class="cover">
+    <div class="rule-top"></div>
+    <div class="rule-bottom"></div>
+    <div class="center-block">
+      <div class="label">Software Architecture Blueprint &middot; Reverse-Engineered</div>
+      <div class="title">Necoyoad</div>
+      <div class="subtitle">An extensive, diagram-rich reconstruction of a legacy<br>PHP/MySQL multi-store e-commerce and content platform</div>
+      <div class="meta-table">
+        <span class="k">artifact:</span> necoyoad_db.sql (76,467 bytes)<br>
+        <span class="k">dump&nbsp;time:</span> 2023-02-03 07:37 UTC<br>
+        <span class="k">stack:</span> PHP 8.1.2 / MySQL 5.7.17 / MyISAM<br>
+        <span class="k">tables:</span> 87 &middot; <span class="k">diagrams:</span> 18 &middot; <span class="k">pages:</span> 34
+      </div>
+      <div class="authors">Reverse-Engineered Architecture Report</div>
+      <div class="institution">Based on the public database dump at<br>github.com/yosietserga/necoyoad</div>
+    </div>
+    <div class="footer">DESCRIPTIVE, NOT PRESCRIPTIVE &nbsp;&middot;&nbsp; NO IMPROVEMENTS PROPOSED</div>
+  </div>
+</body>
+</html>
