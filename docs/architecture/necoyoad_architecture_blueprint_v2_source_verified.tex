@@ -1940,6 +1940,157 @@ three layers:
 This is a do-it-yourself mobile detection, not a third-party library
 like Mobile Detect.
 
+\subsection{Mobile Data Scoping via the Widget and Template System}\label{sec:mobile-widget-scoping}
+
+The template swap in \S12.1 is only the surface of the mobile story.
+After v3's deep dive into the presentation layer (see volume v3,
+\emph{Theme \& Widget Rendering Pipeline}), it is clear that the
+\emph{content} the mobile visitor sees is scoped not by a separate
+mobile codebase but by \emph{three independent filters} that all
+read the device classification established at boot. The mobile
+experience is therefore a \emph{composite} of:
+
+\begin{enumerate}[leftmargin=1.6em,itemsep=2pt]
+  \item a different \emph{theme folder} (the template-swap layer),
+  \item a different \emph{set of widget instances} (the widget-tree
+        layer), and
+  \item a different \emph{set of CSS/JS assets} (the
+        \texttt{deps.php} manifest layer).
+\end{enumerate}
+
+\subsubsection{Layer 1 --- Theme-folder swap (templates)}
+
+At boot, \texttt{app/shop/map.php} calls \texttt{Config::set(
+'config\_template', \$config->get('config\_mobile\_template'))}
+when \texttt{Browser::isMobile()} is true. From that point on,
+every \texttt{file\_exists(DIR\_TEMPLATE . \$config->get('config\_template')
+. '/...')} check resolves against the mobile theme folder. If the
+mobile theme is missing a file, the universal fallback is
+\texttt{'choroni'} (because every \texttt{if file\_exists} has an
+\texttt{else} branch that uses \texttt{'choroni'}). The
+\texttt{\$tpl} inheritance variable at the top of every template
+further guarantees that shared fragments (\texttt{shared/}) are
+inherited from \texttt{choroni} even when the active theme
+overrides individual page templates.
+
+\subsubsection{Layer 2 --- Widget-tree filtering (the
+\texttt{show\_in\_*} flags)}
+
+The widget data-access object \texttt{NecoWidget} (in
+\texttt{system/helper/widgets.php}, 785 lines) queries the
+\texttt{property} EAV table for widget rows, columns, and
+instances. The query includes \texttt{LIKE '\%key=value\%'}
+predicates against the serialised widget settings. Crucially,
+\texttt{Controller::loadWidgets()} passes the device
+classification into the query:
+
+\begin{lstlisting}[caption={\texttt{Controller::loadWidgets()} --- the device flags passed to \texttt{NecoWidget::getRows()}.},label={lst:mobile-widget-flags}]
+protected function loadWidgets($position, $landing_page = 'all', $app = 'shop', $full_tree = true) {
+    // ... browser detection ...
+    $params = [
+        'store_id'           => STORE_ID,
+        'landing_page'       => $session->get('landing_page') ?: $landing_page,
+        'position'           => $position,
+        'show_in_mobile'     => $isMobile,    // ← device flag
+        'show_in_tablet'     => $isTablet,
+        'show_in_facebook'   => $isFacebook,
+        'show_in_desktop'    => !$isMobile && !$isTablet && !$isFacebook,
+        'customer_session_mode' => $isLogged ? 'logon' : 'logoff',
+        'conditional_logic_when_route_contains' => $this->Route,
+        'full_tree'          => true,
+    ];
+    $rows = $widgets->getRows($params, !$this->user->getId());
+    // ... merge rows into $this->children and $this->widget ...
+}
+\end{lstlisting}
+
+\texttt{NecoWidget::getRows()} turns each truthy device flag into
+a \texttt{LIKE '\%show\_in\_mobile=on\%'} predicate (for mobile),
+\texttt{LIKE '\%show\_in\_tablet=on\%'} (for tablet), etc. So a
+mobile visitor only sees widgets whose
+\texttt{settings['show\_in\_mobile']} is \texttt{'on'}; a tablet
+visitor only sees \texttt{show\_in\_tablet='on'}; a desktop
+visitor only sees widgets that match
+\texttt{show\_in\_desktop='on'}. A widget can be visible on
+multiple device classes (set all four flags) or only one (set
+only that flag). The admin configures these per widget instance
+via the visual theme editor.
+
+A second filter dimension is \texttt{customer\_session\_mode}
+(\texttt{'any'}, \texttt{'logon'}, \texttt{'logoff'}): a widget
+can be visible only to logged-in customers, only to logged-out
+customers, or to both. A third is
+\texttt{conditional\_logic\_when\_route\_contains}: a widget can
+be shown or hidden on specific routes (e.g.\ a ``related
+products'' widget only on \texttt{store/product/*}).
+
+The combination of these three filters --- device class,
+auth state, route --- means that the mobile visitor's widget tree
+is a strict subset of the desktop visitor's widget tree, with the
+subsetting performed at SQL-query time, not at render time. There
+is no separate mobile widget database; the same
+\texttt{property} EAV rows are filtered by device.
+
+\subsubsection{Layer 3 --- Asset scoping (the \texttt{deps.php} manifest)}
+
+At boot, \texttt{app/shop/map.php} loads the active theme's
+\texttt{deps.php} files (\texttt{web/assets/theme/<tpl>/css/deps.php}
+and \texttt{web/assets/theme/<tpl>/js/deps.php}). Because the
+\texttt{<tpl>} is the (already-swapped) mobile theme name, the
+mobile theme's \texttt{deps.php} is loaded instead of the desktop
+theme's. So a mobile theme can ship a different set of CSS/JS
+files (e.g.\ a smaller jQuery build, mobile-specific gestures
+library) by simply having a different \texttt{deps.php} manifest.
+
+The route-aware asset loader (\texttt{Controller::loadAssets()})
+further looks for per-route CSS/JS named after the route (e.g.\
+\texttt{commonhome.css} for \texttt{?r=common/home}). These
+per-route files are also resolved against the active (mobile)
+theme's folder, so a mobile theme can override a specific
+route's CSS without overriding the whole \texttt{deps.php}.
+
+\subsubsection{Layer 4 --- Admin testing overrides}
+
+For testing, an admin can pass \texttt{?force\_mobile=1},
+\texttt{?force\_tablet=1}, \texttt{?force\_facebook=1}, or
+\texttt{?force\_customer\_session=1} GET parameters to override
+the device classification and customer-session mode in
+\texttt{Controller::loadWidgets()}. This lets an admin preview
+the mobile widget tree from a desktop browser, without swapping
+the theme. Note that the \texttt{?force\_*} params only override
+the widget-tree filter --- they do not swap the theme folder
+(which was set at boot in \texttt{map.php}). So an admin can
+preview the widget set, but not the template, with these flags.
+
+\subsubsection{Summary}
+
+The mobile experience is therefore a layered composite:
+
+\begin{table}[htbp]
+\centering
+\caption{The four layers of mobile data scoping.}\label{tab:mobile-layers-v2}
+\footnotesize\sloppy
+\begin{tabularx}{\columnwidth}{>{\raggedright\arraybackslash}p{2.6cm}lX}
+\toprule
+\textbf{Layer} & \textbf{Set at} & \textbf{Effect} \\
+\midrule
+Theme folder & boot (\texttt{map.php}) & Different \texttt{.tpl} files for the same route. Falls back to \texttt{choroni} if missing. \\
+Widget tree & render (\texttt{loadWidgets()}) & Different widget instances visible, filtered by \texttt{show\_in\_mobile} / \texttt{show\_in\_tablet} / \texttt{show\_in\_facebook} / \texttt{show\_in\_desktop} flags in the serialised widget settings. \\
+Asset manifest & boot (\texttt{map.php}) & Different \texttt{deps.php} for the active theme; different per-route CSS/JS files. \\
+Admin override & render (\texttt{loadWidgets()}) & \texttt{?force\_mobile=1} etc.\ override the widget-tree device flags for testing (but not the theme folder). \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+The result is that the mobile app is not a separate codebase ---
+it is the same codebase with a different theme folder, a filtered
+widget tree, and a different asset manifest. The same
+\texttt{Controller}, \texttt{Model}, and \texttt{NecoWidget} code
+runs in both contexts; only the data (theme name, widget
+settings, asset manifest) differs. This is the same architecture
+OpenCart uses for multi-store, extended with a device-class
+dimension.
+
 % ============================================================
 \section{The Modules System}\label{sec:modules}
 % ============================================================
