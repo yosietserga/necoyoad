@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    @page { size: 794px 1123px; margin: 0; }
+    :root {
+      --c-bg: #0D2A1A;
+      --c-accent: #4A9C6D;
+      --c-text: #FFFFFF;
+      --c-muted: #9CB8A8;
+      --c-mono: #C8D8CE;
+    }
+    html, body {
+      margin: 0; padding: 0;
+      width: 794px; height: 1123px;
+      background: var(--c-bg);
+      color: var(--c-text);
+      font-family: 'Inter', sans-serif;
+    }
+    @media screen {
+      html { height: auto; display: flex; justify-content: center; min-height: 100vh; background: var(--c-bg); }
+      body { transform-origin: top center; scale: min(1, calc(100vw / 794), calc(100vh / 1123)); margin: 0 auto; box-shadow: 0 0 60px rgba(0,0,0,0.3); }
+    }
+    .cover {
+      width: 794px; height: 1123px;
+      position: relative;
+      display: flex; flex-direction: column;
+      align-items: center;
+      box-sizing: border-box;
+    }
+    .rule-top, .rule-bottom {
+      position: absolute;
+      left: 114px; right: 114px;
+      height: 2px;
+      background: var(--c-accent);
+    }
+    .rule-top { top: 114px; }
+    .rule-bottom { bottom: 114px; }
+    .center-block {
+      position: absolute;
+      top: 0; bottom: 0;
+      left: 114px; right: 114px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+    }
+    .label {
+      font-size: 9pt; color: var(--c-accent);
+      letter-spacing: 4px; text-transform: uppercase;
+      margin-bottom: 28px; font-weight: 500;
+    }
+    .title {
+      font-size: 28pt; font-weight: 700;
+      line-height: 1.2;
+      font-family: 'Playfair Display', serif;
+      margin-bottom: 14px; max-width: 540px;
+    }
+    .version-badge {
+      display: inline-block;
+      background: var(--c-accent); color: var(--c-bg);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11pt; font-weight: 700;
+      padding: 4pt 14pt; margin-bottom: 28px;
+      letter-spacing: 1px;
+    }
+    .subtitle {
+      font-size: 13pt; color: var(--c-muted);
+      margin-bottom: 32px; max-width: 500px;
+      line-height: 1.55; font-style: italic;
+    }
+    .meta-table {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9pt; color: var(--c-mono);
+      margin-bottom: 28px; line-height: 1.7;
+    }
+    .meta-table .k { color: var(--c-accent); margin-right: 8px; }
+    .authors { font-size: 11pt; margin-bottom: 8px; font-weight: 500; }
+    .institution { font-size: 9pt; color: var(--c-muted); line-height: 1.4; max-width: 440px; }
+    .footer {
+      position: absolute; bottom: 57px;
+      left: 114px; right: 114px;
+      text-align: center; font-size: 9pt;
+      color: var(--c-muted); letter-spacing: 1px;
+    }
+  </style>
+</head>
+<body>
+  <div class="cover">
+    <div class="rule-top"></div>
+    <div class="rule-bottom"></div>
+    <div class="center-block">
+      <div class="label">Architecture Blueprint &middot; Marketing Subsystem Deep Dive</div>
+      <div class="title">Necoyoad</div>
+      <div class="version-badge">v4</div>
+      <div class="subtitle">A focused deep-dive into the email-marketing pipeline:<br>newsletters, campaigns, tracking, and the cron sender</div>
+      <div class="meta-table">
+        <span class="k">scope:</span> 41 files, ~17,000 LOC (6 controllers, 5 models,<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;7 cron tasks, 9 email libs, 10 API endpoints)<br>
+        <span class="k">trace:</span> 6-stage lifecycle (compose &rarr; commit &rarr; send &rarr; open &rarr; click)<br>
+        <span class="k">findings:</span> 26 cross-cutting (vestigial bounce, double link rewrite,<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;broken API PUTs, no unsubscribe, PHPMailer 5.0)<br>
+        <span class="k">listings:</span> 18 PHP &middot; <span class="k">pages:</span> 27
+      </div>
+      <div class="authors">Reverse-Engineered Architecture Report</div>
+      <div class="institution">Verified against PHP source commit ce75adf<br>github.com/yosietserga/necoyoad</div>
+    </div>
+    <div class="footer">DESCRIPTIVE, NOT PRESCRIPTIVE &nbsp;&middot;&nbsp; NO IMPROVEMENTS PROPOSED</div>
+  </div>
+</body>
+</html>
