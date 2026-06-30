@@ -1,0 +1,890 @@
+% Necoyoad Architecture Blueprint v8 — CMS Posts/Pages and Widget Composition
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable,listings}
+\usepackage{colortbl}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{adjustbox}
+\usepackage{caption}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{pdflscape}
+\usepackage{listings}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc,shapes.geometric,fit,backgrounds,chains,decorations.pathreplacing,shapes.multipart}
+\usepackage[colorlinks=true,linkcolor=blue!50!black,citecolor=blue!40!black,urlcolor=blue!60!black,bookmarks=true,bookmarksnumbered=true,unicode=true,pdftitle={Necoyoad - CMS Posts/Pages and Widget Composition (v8)},pdfauthor={Reverse-Engineered Architecture Report},pdfsubject={Software Architecture, CMS, Posts, Pages, Widget Composition, Dynamic Rendering},pdfkeywords={Necoyoad, OpenCart, PHP 8.1, CMS, Posts, Pages, Widget Composition, Dynamic Rendering, Hardcoded Placeholders, Template Override, widgets-common.tpl}]{hyperref}
+\geometry{a4paper, top=2.4cm, bottom=2.4cm, left=2.4cm, right=2.4cm}
+\setlength{\headheight}{14pt}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\itshape Necoyoad v8 --- CMS Posts/Pages and Widget Composition}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.3pt}
+\renewcommand{\footrulewidth}{0pt}
+\titleformat{\section}{\Large\bfseries\color{black!85}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries\color{black!80}}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{black!75}}{\thesubsubsection}{0.5em}{}
+\widowpenalty=10000
+\clubpenalty=10000
+\emergencystretch=4em
+\hbadness=10000
+\hfuzz=2pt
+\vfuzz=2pt
+\sloppy
+\definecolor{necoyoad-blue}{HTML}{1F4E79}
+\definecolor{necoyoad-orange}{HTML}{B85C00}
+\definecolor{necoyoad-green}{HTML}{2E6B33}
+\definecolor{nodefill}{HTML}{F4F7FB}
+\definecolor{nodefillalt}{HTML}{FBF4EE}
+\definecolor{nodefillgreen}{HTML}{F2F8F2}
+\definecolor{nodefillgray}{HTML}{F0F0F2}
+\definecolor{phpline}{HTML}{F8F8F0}
+\definecolor{phpcomment}{HTML}{8C8C8C}
+\definecolor{phpkeyword}{HTML}{1F4E79}
+\definecolor{phpstring}{HTML}{B85C00}
+\lstdefinelanguage{necophp}{
+  morekeywords={abstract,and,array,as,break,case,catch,class,clone,const,continue,declare,default,do,echo,else,elseif,empty,enddeclare,endfor,endforeach,endif,endswitch,endwhile,extends,final,finally,for,foreach,function,global,goto,if,implements,include,include_once,instanceof,insteadof,interface,namespace,new,or,print,private,protected,public,require,require_once,return,static,switch,throw,trait,try,use,var,while,xor,yield,true,false,null},
+  sensitive=true,
+  morecomment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  morecomment=[l]{\#},
+  morestring=[b]",
+  morestring=[b]',
+}
+\lstset{
+  language=necophp,
+  basicstyle=\ttfamily\footnotesize,
+  keywordstyle=\color{phpkeyword}\bfseries,
+  commentstyle=\color{phpcomment}\itshape,
+  stringstyle=\color{phpstring},
+  backgroundcolor=\color{phpline},
+  numbers=left,
+  numberstyle=\tiny\color{phpcomment},
+  numbersep=8pt,
+  frame=single,
+  rulecolor=\color{black!25},
+  framerule=0.3pt,
+  breaklines=true,
+  breakatwhitespace=true,
+  showstringspaces=false,
+  captionpos=b,
+  xleftmargin=14pt,
+  xrightmargin=4pt,
+  aboveskip=8pt,
+  belowskip=8pt,
+}
+\newtcolorbox{findingbox}[1][]{
+  enhanced, breakable,
+  colback=nodefillalt, colframe=necoyoad-orange!70,
+  boxrule=0.4pt, arc=2pt, left=8pt, right=8pt, top=6pt, bottom=6pt,
+  fonttitle=\bfseries\small, coltitle=white,
+  title=#1
+}
+\captionsetup{justification=raggedright, singlelinecheck=false, font=small, labelfont=bf}
+
+\begin{document}
+\thispagestyle{empty}
+\begin{center}
+{\Large\bfseries Necoyoad --- CMS Posts/Pages and Widget Composition (v8)}\\[0.4em]
+{\small\itshape How posts and pages share a table, how widgets compose with them
+dynamically and manually, and how templates can be overridden per entity}\\[1.2em]
+\end{center}
+\begin{abstract}
+\noindent
+This is the eighth volume of the Necoyoad architecture blueprint. v8 covers the
+CMS subsystem (posts and pages) and its deep integration with the widget
+composition system. The key finding is that posts and pages share the same
+database table (\texttt{post}) with a \texttt{post\_type} discriminator, and that
+every CMS page is a widget composition surface --- the same
+\texttt{loadWidgets()}/\texttt{addChild()}/\texttt{render()} pipeline that drives
+the home page and product pages also drives blog posts, static pages, and
+post categories.
+
+v8 documents two composition modes: \emph{dynamic composition} (the admin
+configures widgets via the visual editor, and the \texttt{widgets-rows.tpl}
+template emits \texttt{\{\%widget\_name\%\}} placeholders that
+\texttt{Controller::fetch()} substitutes at render time) and \emph{manual
+hardcoding} (a template author writes \texttt{\{\%widget\_name\%\}} tokens
+directly in the \texttt{.tpl} file, bypassing the admin widget manager). It
+also covers the per-entity template override mechanism (EAV
+\texttt{property('style', 'view')} returns a template path), the
+\texttt{widgets-common.tpl} universal layout fragment, the \texttt{only:}
+position prefix for embedded pages, and the \texttt{page\_embed.tpl} simplified
+layout used by the menu system's \texttt{submenu\_type = 'page\_id'}.
+
+The stance is unchanged: \textbf{descriptive, not prescriptive}.
+\end{abstract}
+\vspace{0.6em}
+\noindent\textbf{Keywords:} Necoyoad, OpenCart, PHP 8.1, CMS, posts, pages,
+widget composition, dynamic rendering, hardcoded placeholders, template override,
+\texttt{widgets-common.tpl}, \texttt{widgets-rows.tpl}, \texttt{only:} prefix,
+\texttt{page\_embed.tpl}, EAV property, polymorphic description.
+\newpage
+\tableofcontents
+\newpage
+
+% ============================================================
+\section{Introduction}\label{sec:intro}
+% ============================================================
+
+\subsection{Eight Volumes}
+
+v1--v7 covered the whole platform, source verification, the rendering pipeline,
+the marketing subsystem, multi-store/multi-language, the admin back-office, and
+the menu links system. v8 covers the CMS posts/pages subsystem and its
+integration with the widget composition system.
+
+\subsection{Scope}
+
+v8 covers:
+\begin{itemize}[leftmargin=1.6em,itemsep=2pt]
+  \item The \texttt{post} table --- shared by posts and pages via
+        \texttt{post\_type}.
+  \item The storefront content controllers (\texttt{content/post},
+        \texttt{content/page}, \texttt{content/category}).
+  \item The per-entity template override mechanism (EAV
+        \texttt{property('style', 'view')}).
+  \item The \texttt{widgets-common.tpl} universal layout fragment.
+  \item The \texttt{widgets-rows.tpl} placeholder emitter.
+  \item Dynamic widget composition (admin-configured, via the visual editor).
+  \item Manual widget composition (hardcoded \texttt{\{\%widget\_name\%\}}
+        tokens in \texttt{.tpl} files).
+  \item The \texttt{only:} position prefix for embedded pages.
+  \item The \texttt{page\_embed.tpl} simplified layout.
+  \item Landing page templates (combining widget-driven and hardcoded content).
+\end{itemize}
+
+% ============================================================
+\section{The Shared \texttt{post} Table}\label{sec:post-table}
+% ============================================================
+
+\begin{findingbox}[Posts and pages share the same table]
+The \texttt{post} table stores both blog posts and static pages. The
+\texttt{post\_type} column discriminates them: \texttt{'post'} for blog
+posts, \texttt{'page'} for static pages. Both the post model
+(\texttt{ModelContentPost}) and the page model
+(\texttt{ModelContentPage}) declare \texttt{\$table = "post"} and
+\texttt{\$pkey = "post\_id"}. The only difference is
+\texttt{\$object\_type}: \texttt{'post'} vs \texttt{'page'}. This
+discriminator flows into the polymorphic \texttt{description},
+\texttt{property}, and \texttt{object\_to\_store} tables.
+\end{findingbox}
+
+\begin{lstlisting}[caption={The \texttt{post} table schema (shared by posts and pages).},label={lst:post-schema}]
+CREATE TABLE `post` (
+  `post_id`            int(11) NOT NULL,
+  `parent_id`          int(11) NOT NULL,          -- tree via parent_id
+  `author_id`          int(11) NOT NULL,          -- admin user who wrote it
+  `post_type`          varchar(50) NOT NULL,      -- 'post' or 'page'
+  `sort_order`         int(11) NOT NULL,
+  `image`              varchar(250) NOT NULL,
+  `status`             int(1) NOT NULL,
+  `date_publish_start` datetime NOT NULL,
+  `date_publish_end`   datetime NOT NULL,
+  `publish`            int(1) NOT NULL,           -- published flag
+  `allow_reviews`      int(1) NOT NULL,
+  `template`           varchar(100) NOT NULL,     -- template hint (unused by storefront)
+  `date_added`         datetime NOT NULL,
+  `date_modified`      datetime NOT NULL
+);
+\end{lstlisting}
+
+The \texttt{template} column in the \texttt{post} table is declared but
+\emph{not used} by the storefront controllers. The actual template override
+comes from the EAV \texttt{property} table, not from this column.
+
+% ============================================================
+\section{The Storefront CMS Controllers}\label{sec:cms-controllers}
+% ============================================================
+
+\subsection{The Common CMS Page Pattern}
+
+All three storefront CMS controllers (post, page, category) follow the
+same pattern:
+
+\begin{lstlisting}[caption={The common CMS page pattern (abridged from \texttt{content/post.php}).},label={lst:cms-pattern}]
+public function index() {
+    $this->language->load('content/post');
+    $this->load->model('content/post');
+
+    // 1. Cache key (per-entity + language + currency + store + customer)
+    $cacheId = 'html-post.' . $this->request->getQuery('post_id') . ...;
+
+    // 2. Set session object_type/object_id (for per-object widget filtering)
+    $this->session->set('object_type', 'post');
+    $this->session->set('object_id', $post_id);
+
+    // 3. Load the entity
+    $post_info = $this->modelPost->getById($post_id);
+
+    if ($post_info && $post_info['publish']) {
+        // 4. Customer group permission check
+        $customerGroups = $this->modelPost->getProperty($post_id, 'customer_groups', 'customer_groups');
+        if (in_array(0, $customerGroups) || in_array($this->customer->getCustomerGroupId(), $customerGroups)) {
+
+            // 5. Cache check
+            $cached = $this->cache->get($cacheId);
+            if ($cached && !$this->user->isLogged()) {
+                $this->response->setOutput($cached, ...);
+            } else {
+                // 6. Set landing_page (for widget filtering)
+                $this->session->set('landing_page', 'content/post/index');
+
+                // 7. Load widgets for three positions
+                $this->loadWidgets('featuredContent');
+                $this->loadWidgets('main');
+                $this->loadWidgets('featuredFooter');
+
+                // 8. Add layout children
+                $this->addChild('common/column_left');
+                $this->addChild('common/column_right');
+                $this->addChild('common/header');
+                $this->addChild('common/footer');
+
+                // 9. Per-entity template override
+                $template = $this->modelPost->getProperty($post_id, 'style', 'view');
+                $default_template = $this->config->get('default_view_post') ?: 'content/post.tpl';
+                $template = empty($template) ? $default_template : $template;
+                if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/' . $template)) {
+                    $this->template = $this->config->get('config_template') . '/' . $template;
+                } else {
+                    $this->template = 'choroni/' . $template;
+                }
+
+                // 10. Render (with cache write-back)
+                if (!$this->user->isLogged()) $this->cacheId = $cacheId;
+                $this->response->setOutput($this->render(true), ...);
+            }
+        }
+    } else {
+        $this->error404();
+    }
+}
+\end{lstlisting}
+
+\subsection{The Session \texttt{object\_type} Protocol}
+
+Each CMS controller sets the session's \texttt{object\_type} and
+\texttt{object\_id}:
+
+\begin{table}[htbp]
+\centering
+\caption{Session \texttt{object\_type} per CMS controller.}\label{tab:object-types}
+\small
+\begin{tabularx}{\columnwidth}{llX}
+\toprule
+\textbf{Controller} & \textbf{object\_type} & \textbf{Effect} \\
+\midrule
+\texttt{content/post}     & \texttt{'post'}          & Widgets filtered by \texttt{LIKE '\%object\_type=post\%'} and \texttt{LIKE '\%object\_id=<post\_id>\%'}. \\
+\texttt{content/page}     & \texttt{'page'}          & Widgets filtered by \texttt{LIKE '\%object\_type=page\%'} and \texttt{LIKE '\%object\_id=<page\_id>\%'}. \\
+\texttt{content/category} & \texttt{'post\_category'} & Widgets filtered by \texttt{LIKE '\%object\_type=post\_category\%'} and \texttt{LIKE '\%object\_id=<cat\_id>\%'}. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+This is the mechanism v5 documented: \texttt{Controller::loadWidgets()} reads
+the session's \texttt{object\_type}/\texttt{object\_id} and runs a second
+\texttt{NecoWidget::getRows()} query with \texttt{LIKE} predicates, merging
+per-object widgets into the default tree.
+
+\subsection{Customer Group Permission Check}
+
+Every CMS entity has a \texttt{customer\_groups} property in the EAV
+\texttt{property} table (under \texttt{group='customer\_groups'},
+\texttt{key='customer\_groups'}). This is a serialised array of customer
+group IDs that are allowed to view the entity. If the array contains
+\texttt{0}, the entity is public (visible to all). Otherwise, the
+customer's group must be in the array.
+
+\subsection{The Per-Entity Template Override}
+
+The template resolution follows a 3-level priority:
+
+\begin{enumerate}[leftmargin=1.6em,itemsep=2pt]
+  \item \textbf{EAV property} \texttt{property('style', 'view')} --- the
+        admin can set a per-entity template path (e.g.\
+        \texttt{content/landing\_page\_necotienda.tpl}) via the visual
+        editor. This is stored in the \texttt{property} EAV table under
+        \texttt{group='style'}, \texttt{key='view'}.
+  \item \textbf{Config default} --- \texttt{default\_view\_post} or
+        \texttt{default\_view\_page} setting (per-store, in the
+        \texttt{setting} table). Falls back to
+        \texttt{content/post.tpl} or \texttt{content/page.tpl}.
+  \item \textbf{Theme fallback} --- if the template file exists in the
+        active theme (\texttt{config\_template}), use it; otherwise fall
+        back to \texttt{choroni/}.
+\end{enumerate}
+
+\begin{lstlisting}[caption={Per-entity template override (from \texttt{content/post.php}).},label={lst:template-override}]
+$template = $this->modelPost->getProperty($post_id, 'style', 'view');
+$default_template = ($this->config->get('default_view_post'))
+    ? $this->config->get('default_view_post')
+    : 'content/post.tpl';
+$template = empty($template) ? $default_template : $template;
+if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/' . $template)) {
+    $this->template = $this->config->get('config_template') . '/' . $template;
+} else {
+    $this->template = 'choroni/' . $template;
+}
+\end{lstlisting}
+
+This means each individual post or page can use a completely different
+template --- a blog post can use \texttt{content/post.tpl}, a landing page
+can use \texttt{content/landing\_page\_necotienda.tpl}, and a product
+information page can use a custom \texttt{content/product-info.tpl} --- all
+without changing any code.
+
+% ============================================================
+\section{The \texttt{widgets-common.tpl} Universal Layout}\label{sec:widgets-common}
+% ============================================================
+
+The most important template in the theme is
+\texttt{shared/widgets-common.tpl}. It is the universal layout fragment
+included by almost every page template:
+
+\begin{lstlisting}[caption={\texttt{shared/widgets-common.tpl} --- the universal layout fragment.},label={lst:widgets-common}]
+<?php include("widgets-featured.tpl");?>
+
+<!--mainContentContainer -->
+<div id="mainContentContainer" nt-editable>
+    <div class="row">
+
+        <?php include("breadcrumbs.tpl");?>
+        <div class="clear"></div>
+
+        <!-- left-column -->
+        <?php if ($column_left) { ?>
+        <?php include("widgets-column-left.tpl");?>
+        <?php } ?>
+        <!--/left-column -->
+
+        <!--center-column -->
+        <?php include("widgets-column-center.tpl");?>
+        <!--/center-column -->
+
+        <!-- right-column -->
+        <?php if ($column_right) { ?>
+        <?php include("widgets-column-right.tpl");?>
+        <?php } ?>
+        <!--/right-column -->
+
+    </div>
+</div>
+
+<?php include("widgets-featured-footer.tpl");?>
+\end{lstlisting}
+
+This template includes five fragments:
+\begin{enumerate}[leftmargin=1.6em,itemsep=2pt]
+  \item \texttt{widgets-featured.tpl} --- sets \texttt{\$position =
+        'featuredContent'} and includes \texttt{widgets-rows.tpl}.
+  \item \texttt{breadcrumbs.tpl} --- renders the breadcrumb trail.
+  \item \texttt{widgets-column-left.tpl} --- echoes \texttt{\$column\_left}
+        (the rendered left column child).
+  \item \texttt{widgets-column-center.tpl} --- sets
+        \texttt{\$position = 'main'} and includes
+        \texttt{widgets-rows.tpl}. Also computes the column width based
+        on which side columns are present.
+  \item \texttt{widgets-column-right.tpl} --- echoes
+        \texttt{\$column\_right}.
+  \item \texttt{widgets-featured-footer.tpl} --- sets
+        \texttt{\$position = 'featuredFooter'} and includes
+        \texttt{widgets-rows.tpl}.
+\end{enumerate}
+
+\subsection{Which Templates Use \texttt{widgets-common.tpl}}
+
+\begin{table}[htbp]
+\centering
+\caption{Templates that include \texttt{widgets-common.tpl}.}\label{tab:common-users}
+\small
+\begin{tabularx}{\columnwidth}{llX}
+\toprule
+\textbf{Template} & \textbf{Controller} & \textbf{Notes} \\
+\midrule
+\texttt{content/post.tpl}     & \texttt{content/post}     & Blog post page. \\
+\texttt{content/page.tpl}     & \texttt{content/page}     & Static page. \\
+\texttt{store/product.tpl}    & \texttt{store/product}    & Product detail page. \\
+\texttt{content/category.tpl} & \texttt{content/category} & Blog category page. \\
+\texttt{content/categories.tpl} & \texttt{content/category/all} & All blog categories. \\
+\texttt{content/posts.tpl}    & \texttt{content/post/all} & All blog posts. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+The \texttt{common/home.tpl} (home page) does \emph{not} use
+\texttt{widgets-common.tpl} --- it manually includes each fragment
+individually. This is an older pattern that predates
+\texttt{widgets-common.tpl}. The home page template also omits the
+breadcrumbs fragment.
+
+% ============================================================
+\section{The \texttt{widgets-rows.tpl} Placeholder Emitter}\label{sec:widgets-rows}
+% ============================================================
+
+\texttt{shared/widgets-rows.tpl} is the template that actually emits the
+\texttt{\{\%widget\_name\%\}} placeholder tokens. It iterates the
+\texttt{\$rows[\$position]} array (populated by
+\texttt{Controller::loadWidgets()}) and emits the widget tree as nested
+HTML with placeholder tokens:
+
+\begin{lstlisting}[caption={\texttt{shared/widgets-rows.tpl} --- the placeholder emitter.},label={lst:widgets-rows}]
+<?php foreach($rows[$position] as $j => $row) { ?>
+    <?php if (!$row['key']) continue; ?>
+    <?php $row_id = $row['key']; ?>
+    <?php $row_settings = unserialize($row['value']); ?>
+
+    <div data-row="<?php echo $row_id; ?>" data-position="<?php echo $position; ?>"
+         class="row<?php if (!empty($row_settings['classnames'])) echo ' '.$row_settings['classnames']; ?>"
+         id="<?php echo $position; ?>_<?php echo $row_id; ?>" nt-editable>
+
+        <?php foreach($row['columns'] as $k => $column) { ?>
+            <?php $column_id = $column['key']; ?>
+            <?php $column_settings = unserialize($column['value']); ?>
+
+            <div data-column="<?php echo $column_id; ?>" data-position="<?php echo $position; ?>"
+                 class="large-<?php echo $column_settings['grid_large']; ?>
+                       medium-<?php echo $column_settings['grid_medium']; ?>
+                       small-<?php echo $column_settings['grid_small']; ?>"
+                 id="<?php echo $position; ?>_<?php echo $column_id; ?>" nt-editable>
+                <ul class="widgets">
+                    <?php foreach($column['widgets'] as $l => $widget) { ?>
+                        {%<?php echo $widget['name']; ?>%}
+                    <?php } ?>
+                </ul>
+            </div>
+        <?php } ?>
+    </div>
+<?php } ?>
+\end{lstlisting}
+
+The key line is:
+\texttt{<?php foreach(\$column['widgets'] as \$widget) \{ ?> \{\%<?php echo \$widget['name']; ?>\%\} <?php \} ?>}
+
+This emits \texttt{\{\%widget\_name\%\}} for each widget in each column
+in each row. The \texttt{Controller::fetch()} method (v3, \S3.2) then
+substitutes each \texttt{\{\%widget\_name\%\}} token with the
+corresponding \texttt{\$<name>\_code} output (the widget's rendered HTML).
+
+\subsection{The Row and Column Settings}
+
+Each row and column has a serialised PHP settings blob (in the
+\texttt{value} column of the \texttt{property} EAV table). The
+\texttt{widgets-rows.tpl} template unserialises these and uses them for:
+
+\begin{itemize}[leftmargin=1.6em,itemsep=2pt]
+  \item \textbf{Row settings}: \texttt{sticky} (data-sticky attribute),
+        \texttt{layout\_width} (\texttt{'fixed'} adds the
+        \texttt{container} class), \texttt{classnames} (additional CSS
+        classes).
+  \item \textbf{Column settings}: \texttt{grid\_large},
+        \texttt{grid\_medium}, \texttt{grid\_small} (Foundation grid
+        column widths for responsive layouts), \texttt{sticky},
+        \texttt{classnames}.
+\end{itemize}
+
+The \texttt{nt-editable} attribute on every row and column div is the
+visual theme editor's hook (v3, \S9).
+
+% ============================================================
+\section{Dynamic vs Manual Widget Composition}\label{sec:composition-modes}
+% ============================================================
+
+Necoyoad supports two ways to compose widgets on a CMS page:
+\emph{dynamic} (admin-configured via the visual editor) and \emph{manual}
+(hardcoded \texttt{\{\%widget\_name\%\}} tokens in the \texttt{.tpl} file).
+
+\subsection{Dynamic Composition (The Default)}
+
+In dynamic composition, the admin uses the visual theme editor to drag
+widgets into rows and columns. The widget tree is stored in the
+\texttt{property} EAV table (\texttt{object\_type = 'widget\_rows'},
+\texttt{group = <position>}). At render time:
+
+\begin{enumerate}[leftmargin=1.6em,itemsep=2pt]
+  \item \texttt{Controller::loadWidgets('main')} queries
+        \texttt{NecoWidget::getRows()} which reads the
+        \texttt{property} table.
+  \item The widget routes are merged into \texttt{\$this->children} with
+        string keys.
+  \item \texttt{Controller::render()} iterates children, rendering each
+        widget's HTML into \texttt{\$this->data[\$name . '\_code']}.
+  \item \texttt{Controller::fetch()} requires the template, which
+        includes \texttt{widgets-rows.tpl}.
+  \item \texttt{widgets-rows.tpl} emits
+        \texttt{\{\%widget\_name\%\}} tokens.
+  \item \texttt{fetch()} substitutes the tokens with the widget HTML.
+\end{enumerate}
+
+This is the default mode. The admin has full control over which widgets
+appear, in what order, in which columns, on which pages. No code changes
+are needed.
+
+\subsection{Manual Composition (Hardcoded Placeholders)}
+
+In manual composition, a template author writes
+\texttt{\{\%widget\_name\%\}} tokens directly in the \texttt{.tpl} file,
+bypassing the admin widget manager. For this to work, the widget must
+still be registered as a child of the controller (via
+\texttt{loadWidgets()} or \texttt{addChild()}), so that its HTML is
+rendered into \texttt{\$this->data[\$name . '\_code']}.
+
+\begin{lstlisting}[caption={Manual widget placeholder hardcoding in a custom template.},label={lst:manual-hardcode}]
+<!-- A custom landing page template that hardcodes widget positions -->
+<div class="hero-section">
+    {%hero_banner_widget%}
+</div>
+
+<div class="features-grid">
+    <div class="col-4">{%product_overview_1%}</div>
+    <div class="col-4">{%product_overview_2%}</div>
+    <div class="col-4">{%product_overview_3%}</div>
+</div>
+
+<div class="content-section">
+    {%richtext_widget_1%}
+</div>
+
+<div class="cta-section">
+    {%contact_form_widget%}
+</div>
+\end{lstlisting}
+
+For this to work, the controller must still call
+\texttt{loadWidgets('main')} (or whatever position the widgets are
+assigned to), so that the widget children are registered and their HTML
+is rendered. The \texttt{widgets-rows.tpl} template is \emph{not}
+included; instead, the custom template emits the placeholders directly
+in the desired HTML structure.
+
+\begin{findingbox}[Manual placeholders require widget children to be registered]
+A \texttt{\{\%widget\_name\%\}} token in a template is only substituted
+if the corresponding widget is registered as a child of the controller
+(in \texttt{\$this->children} with the matching string key). This
+happens automatically when \texttt{loadWidgets()} runs and the
+\texttt{property} EAV table has a widget with that name for the current
+position. If the admin has not configured a widget named
+\texttt{hero\_banner\_widget} for the current page's position, the
+placeholder token will remain in the HTML unsubstituted (it will appear
+as literal text \texttt{\{\%hero\_banner\_widget\%\}} in the browser).
+
+So manual composition requires coordination between the template author
+(who writes the placeholder) and the admin (who must create a widget
+instance with the matching name in the visual editor).
+\end{findingbox}
+
+\subsection{Hybrid Composition}
+
+A template can combine both modes: use \texttt{widgets-rows.tpl} for
+some positions (dynamic) and hardcode placeholders for others (manual).
+For example, the \texttt{landing\_page\_necotienda.tpl} template
+includes \texttt{widgets-common.tpl} (which uses
+\texttt{widgets-rows.tpl} for dynamic composition) but also appends
+hardcoded SVG sections after the widget-driven content:
+
+\begin{lstlisting}[caption={Hybrid composition in \texttt{landing\_page\_necotienda.tpl}.},label={lst:hybrid}]
+<?php echo $header; ?>
+<?php $tpl = is_dir(...) ? $this->config->get('config_template') : "choroni"; ?>
+
+<div id="contentContainer" class="tpl-page" nt-editable>
+    <!-- Dynamic widget composition (via widgets-common.tpl) -->
+    <?php include(DIR_TEMPLATE . $tpl . "/shared/widgets-common.tpl"); ?>
+</div>
+
+<!-- Hardcoded content (not widget-driven) -->
+<div class="svg-container-01" style="width: 2918px; height: 1306px;">
+    <?php include("landing_page_necotienda_svg_01.tpl"); ?>
+</div>
+<div class="svg-container-02" style="width: 2374px; height: 681px;">
+    <?php include("landing_page_necotienda_svg_02.tpl"); ?>
+</div>
+\end{lstlisting}
+
+This is the most flexible mode: the admin controls the main content area
+via the visual editor, and the template author controls the surrounding
+sections with hardcoded HTML.
+
+% ============================================================
+\section{The \texttt{only:} Position Prefix and Embedded Pages}\label{sec:only-prefix}
+% ============================================================
+
+\subsection{The \texttt{page\_embed.tpl} Layout}
+
+When a page is embedded (via \texttt{ControllerContentPage::embed()}, as
+called by the menu system's \texttt{submenu\_type = 'page\_id'}, v7),
+the controller uses a simplified layout:
+
+\begin{lstlisting}[caption={\texttt{page\_embed.tpl} --- the simplified embed layout.},label={lst:page-embed}]
+<?php $tpl = ...; ?>
+<div class="tpl-page-embed">
+    <?php include(DIR_TEMPLATE . $tpl . "/shared/widgets-featured.tpl");?>
+
+    <div class="row">
+        <div class="large-12 medium-12 small-12">
+            <div nt-editable>
+                <?php $position = 'main'; ?>
+                <?php include(DIR_TEMPLATE . $tpl . "/shared/widgets-rows.tpl");?>
+            </div>
+        </div>
+    </div>
+
+    <?php include(DIR_TEMPLATE . $tpl . "/shared/widgets-featured-footer.tpl");?>
+</div>
+\end{lstlisting}
+
+No side columns, no breadcrumbs --- just the featured, main, and
+featured-footer positions, all in a single full-width column.
+
+\subsection{The \texttt{only:} Prefix}
+
+When embedding a page, the controller uses the \texttt{only:} position
+prefix:
+
+\begin{lstlisting}[caption={The \texttt{only:} prefix in \texttt{ControllerContentPage::embed()}.},label={lst:only-prefix}]
+$this->loadWidgets('only:featuredContent');
+$this->loadWidgets('only:main');
+$this->loadWidgets('only:featuredFooter');
+\end{lstlisting}
+
+The \texttt{only:} prefix tells \texttt{Controller::loadWidgets()} to
+load \emph{only} the per-object widgets (those matching the session's
+\texttt{object\_type}/\texttt{object\_id}), skipping the default widget
+tree. This is because an embedded page should only show its own widgets,
+not the entire page's widget tree.
+
+In \texttt{Controller::loadWidgets()}, the \texttt{only:} prefix is
+detected at line 510:
+
+\begin{lstlisting}[caption={\texttt{Controller::loadWidgets()} --- the \texttt{only:} detection.},label={lst:only-detection}]
+if (!strpos($position, 'only:')) {
+    // Normal: load default tree + per-object tree
+    $rows = $widgets->getRows($params, ...);
+    // ... merge default rows ...
+} else {
+    // 'only:' prefix: skip the default tree
+    // (the per-object query still runs below)
+}
+// Then, regardless of 'only:', the per-object query runs:
+if ($session->has('object_type') || $session->has('object_id')) {
+    $params['position'] = $position = str_replace('only:', '', $position);
+    // ... query per-object widgets and merge ...
+}
+\end{lstlisting}
+
+So \texttt{only:} skips the first query (the default widget tree) and
+only runs the second query (the per-object widget tree). The result is
+that an embedded page shows only its own widgets, not the page's default
+widgets.
+
+% ============================================================
+\section{The CMS Lifecycle Trace}\label{sec:trace}
+% ============================================================
+
+\subsection{Visitor Views a Blog Post}
+
+\begin{enumerate}[leftmargin=1.6em,itemsep=2pt]
+  \item Request: \texttt{GET /articulos/my-first-post}
+  \item SEO URL rewriter resolves \texttt{my-first-post} to
+        \texttt{post\_id=42} via \texttt{url\_alias} table.
+  \item Route: \texttt{content/post}.
+  \item \texttt{ControllerContentPost::index()}:
+        \begin{enumerate}[itemsep=2pt]
+          \item Sets session: \texttt{object\_type = 'post'},
+                \texttt{object\_id = 42},
+                \texttt{landing\_page = 'content/post/index'}.
+          \item Loads post: \texttt{modelPost->getById(42)} ---
+                \texttt{SELECT * FROM post p LEFT JOIN description pd ON
+                (pd.object\_id = p.post\_id AND pd.object\_type = 'post'
+                AND pd.language\_id = <lang>)}.
+          \item Checks customer group permission via
+                \texttt{modelPost->getProperty(42, 'customer\_groups',
+                'customer\_groups')}.
+          \item Loads widgets: \texttt{loadWidgets('featuredContent')},
+                \texttt{loadWidgets('main')},
+                \texttt{loadWidgets('featuredFooter')}. Each runs two
+                queries: default tree + per-object tree (filtered by
+                \texttt{LIKE '\%object\_type=post\%'} and
+                \texttt{LIKE '\%object\_id=42\%'}).
+          \item Adds layout children: \texttt{common/header},
+                \texttt{common/footer},
+                \texttt{common/column\_left},
+                \texttt{common/column\_right}.
+          \item Template resolution: checks EAV
+                \texttt{property(42, 'style', 'view')} for a per-post
+                template. If empty, uses \texttt{config('default\_view\_post')}
+                or falls back to \texttt{content/post.tpl}.
+          \item \texttt{render(true)}:
+                \begin{itemize}[itemsep=2pt]
+                  \item Renders header, footer, column\_left,
+                        column\_right (each a child controller).
+                  \item Renders each widget child (each a module
+                        controller).
+                  \item Fetches \texttt{content/post.tpl}, which
+                        includes \texttt{widgets-common.tpl}, which
+                        includes \texttt{widgets-rows.tpl}, which emits
+                        \texttt{\{\%widget\_name\%\}} tokens.
+                  \item Substitutes tokens with widget HTML.
+                  \item Post-processes HTML (strip comments, collapse
+                        whitespace).
+                  \item Returns the final HTML.
+                \end{itemize}
+          \item Cache write-back: \texttt{cache->set('html-post.42...',
+                \$html)}.
+          \item \texttt{response->setOutput(\$html)}.
+        \end{enumerate}
+\end{enumerate}
+
+\subsection{Menu Embeds a Page}
+
+\begin{enumerate}[leftmargin=1.6em,itemsep=2pt]
+  \item The ``links'' widget renders a menu link with
+        \texttt{submenu\_type = 'page\_id'},
+        \texttt{page\_id = 7}.
+  \item \texttt{ControllerModuleLinks::getLinks()} calls
+        \texttt{content/page->embed(7)}.
+  \item \texttt{ControllerContentPage::embed(7)}:
+        \begin{enumerate}[itemsep=2pt]
+          \item Sets session: \texttt{object\_type = 'page'},
+                \texttt{object\_id = 7},
+                \texttt{landing\_page = 'content/page/index'}.
+          \item Loads widgets with \texttt{only:} prefix:
+                \texttt{loadWidgets('only:featuredContent')},
+                \texttt{loadWidgets('only:main')},
+                \texttt{loadWidgets('only:featuredFooter')}. This loads
+                \emph{only} the per-object widgets for page 7, skipping
+                the default tree.
+          \item Template: \texttt{content/page\_embed.tpl} (simplified
+                layout, no side columns).
+          \item \texttt{render(true)} --- renders the embedded page
+                HTML.
+          \item Returns the HTML to the links widget, which inserts it
+                as the link's submenu content.
+        \end{enumerate}
+\end{enumerate}
+
+% ============================================================
+\section{Cross-Cutting Findings}\label{sec:findings}
+% ============================================================
+
+\subsection{Every CMS Page is a Widget Composition Surface}
+
+The most important finding of v8 is that every CMS page --- whether a
+blog post, a static page, or a category listing --- is a widget
+composition surface. The same \texttt{loadWidgets()}/\texttt{addChild()}
+/\texttt{render()} pipeline that drives the home page and product pages
+also drives CMS pages. This means the admin can configure different
+widgets for each individual post, page, or category --- a ``related
+posts'' widget on one blog post, a ``contact form'' widget on a specific
+page, a ``product list'' widget on a category --- all via the visual
+editor, without code changes.
+
+\subsection{The \texttt{widgets-common.tpl} Central Layout is a Refactoring}
+
+The \texttt{widgets-common.tpl} fragment was introduced to centralise the
+layout that was originally inlined in \texttt{home.tpl}. The home page
+template still uses the old inline pattern (manually including each
+fragment); newer templates (post, page, product, category) use the
+centralised \texttt{widgets-common.tpl}. This is an evolutionary
+refactoring scar --- the home page was never migrated.
+
+\subsection{Manual Placeholders Require Admin Coordination}
+
+A template author can hardcode \texttt{\{\%widget\_name\%\}} tokens in a
+custom template, but this requires the admin to create a widget instance
+with the matching name in the visual editor. If the admin doesn't, the
+token appears as literal text in the browser. This coordination
+requirement makes manual composition fragile --- a widget renamed or
+deleted in the admin breaks the template.
+
+\subsection{The \texttt{only:} Prefix is an Optimisation}
+
+The \texttt{only:} prefix halves the number of
+\texttt{NecoWidget::getRows()} queries for embedded pages (one query
+instead of two). This is important because embedded pages are rendered
+inside the links widget, which may render multiple embedded pages for a
+single menu's submenu items. Without \texttt{only:}, each embedded page
+would fire two queries; with \texttt{only:}, it fires one.
+
+\subsection{Posts and Pages Share Everything But the Discriminator}
+
+The post and page models are nearly identical: same table
+(\texttt{post}), same primary key (\texttt{post\_id}), same fields, same
+relations (\texttt{descriptions}, \texttt{stores}). The only difference
+is \texttt{\$object\_type} (\texttt{'post'} vs \texttt{'page'}) and the
+page model's \texttt{embed()} method. The \texttt{post\_type} column in
+the database provides the discriminator. This is the same
+single-table-with-discriminator pattern used by many CMS platforms
+(WordPress's \texttt{post\_type}, Drupal's \texttt{bundle}).
+
+% ============================================================
+\section{Closing Observations}\label{sec:observations}
+% ============================================================
+
+\subsection{The CMS + Widget Integration is the Platform's Crown Jewel}
+
+The integration of the CMS subsystem with the widget composition system
+is the platform's crown jewel. It allows a non-technical admin to create
+a blog post, assign widgets to it (a ``related posts'' carousel, a
+``comments'' widget, a ``social share'' widget), choose a per-post
+template (a standard blog layout or a custom landing page), and publish
+--- all without touching a single line of code. The widget composition
+system (v3) and the per-entity template override (v8) together form a
+page-builder experience that rivals dedicated CMS platforms.
+
+\subsection{The Manual Composition Mode is a Safety Valve}
+
+The manual composition mode (hardcoding \texttt{\{\%widget\_name\%\}}
+tokens) is a safety valve for cases where the visual editor's layout
+capabilities are insufficient. A template author can create a custom
+template with a fixed HTML structure and insert widget placeholders at
+specific positions. This gives the admin control over the widget
+\emph{content} (via the visual editor) while the template author
+controls the widget \emph{layout} (via the hardcoded HTML).
+
+\subsection{Final Note}
+
+v8 confirms that the Necoyoad CMS subsystem is a widget-driven content
+management system where every page is a composition surface. The shared
+\texttt{post} table, the per-entity template override, the
+\texttt{widgets-common.tpl} universal layout, and the
+\texttt{\{\%widget\_name\%\}} placeholder substitution together form a
+flexible page-builder architecture that supports both dynamic
+(admin-configured) and manual (hardcoded) composition modes.
+
+\appendix
+\section{Glossary}\label{app:glossary}
+\begin{table}[htbp]
+\centering
+\caption{Glossary of CMS and widget composition terms.}\label{tab:glossary-v8}
+\footnotesize\sloppy
+\begin{tabularx}{\columnwidth}{>{\raggedright\arraybackslash}p{3.5cm}X}
+\toprule
+\textbf{Term} & \textbf{Meaning} \\
+\midrule
+\texttt{post} table & Shared by blog posts and static pages, discriminated by \texttt{post\_type}. \\
+\texttt{post\_type} & The discriminator: \texttt{'post'} for blog posts, \texttt{'page'} for static pages. \\
+Dynamic composition & Widgets configured via the visual editor, stored in the \texttt{property} EAV table, rendered via \texttt{widgets-rows.tpl}. \\
+Manual composition & \texttt{\{\%widget\_name\%\}} tokens hardcoded in a \texttt{.tpl} file. Requires matching widget instances in the admin. \\
+Hybrid composition & A template that combines dynamic (via \texttt{widgets-common.tpl}) and hardcoded sections. \\
+\texttt{widgets-common.tpl} & The universal layout fragment: featured + breadcrumbs + columns + featured-footer. \\
+\texttt{widgets-rows.tpl} & The template that iterates the widget tree and emits \texttt{\{\%widget\_name\%\}} tokens. \\
+\texttt{only:} prefix & A position prefix that loads only per-object widgets, skipping the default tree. Used by embedded pages. \\
+Per-entity template override & EAV \texttt{property('style', 'view')} returns a template path; falls back to config default; falls back to \texttt{choroni/}. \\
+\texttt{page\_embed.tpl} & Simplified layout for embedded pages (no side columns). Used by the menu system's \texttt{submenu\_type = 'page\_id'}. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+\end{document}

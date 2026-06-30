@@ -1,9 +1,9 @@
 # Necoyoad Architecture Blueprint
 
-This folder contains the seven-volume reverse-engineered architecture
+This folder contains the eight-volume reverse-engineered architecture
 blueprint of the Necoyoad web application.
 
-## Seven Volumes
+## Eight Volumes
 
 | Volume | Focus | Pages | Based on |
 |--------|-------|-------|----------|
@@ -14,6 +14,7 @@ blueprint of the Necoyoad web application.
 | **v5** | Deep dive: multi-store/multi-language architecture | 21 | store_id + language_id composition, polymorphic object spine |
 | **v6** | Deep dive: the admin back-office | 12 | AdminController, file manager, visual editors |
 | **v7** | Deep dive: menu links in admin and apps | 12 | Menu/menu_link system, links widget, tree composition |
+| **v8** | Deep dive: CMS posts/pages and widget composition | 15 | How posts/pages share a table, dynamic vs manual widget composition |
 
 ## Files
 
@@ -40,26 +41,32 @@ blueprint of the Necoyoad web application.
 | `necoyoad_architecture_blueprint_v7_menu_links.pdf` | **v7** final PDF. |
 | `necoyoad_architecture_blueprint_v7_menu_links.tex` | v7 LaTeX source. |
 | `cover_v7.html` | v7 cover HTML. |
+| `necoyoad_architecture_blueprint_v8_cms_widget_composition.pdf` | **v8** final PDF. |
+| `necoyoad_architecture_blueprint_v8_cms_widget_composition.tex` | v8 LaTeX source. |
+| `cover_v8.html` | v8 cover HTML. |
 
 ## Stance
 
-All seven documents are **descriptive, not prescriptive**. They document
+All eight documents are **descriptive, not prescriptive**. They document
 how the system *is*. No improvements or modernisations are proposed.
 
-## v6: The Admin Back-Office
+## v8: CMS Posts/Pages and Widget Composition
 
-v6 covers the 70+ admin controllers, the AdminController declarative
-CRUD base (1,244 lines), the file manager (688 lines), the visual
-editors (1,853 lines), admin authentication and RBAC, and the
-843-line route-aware map.php preloader. 443 PHP files across 22
-controller folders.
+v8 covers how posts and pages share the `post` table (discriminated by
+`post_type`), how every CMS page is a widget composition surface, and
+how widgets can be composed in three modes:
 
-## v7: Menu Links in Admin and Apps
+- **Dynamic composition**: the admin configures widgets via the visual
+  editor; `widgets-rows.tpl` emits `{%widget_name%}` placeholders;
+  `Controller::fetch()` substitutes them at render time.
+- **Manual composition**: a template author hardcodes
+  `{%widget_name%}` tokens directly in a `.tpl` file, bypassing the
+  admin widget manager. Requires matching widget instances in the admin.
+- **Hybrid composition**: a template combines dynamic sections (via
+  `widgets-common.tpl`) with hardcoded sections (custom HTML, SVG, etc.).
 
-v7 covers the menu and menu_link system: admin CRUD (via
-AdminController), the model's on('save')/on('delete') hooks for
-tree management, the storefront's recursive getLinks() method, the
-links widget module, three submenu types (children, page_id,
-html_content), and the EAV property + polymorphic description tables
-for per-link metadata and localisation. The menu system is a microcosm
-that exercises every cross-cutting pattern in the platform.
+Also covers: per-entity template override via EAV
+`property('style', 'view')`, the `widgets-common.tpl` universal layout
+fragment, the `only:` position prefix for embedded pages, and the
+`page_embed.tpl` simplified layout used by the menu system's
+`submenu_type = 'page_id'`.

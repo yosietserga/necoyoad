@@ -5,7 +5,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
     @page { size: 794px 1123px; margin: 0; }
-    :root { --c-bg: #0F2A1D; --c-accent: #5BA88A; --c-text: #FFFFFF; --c-muted: #9CB8A8; --c-mono: #C8D8CE; }
+    :root { --c-bg: #1A0D2A; --c-accent: #A855F7; --c-text: #FFFFFF; --c-muted: #C8A8D8; --c-mono: #D8C8F0; }
     html, body { margin: 0; padding: 0; width: 794px; height: 1123px; background: var(--c-bg); color: var(--c-text); font-family: 'Inter', sans-serif; }
     @media screen { html { height: auto; display: flex; justify-content: center; min-height: 100vh; background: var(--c-bg); } body { transform-origin: top center; scale: min(1, calc(100vw / 794), calc(100vh / 1123)); margin: 0 auto; box-shadow: 0 0 60px rgba(0,0,0,0.3); } }
     .cover { width: 794px; height: 1123px; position: relative; display: flex; flex-direction: column; align-items: center; box-sizing: border-box; }
@@ -28,17 +28,17 @@
     <div class="rule-top"></div>
     <div class="rule-bottom"></div>
     <div class="center-block">
-      <div class="label">Architecture Blueprint &middot; Menu Links System</div>
+      <div class="label">Architecture Blueprint &middot; CMS Posts/Pages and Widget Composition</div>
       <div class="title">Necoyoad</div>
-      <div class="version-badge">v7</div>
-      <div class="subtitle">The menu and menu_link system: admin CRUD,<br>storefront rendering via the links widget, and tree composition</div>
+      <div class="version-badge">v8</div>
+      <div class="subtitle">How posts and pages share a table, how widgets compose<br>with them dynamically and manually, and how templates<br>can be overridden per entity</div>
       <div class="meta-table">
-        <span class="k">scope:</span> menu/menu_link tables, admin controller (495 lines),<br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;admin model (274 lines), storefront model, links widget,<br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;10+ link templates, EAV property + description tables<br>
-        <span class="k">findings:</span> recursive tree (N+1 queries), 3 submenu types,<br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var_dump in production, every cross-cutting pattern<br>
-        <span class="k">listings:</span> 8 PHP &middot; <span class="k">pages:</span> 11
+        <span class="k">scope:</span> post table (shared by posts/pages), content controllers,<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;widgets-common.tpl, widgets-rows.tpl, per-entity template<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;override, only: prefix, page_embed.tpl, landing pages<br>
+        <span class="k">findings:</span> every CMS page is a widget composition surface,<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dynamic vs manual vs hybrid composition, only: optimisation<br>
+        <span class="k">listings:</span> 12 PHP &middot; <span class="k">pages:</span> 14
       </div>
       <div class="authors">Reverse-Engineered Architecture Report</div>
       <div class="institution">Verified against PHP source commit ce75adf<br>github.com/yosietserga/necoyoad</div>
