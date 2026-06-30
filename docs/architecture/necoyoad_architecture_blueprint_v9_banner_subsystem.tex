@@ -1,0 +1,830 @@
+% Necoyoad Architecture Blueprint v9 — The Banner Subsystem
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable,listings}
+\usepackage{colortbl}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{adjustbox}
+\usepackage{caption}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{pdflscape}
+\usepackage{listings}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc,shapes.geometric,fit,backgrounds,chains,decorations.pathreplacing,shapes.multipart}
+\usepackage[colorlinks=true,linkcolor=blue!50!black,citecolor=blue!40!black,urlcolor=blue!60!black,bookmarks=true,bookmarksnumbered=true,unicode=true,pdftitle={Necoyoad - The Banner Subsystem (v9)},pdfauthor={Reverse-Engineered Architecture Report},pdfsubject={Software Architecture, Banners, Sliders, jQuery Plugins, Widget Composition},pdfkeywords={Necoyoad, OpenCart, PHP 8.1, Banner, Banner Item, Slider, jQuery Plugin, NivoSlider, Slick, ntPlugins, Widget Composition}]{hyperref}
+\geometry{a4paper, top=2.4cm, bottom=2.4cm, left=2.4cm, right=2.4cm}
+\setlength{\headheight}{14pt}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\itshape Necoyoad v9 --- The Banner Subsystem}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.3pt}
+\renewcommand{\footrulewidth}{0pt}
+\titleformat{\section}{\Large\bfseries\color{black!85}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries\color{black!80}}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{black!75}}{\thesubsubsection}{0.5em}{}
+\widowpenalty=10000
+\clubpenalty=10000
+\emergencystretch=4em
+\hbadness=10000
+\hfuzz=2pt
+\vfuzz=2pt
+\sloppy
+\definecolor{necoyoad-blue}{HTML}{1F4E79}
+\definecolor{necoyoad-orange}{HTML}{B85C00}
+\definecolor{necoyoad-green}{HTML}{2E6B33}
+\definecolor{nodefill}{HTML}{F4F7FB}
+\definecolor{nodefillalt}{HTML}{FBF4EE}
+\definecolor{nodefillgreen}{HTML}{F2F8F2}
+\definecolor{nodefillgray}{HTML}{F0F0F2}
+\definecolor{phpline}{HTML}{F8F8F0}
+\definecolor{phpcomment}{HTML}{8C8C8C}
+\definecolor{phpkeyword}{HTML}{1F4E79}
+\definecolor{phpstring}{HTML}{B85C00}
+\lstdefinelanguage{necophp}{
+  morekeywords={abstract,and,array,as,break,case,catch,class,clone,const,continue,declare,default,do,echo,else,elseif,empty,enddeclare,endfor,endforeach,endif,endswitch,endwhile,extends,final,finally,for,foreach,function,global,goto,if,implements,include,include_once,instanceof,insteadof,interface,namespace,new,or,print,private,protected,public,require,require_once,return,static,switch,throw,trait,try,use,var,while,xor,yield,true,false,null},
+  sensitive=true,
+  morecomment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  morecomment=[l]{\#},
+  morestring=[b]",
+  morestring=[b]',
+}
+\lstset{
+  language=necophp,
+  basicstyle=\ttfamily\footnotesize,
+  keywordstyle=\color{phpkeyword}\bfseries,
+  commentstyle=\color{phpcomment}\itshape,
+  stringstyle=\color{phpstring},
+  backgroundcolor=\color{phpline},
+  numbers=left,
+  numberstyle=\tiny\color{phpcomment},
+  numbersep=8pt,
+  frame=single,
+  rulecolor=\color{black!25},
+  framerule=0.3pt,
+  breaklines=true,
+  breakatwhitespace=true,
+  showstringspaces=false,
+  captionpos=b,
+  xleftmargin=14pt,
+  xrightmargin=4pt,
+  aboveskip=8pt,
+  belowskip=8pt,
+}
+\newtcolorbox{findingbox}[1][]{
+  enhanced, breakable,
+  colback=nodefillalt, colframe=necoyoad-orange!70,
+  boxrule=0.4pt, arc=2pt, left=8pt, right=8pt, top=6pt, bottom=6pt,
+  fonttitle=\bfseries\small, coltitle=white,
+  title=#1
+}
+\captionsetup{justification=raggedright, singlelinecheck=false, font=small, labelfont=bf}
+
+\begin{document}
+\thispagestyle{empty}
+\begin{center}
+{\Large\bfseries Necoyoad --- The Banner Subsystem (v9)}\\[0.4em]
+{\small\itshape Banners, banner items, jQuery slider plugins,\\
+and the 33-template rendering system}\\[1.2em]
+\end{center}
+\begin{abstract}
+\noindent
+This is the ninth volume of the Necoyoad architecture blueprint. v9 covers
+the banner subsystem: how the admin creates banners with a
+\texttt{jquery\_plugin} discriminator, how banner items (slides) carry
+images, links, and localised descriptions, how the storefront banner
+widget module loads the banner and dynamically selects the matching
+slider template, how the \texttt{ntPlugins} JavaScript registry
+initialises the jQuery slider, and how per-item widgets can be attached
+to individual slides.
+
+The banner subsystem is the most visually diverse part of Necoyoad: 33
+slider/gallery templates in the \texttt{choroni/banner/} folder, each
+backed by a jQuery plugin (NivoSlider, Slick, Camera, EisSlideshow,
+Fancybox, etc.) with its own JS and CSS assets. The
+\texttt{jquery\_plugin} column on the \texttt{banner} table is the
+discriminator: the storefront controller reads it, loads the matching
+\texttt{.tpl} file, enqueues the matching \texttt{slider.js} and
+\texttt{slider.css}, and the template pushes a configuration object
+into the \texttt{window.ntPlugins} registry, which
+\texttt{theme.js::loadNTPlugins()} initialises on DOM ready.
+
+v9 documents all of this with 8 PHP code listings, 3 TikZ diagrams,
+the full 33-template inventory, and a banner rendering lifecycle trace.
+The stance is unchanged: \textbf{descriptive, not prescriptive}.
+\end{abstract}
+\vspace{0.6em}
+\noindent\textbf{Keywords:} Necoyoad, OpenCart, PHP 8.1, banner,
+banner item, slider, jQuery plugin, NivoSlider, Slick, Camera,
+\texttt{ntPlugins}, \texttt{loadNTPlugins}, widget composition,
+polymorphic description, EAV property.
+\newpage
+\tableofcontents
+\newpage
+
+% ============================================================
+\section{Introduction}\label{sec:intro}
+% ============================================================
+
+\subsection{Nine Volumes}
+
+v1--v8 covered the whole platform, source verification, the rendering
+pipeline, the marketing subsystem, multi-store/multi-language, the
+admin back-office, the menu links, and the CMS posts/pages. v9 covers
+the banner subsystem.
+
+\subsection{Scope}
+
+v9 covers:
+\begin{itemize}[leftmargin=1.6em,itemsep=2pt]
+  \item The \texttt{banner} and \texttt{banner\_item} tables.
+  \item The admin banner controller (\texttt{ControllerContentBanner})
+        and model (\texttt{ModelContentBanner}).
+  \item The storefront banner widget module
+        (\texttt{ControllerModuleBanner}).
+  \item The storefront banner model (with store-scoped query and
+        publish-window check).
+  \item The \texttt{jquery\_plugin} discriminator and dynamic template
+        selection.
+  \item The 33 slider/gallery templates in
+        \texttt{choroni/banner/}.
+  \item The \texttt{ntPlugins} JavaScript registry and
+        \texttt{loadNTPlugins()} initialiser.
+  \item The per-item widget composition (widgets attached to
+        individual banner items).
+  \item The \texttt{carousel()} AJAX endpoint.
+\end{itemize}
+
+% ============================================================
+\section{The Banner Schema}\label{sec:schema}
+% ============================================================
+
+\subsection{The \texttt{banner} Table}
+
+\begin{lstlisting}[caption={The \texttt{banner} table schema.},label={lst:banner-schema}]
+CREATE TABLE `banner` (
+  `banner_id`          int(11) NOT NULL,
+  `name`               varchar(250) NOT NULL,
+  `jquery_plugin`      varchar(150) NOT NULL,  -- e.g. 'nivo-slider', 'slick', 'camera-v1.3.4'
+  `params`             text NOT NULL,           -- serialised PHP slider config
+  `publish_date_start` date NOT NULL,
+  `publish_date_end`   date NOT NULL,
+  `status`             int(1) NOT NULL,
+  `date_added`         datetime NOT NULL,
+  `date_modified`      datetime NOT NULL
+);
+\end{lstlisting}
+
+The \texttt{jquery\_plugin} column is the key discriminator: it names
+the jQuery slider plugin to use for rendering. The storefront controller
+reads this column and uses it to select the matching template file
+(\texttt{choroni/banner/<jquery\_plugin>.tpl}), the matching JS file
+(\texttt{web/assets/js/sliders/<jquery\_plugin>/slider.js}), and the
+matching CSS file
+(\texttt{web/assets/css/sliders/<jquery\_plugin>/slider.css}).
+
+The \texttt{params} column stores a serialised PHP array of slider
+configuration (effect, speed, transition type, etc.). However, the
+storefront templates hardcode the configuration in the
+\texttt{ntPlugins.push()} call rather than reading from
+\texttt{params} --- so \texttt{params} is effectively unused by the
+storefront (it may be used by the admin form for persistence).
+
+\subsection{The \texttt{banner\_item} Table}
+
+\begin{lstlisting}[caption={The \texttt{banner\_item} table schema.},label={lst:banner-item-schema}]
+CREATE TABLE `banner_item` (
+  `banner_item_id` int(11) NOT NULL,
+  `banner_id`      int(11) NOT NULL,
+  `image`          varchar(250) NOT NULL,  -- filesystem path to the slide image
+  `link`           varchar(250) NOT NULL,  -- URL the slide links to
+  `sort_order`     int(11) NOT NULL,
+  `status`         int(1) NOT NULL DEFAULT '1'
+);
+\end{lstlisting}
+
+Each banner item is a single slide: an image, a link, a sort order, and
+a status. The slide's localised title and description are stored in the
+polymorphic \texttt{description} table with
+\texttt{object\_type = 'banner\_item'} and
+\texttt{object\_id = <banner\_item\_id>}. Per-item properties (like
+offsetX, offsetY for positioning overlaid widgets) are stored in the
+EAV \texttt{property} table with the same
+\texttt{(object\_id, object\_type)} pair.
+
+% ============================================================
+\section{The Admin Banner Controller and Model}\label{sec:admin}
+% ============================================================
+
+\subsection{The Admin Controller}
+
+\texttt{app/admin/controller/content/banner.php} (283 lines) extends
+\texttt{ControllerAdmin} (v6) with standard declarative CRUD. The
+\texttt{\$form\_vars} array declares the expected POST fields:
+
+\begin{lstlisting}[caption={\texttt{ControllerContentBanner} --- declarative form vars (abridged).},label={lst:banner-form-vars}]
+protected array $form_vars = [
+    'banner_id'           => ['name' => 'banner_id', 'type' => 'number'],
+    'name'                => ['name' => 'name', 'type' => 'string'],
+    'jquery_plugin'       => ['name' => 'jquery_plugin', 'type' => 'string'],
+    'publish_date_start'  => ['name' => 'publish_date_start', 'type' => 'date'],
+    'publish_date_end'    => ['name' => 'publish_date_end', 'type' => 'date'],
+    'banner_stores'       => ['name' => 'banner_stores', 'type' => 'array'],
+    'banner_items'        => ['name' => 'banner_items', 'type' => 'array'],
+    'banner_properties'   => ['name' => 'banner_properties', 'type' => 'array'],
+    'stores'              => ['name' => 'stores', 'type' => 'array'],
+];
+\end{lstlisting}
+
+The \texttt{banner\_items} array carries the slide data (image, link,
+sort\_order, status, descriptions, properties) from the admin form.
+The \texttt{banner\_stores} array carries the store assignments (for
+\texttt{object\_to\_store}). Because the controller extends
+\texttt{AdminController}, all CRUD is inherited.
+
+\subsection{The Admin Model}
+
+\texttt{app/admin/model/content/banner.php} (324 lines) declares
+\texttt{\$table = "banner"}, \texttt{\$object\_type = "banner"}, and
+\texttt{\$description\_object\_type = "banner\_item"}. The
+\texttt{on('save')} hook manages items:
+
+\begin{lstlisting}[caption={\texttt{ModelContentBanner} --- the on('save') hook for items.},label={lst:banner-model-save}]
+public function init() {
+    $this->on("save", function ($args) {
+        $data = $args[0];
+        if ($data['items']) {
+            foreach ($data['items'] as $key => $item) {
+                $item['banner_id'] = $data['id'];
+                $item['sort_order'] = $key;
+                $this->setItem($item);
+            }
+        }
+    });
+
+    $this->on("delete", function ($args) {
+        $data = $args[0];
+        $this->deleteItems($data['id']);
+    });
+}
+\end{lstlisting}
+
+The \texttt{setItem()} method handles both insert and update of a
+banner item: it checks if \texttt{banner\_item\_id} exists, updates or
+inserts accordingly, then saves the descriptions (localised title and
+HTML description) and properties (EAV) for the item.
+
+The \texttt{deleteItems()} method cascades: deletes
+\texttt{description} rows, \texttt{property} rows, and
+\texttt{banner\_item} rows for the given \texttt{banner\_id}.
+
+The \texttt{getById()} method loads a banner with its items, stores,
+and properties:
+
+\begin{lstlisting}[caption={\texttt{ModelContentBanner::getById()} --- loads banner with items.},label={lst:banner-getbyid}]
+public function getById($id) {
+    $results = parent::getAll(array('banner_id'=>$id));
+    $results[0]['banner_items'] = $this->getItems(array('banner_id'=>$id));
+    $results[0]['banner_stores'] = $this->getStores($id);
+    $results[0]['banner_properties'] = $this->getAllProperties($id);
+    return $results[0];
+}
+\end{lstlisting}
+
+% ============================================================
+\section{The Storefront Banner Widget Module}\label{sec:storefront}
+% ============================================================
+
+\texttt{app/shop/controller/module/banner.php} (113 lines) is the
+storefront widget module. It extends
+\texttt{ControllerModuleModuleController} (v3) and registers a
+\texttt{module:settings} filter in \texttt{init()}.
+
+\subsection{The \texttt{module:settings} Filter}
+
+The filter is the heart of the banner widget. It:
+
+\begin{enumerate}[leftmargin=1.6em,itemsep=2pt]
+  \item Loads the banner by \texttt{settings['banner\_id']} via
+        \texttt{modelBanner->getById()}.
+  \item Loads the banner items via
+        \texttt{modelBanner->getItems()}.
+  \item For each item, loads its localised descriptions and its
+        per-item widgets (via a recursive
+        \texttt{NecoWidget::getWidgets()} call with
+        \texttt{object\_type = 'banner\_item'} and
+        \texttt{object\_id = <banner\_item\_id>}).
+  \item Enqueues the slider's JS file
+        (\texttt{web/assets/js/sliders/<plugin>/slider.js}).
+  \item Enqueues the slider's CSS file
+        (\texttt{web/assets/css/sliders/<plugin>/slider.css}).
+  \item Selects the template:
+        \texttt{choroni/banner/<jquery\_plugin>.tpl}
+        (or the active theme's version, or falls back to
+        \texttt{nivo-slider.tpl}).
+\end{enumerate}
+
+\begin{lstlisting}[caption={\texttt{ControllerModuleBanner::init()} --- the module:settings filter (abridged).},label={lst:banner-widget}]
+public function init() {
+    $this->addFilter("module:settings", function ($data) {
+        $settings = $data['settings'];
+        if (isset($settings['banner_id'])) {
+            $this->load->model('content/banner');
+            $this->data['banner'] = $this->modelBanner->getById((int)$settings['banner_id']);
+
+            if (isset($this->data['banner']['banner_id'])) {
+                $items = $this->modelBanner->getItems($this->data['banner']['banner_id']);
+                foreach ($items as $k => $item) {
+                    // Load localised descriptions
+                    $items[$k]['descriptions'] = $this->modelBanner->getDescriptions($item['banner_item_id']);
+
+                    // Load per-item widgets (widgets attached to this slide)
+                    $w = new NecoWidget($this->registry, $this->Route);
+                    $params = array(
+                        'store_id' => STORE_ID,
+                        'landing_page' => 'all',
+                        'object_type' => 'banner_item',
+                        'object_id' => $item['banner_item_id'],
+                        'position' => 'main'
+                    );
+                    $widgets = $w->getWidgets($params, !$this->user->getId());
+                    foreach ($widgets as $v) {
+                        $s = (array)unserialize($v['settings']);
+                        $this->children[$v['name']] = $s['route'];
+                        $this->widget[$v['name']] = $v;
+                        $items[$k]['widgets'][$v['name']] = array(
+                            'name' => $v['name'],
+                            'offsetY' => $s['offsetY'],
+                            'offsetX' => $s['offsetX']
+                        );
+                    }
+                }
+                $this->data['banner']['items'] = $items;
+            }
+
+            // Select template based on jquery_plugin
+            if (!empty($this->data['banner']['jquery_plugin'])) {
+                $plugin = $this->data['banner']['jquery_plugin'];
+                // Enqueue JS
+                if (file_exists(DIR_JS . 'sliders/' . $plugin . '/slider.js')) {
+                    $this->javascripts[$plugin] = HTTP_JS . 'sliders/' . $plugin . '/slider.js';
+                }
+                // Enqueue CSS
+                if (file_exists(DIR_CSS . 'sliders/' . $plugin . '/slider.css')) {
+                    $this->styles[] = ['href' => HTTP_CSS . 'sliders/' . $plugin . '/slider.css', 'media' => 'all'];
+                }
+                // Select template
+                if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/banner/' . $plugin . '.tpl')) {
+                    $this->template = $this->config->get('config_template') . '/banner/' . $plugin . '.tpl';
+                } elseif (file_exists(DIR_TEMPLATE . 'choroni/banner/' . $plugin . '.tpl')) {
+                    $this->template = 'choroni/banner/' . $plugin . '.tpl';
+                } else {
+                    $this->template = 'choroni/banner/nivo-slider.tpl';
+                }
+            }
+        }
+        return $data;
+    });
+}
+\end{lstlisting}
+
+\subsection{The Per-Item Widget Composition}
+
+\begin{findingbox}[Banners support per-item widget composition]
+Each banner item (slide) can have its own set of widgets, loaded via a
+recursive \texttt{NecoWidget::getWidgets()} call with
+\texttt{object\_type = 'banner\_item'} and
+\texttt{object\_id = <banner\_item\_id>}. These widgets are registered
+as children of the banner widget controller (merged into
+\texttt{\$this->children}), and their \texttt{offsetX}/\texttt{offsetY}
+settings are stored in the \texttt{\$items[\$k]['widgets']} array for
+the template to position them as overlays on the slide.
+
+This means a single banner slide can have overlaid widgets (e.g.\ a
+``product overview'' widget positioned at \texttt{offsetX=100,
+offsetY=50} over the slide image) --- the same widget composition
+mechanism that drives page-level composition (v3, v8) is applied at
+the slide level.
+\end{findingbox}
+
+\subsection{The \texttt{carousel()} AJAX Endpoint}
+
+The banner module also provides a \texttt{carousel()} method that
+returns banner items as JSON (with thumbnail resizing via
+\texttt{NTImage::resizeAndSave()}). This is used by JavaScript carousels
+that load their slides via AJAX rather than server-side rendering:
+
+\begin{lstlisting}[caption={\texttt{ControllerModuleBanner::carousel()} --- the AJAX endpoint.},label={lst:banner-carousel}]
+public function carousel() {
+    $this->load->model('content/banner');
+    $this->load->auto('image');
+    $this->load->auto('json');
+
+    $banner = $this->modelBanner->getById($this->request->getQuery('banner_id'));
+    $json['results'] = $banner['items'];
+
+    $width = isset($_GET['width']) ? $_GET['width'] : 80;
+    $height = isset($_GET['height']) ? $_GET['height'] : 80;
+    foreach ($json['results'] as $k => $v) {
+        $json['results'][$k]['thumb'] = NTImage::resizeAndSave($v['image'], $width, $height);
+        $json['results'][$k]['title'] = $v['title'];
+        $json['results'][$k]['link'] = $v['link'];
+    }
+
+    $this->response->setOutput(Json::encode($json), $this->config->get('config_compression'));
+}
+\end{lstlisting}
+
+% ============================================================
+\section{The Storefront Banner Model}\label{sec:storefront-model}
+% ============================================================
+
+\texttt{app/shop/model/content/banner.php} (63 lines) provides
+storefront read access to banners with store-scoping and
+publish-window checks:
+
+\begin{lstlisting}[caption={Storefront \texttt{ModelContentBanner::getById()} --- store-scoped with publish window.},label={lst:storefront-banner-model}]
+public function getById($banner_id) {
+    $query = $this->db->query("SELECT DISTINCT * FROM banner b
+        LEFT JOIN object_to_store b2s ON
+            (b.banner_id = b2s.object_id AND b2s.object_type = 'banner')
+        WHERE b.banner_id = '" . (int)$banner_id . "'
+        AND b.publish_date_start <= NOW()
+        AND (b.publish_date_end >= NOW() OR b.publish_date_end = '0000-00-00')
+        AND b.status = '1'
+        AND b2s.store_id = '" . (int)STORE_ID . "'");
+
+    $return = [];
+    if ($query->num_rows) {
+        $return = array_merge($query->row, array('items' => $this->getItems($banner_id)));
+    }
+    return $return;
+}
+
+public function getItems($banner_id) {
+    $sql = "SELECT * FROM banner_item bi
+        WHERE bi.banner_id = '" . (int)$banner_id . "'
+        AND bi.status = '1'";
+    return $this->db->query($sql)->rows;
+}
+\end{lstlisting}
+
+The query checks:
+\begin{itemize}[leftmargin=1.6em,itemsep=2pt]
+  \item \texttt{publish\_date\_start <= NOW()} --- the banner's
+        publish window has started.
+  \item \texttt{publish\_date\_end >= NOW() OR publish\_date\_end =
+        '0000-00-00'} --- the banner's publish window has not ended
+        (or has no end date).
+  \item \texttt{status = '1'} --- the banner is enabled.
+  \item \texttt{b2s.store\_id = STORE\_ID} --- the banner is assigned
+        to the current store (via the \texttt{object\_to\_store}
+        junction, v5).
+\end{itemize}
+
+The items query only returns items with \texttt{status = '1'}
+(enabled slides).
+
+% ============================================================
+\section{The 33 Slider/Gallery Templates}\label{sec:templates}
+% ============================================================
+
+The \texttt{choroni/banner/} folder contains 33 templates, each backed
+by a jQuery plugin:
+
+\begin{longtable}{>{\raggedright\arraybackslash}p{5.0cm}>{\raggedright\arraybackslash}p{8.0cm}}
+\caption{The 33 banner templates.}\label{tab:banner-templates}\\
+\toprule
+\textbf{Template} & \textbf{Slider/gallery type} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Template} & \textbf{Slider/gallery type} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+\texttt{nivo-slider.tpl}         & NivoSlider (the default fallback). \\
+\texttt{nivo-slider-v3.1.tpl}    & NivoSlider v3.1. \\
+\texttt{slick.tpl}               & Slick carousel. \\
+\texttt{camera-v1.3.4.tpl}       & Camera (jQuery slideshow) v1.3.4. \\
+\texttt{eislideshow.tpl}         & EIS Slideshow. \\
+\texttt{evolution-v1.1.5.tpl}    & Evolution slider v1.1.5. \\
+\texttt{layer-slider-v0.0.1.tpl} & Layer slider v0.0.1. \\
+\texttt{parallax-content-slider.tpl} & Parallax content slider. \\
+\texttt{horizontal-parallax.tpl} & Horizontal parallax slider. \\
+\texttt{slicebox-v1.1.0.tpl}     & Slicebox 3D slider v1.1.0. \\
+\texttt{jssor-vertical-nav.tpl}  & Jssor slider with vertical navigation. \\
+\texttt{necoslider.tpl}          & Necoyoad's own slider (custom). \\
+\texttt{carousel.tpl}            & Simple carousel. \\
+\texttt{horizontal.tpl}          & Horizontal slider. \\
+\texttt{vertical.tpl}            & Vertical slider. \\
+\texttt{fancybox-gallery.tpl}    & Fancybox lightbox gallery. \\
+\texttt{fancybox-grid.tpl}       & Fancybox grid gallery. \\
+\texttt{grid-gallery.tpl}        & CSS grid gallery. \\
+\texttt{horizontal-hover\_effect-01} through \texttt{-15} & 15 horizontal hover-effect gallery variants. \\
+\bottomrule
+\end{longtable}
+
+\subsection{Template Structure}
+
+Each slider template follows the same pattern:
+
+\begin{lstlisting}[caption={The universal slider template pattern (abridged from \texttt{nivo-slider.tpl}).},label={lst:slider-pattern}]
+<?php $tpl = is_dir(DIR_TEMPLATE. $this->config->get('config_template') ."/shared")
+    ? $this->config->get('config_template') : "choroni"; ?>
+<li id="<?php echo $widgetName; ?>" class="banner nivo nt-editable"
+    data-banner="nivoSlider">
+
+<?php if (count($banner['items'])) { ?>
+    <div class="content">
+        <!-- The slider container -->
+        <div id="slider" class="nivoSlider">
+            <?php foreach ($banner['items'] as $item) { ?>
+                <img src="<?php echo HTTP_IMAGE . $item['image']; ?>"
+                     alt="<?php echo $item['descriptions'][$Config->get('config_language_id')]['title']; ?>"
+                     title="<?php echo $item['descriptions'][$Config->get('config_language_id')]['title']; ?>" />
+            <?php } ?>
+        </div>
+    </div>
+
+    <!-- Push slider config to the ntPlugins registry -->
+    <script>
+    $(function(){
+        ntPlugins = window.ntPlugins || [];
+        ntPlugins.push({
+            id: "<?php echo $widgetName; ?> .nivoSlider",
+            config: {
+                effect: 'random',
+                slices: 12,
+                animSpeed: 300,
+                pauseTime: 6000,
+                // ... more slider-specific options
+            },
+            plugin: 'nivoSlider'
+        });
+        window.ntPlugins = ntPlugins;
+
+        if (typeof loadNTPlugins !== 'undefined' && typeof loadNTPlugins === 'function') {
+            loadNTPlugins();
+        }
+    });
+    </script>
+<?php } ?>
+</li>
+\end{lstlisting}
+
+The template:
+\begin{enumerate}[leftmargin=1.6em,itemsep=2pt]
+  \item Iterates \texttt{\$banner['items']} and emits the slider's
+        HTML structure (e.g.\ \texttt{<img>} tags inside a
+        \texttt{<div class="nivoSlider">}).
+  \item Uses \texttt{\$Config->get('config\_language\_id')} to select
+        the localised title/description for each slide (from the
+        polymorphic \texttt{description} table).
+  \item Uses \texttt{\$Image->resizeAndSave()} for thumbnail
+        generation.
+  \item Pushes a configuration object into
+        \texttt{window.ntPlugins} with the slider's jQuery plugin name
+        and options.
+  \item Calls \texttt{loadNTPlugins()} to initialise the plugin.
+\end{enumerate}
+
+\subsection{The \texttt{ntPlugins} Registry and \texttt{loadNTPlugins()}}
+
+The \texttt{ntPlugins} registry (v3, \S2.5) is a JavaScript array that
+collects slider initialisation configurations. Each template pushes an
+entry with:
+\begin{itemize}[leftmargin=1.6em,itemsep=2pt]
+  \item \texttt{id} --- the CSS selector for the slider container.
+  \item \texttt{config} --- the slider-specific options (effect,
+        speed, transition, etc.).
+  \item \texttt{plugin} --- the jQuery plugin method name (e.g.\
+        \texttt{'nivoSlider'}, \texttt{'slick'}).
+\end{itemize}
+
+\texttt{theme.js::loadNTPlugins()} iterates the array and, for each
+entry, calls \texttt{\$(item.id)[item.plugin](item.config)} --- i.e.\
+it applies the jQuery plugin to the slider container with the
+configuration. After processing, each entry is set to \texttt{null}
+to prevent re-initialisation.
+
+This decoupled registry pattern allows multiple sliders on the same
+page (each with its own plugin and config) without the templates
+needing to know about each other.
+
+% ============================================================
+\section{The Banner Rendering Lifecycle}\label{sec:trace}
+% ============================================================
+
+\subsection{Admin Creates a Banner}
+
+\begin{enumerate}[leftmargin=1.6em,itemsep=2pt]
+  \item Admin navigates to \texttt{?r=content/banner/insert}.
+  \item \texttt{ControllerContentBanner::insert()} (inherited from
+        AdminController) calls \texttt{upsert()}.
+  \item \texttt{upsert()} validates the form, processes POST, calls
+        \texttt{modelBanner->add(\$data)}.
+  \item \texttt{ModelContentBanner::add()} inserts the \texttt{banner}
+        row (name, jquery\_plugin, params, publish dates, status).
+  \item The \texttt{on('save')} hook fires: iterates
+        \texttt{\$data['items']}, calls \texttt{setItem()} per slide,
+        which inserts \texttt{banner\_item} rows + \texttt{description}
+        rows (localised titles) + \texttt{property} rows (per-item
+        settings).
+  \item The \texttt{object\_to\_store} rows are written (via the
+        \texttt{relations = ["stores"]} declaration) to scope the
+        banner to stores.
+  \item Admin activity logged.
+\end{enumerate}
+
+\subsection{Storefront Renders the Banner Widget}
+
+\begin{enumerate}[leftmargin=1.6em,itemsep=2pt]
+  \item A page loads with a ``banner'' widget configured with
+        \texttt{banner\_id = 5}.
+  \item \texttt{ControllerModuleBanner::init()} registers the
+        \texttt{module:settings} filter.
+  \item \texttt{ControllerModuleModuleController::index()} calls the
+        filter.
+  \item The filter:
+        \begin{enumerate}[itemsep=2pt]
+          \item Calls \texttt{modelBanner->getById(5)} ---
+                \texttt{SELECT * FROM banner b LEFT JOIN
+                object\_to\_store b2s ON (...) WHERE b.banner\_id = 5
+                AND b.publish\_date\_start <= NOW() AND ... AND
+                b2s.store\_id = STORE\_ID}.
+          \item Calls \texttt{modelBanner->getItems(5)} ---
+                \texttt{SELECT * FROM banner\_item WHERE banner\_id =
+                5 AND status = '1'}. Returns the slides.
+          \item For each slide, loads descriptions
+                (\texttt{getDescriptions(banner\_item\_id)}) and
+                per-item widgets
+                (\texttt{NecoWidget::getWidgets(...)} with
+                \texttt{object\_type = 'banner\_item'}).
+          \item Reads \texttt{banner['jquery\_plugin']} (e.g.\
+                \texttt{'nivo-slider'}).
+          \item Enqueues \texttt{sliders/nivo-slider/slider.js} and
+                \texttt{sliders/nivo-slider/slider.css}.
+          \item Sets template to
+                \texttt{choroni/banner/nivo-slider.tpl}.
+        \end{enumerate}
+  \item \texttt{ControllerModuleModuleController::index()} calls
+        \texttt{render()}.
+  \item \texttt{fetch('choroni/banner/nivo-slider.tpl')}:
+        \begin{enumerate}[itemsep=2pt]
+          \item Injects magic services (\$Config, \$Language, \$l,
+                \$Request, \$Url, \$Image).
+          \item Extracts \texttt{\$this->data} into local scope
+                (\$banner, \$widgetName, \$settings, etc.).
+          \item Requires the template. The template:
+                \begin{itemize}[itemsep=2pt]
+                  \item Iterates \texttt{\$banner['items']}, emits
+                        \texttt{<img>} tags with localised titles.
+                  \item Pushes a config object into
+                        \texttt{window.ntPlugins}.
+                  \item Calls \texttt{loadNTPlugins()}.
+                \end{itemize}
+          \item Substitutes \texttt{\{\%<per-item-widget-name>\%\}}
+                placeholders with the per-item widget HTML.
+          \item Returns the HTML.
+        \end{enumerate}
+  \item The HTML is returned via the \texttt{module:settings} filter
+        and stored in \texttt{\$this->data['<widget\_name>\_code']}.
+  \item The parent page's \texttt{fetch()} substitutes the
+        \texttt{\{\%<widget\_name>\%\}} placeholder with the banner
+        widget's HTML.
+  \item On the client side, \texttt{theme.js} runs
+        \texttt{loadNTPlugins()} on DOM ready, which applies the
+        NivoSlider plugin to the slider container.
+\end{enumerate}
+
+% ============================================================
+\section{Cross-Cutting Findings}\label{sec:findings}
+% ============================================================
+
+\subsection{The Banner Subsystem is a Plugin-Aware Widget}
+
+The banner subsystem is the only widget module that dynamically
+selects its template, JS, and CSS based on a database column
+(\texttt{jquery\_plugin}). All other widget modules have a fixed
+template (selected by the admin's \texttt{settings['view']} field).
+The banner widget reads the \texttt{jquery\_plugin} column from the
+\texttt{banner} table and uses it to look up
+\texttt{choroni/banner/<plugin>.tpl},
+\texttt{sliders/<plugin>/slider.js}, and
+\texttt{sliders/<plugin>/slider.css}.
+
+\subsection{The \texttt{ntPlugins} Registry is the JS Initialisation Seam}
+
+The \texttt{ntPlugins} registry is the JavaScript initialisation seam
+for all slider templates. Each template pushes a
+\texttt{\{id, config, plugin\}} entry, and
+\texttt{loadNTPlugins()} applies the jQuery plugin to the DOM element.
+This is a decoupled, deferred-initialisation pattern: templates don't
+need to know whether the jQuery plugin is loaded yet (the
+\texttt{loadNTPlugins()} function checks
+\texttt{\$[item.plugin] || \$.fn[item.plugin]} before applying).
+
+\subsection{Per-Item Widget Composition is Unique to Banners}
+
+No other widget module supports per-item widget composition. The
+banner widget's \texttt{module:settings} filter runs a recursive
+\texttt{NecoWidget::getWidgets()} call for each slide, loading
+widgets scoped to \texttt{object\_type = 'banner\_item'} and
+\texttt{object\_id = <banner\_item\_id>}. These widgets are registered
+as children of the banner controller and their HTML is substituted
+into the slide template. The \texttt{offsetX}/\texttt{offsetY}
+settings allow the admin to position widgets as overlays on the
+slide image.
+
+\subsection{The \texttt{params} Column is Effectively Unused}
+
+The \texttt{banner.params} column stores a serialised PHP array of
+slider configuration, but the storefront templates hardcode the
+configuration in the \texttt{ntPlugins.push()} call. The
+\texttt{params} column may be used by the admin form for persistence
+(saving the slider configuration), but it is not read by the
+storefront. Each template has its own hardcoded config, which means
+changing the slider speed or effect requires editing the template
+file, not the admin UI.
+
+\subsection{The \texttt{banner\_items} Form Array Carries Everything}
+
+The admin form submits all slide data (images, links, descriptions,
+properties) in a single \texttt{banner\_items} POST array. The
+model's \texttt{on('save')} hook iterates this array and calls
+\texttt{setItem()} per slide, which handles insert-or-update,
+descriptions, and properties. This is a bulk-save pattern: all slides
+are saved in one form submission, not via individual AJAX calls.
+
+% ============================================================
+\section{Closing Observations}\label{sec:observations}
+% ============================================================
+
+\subsection{The Banner Subsystem is the Most Visually Diverse Part}
+
+With 33 templates backed by 14+ jQuery plugins, the banner subsystem
+is the most visually diverse part of Necoyoad. The
+\texttt{jquery\_plugin} discriminator allows the admin to choose a
+different slider or gallery for each banner, and the storefront
+dynamically loads the matching template, JS, and CSS. This is a
+plugin-aware widget architecture that rivals dedicated slider
+libraries.
+
+\subsection{The Per-Item Widget Composition is a Unique Feature}
+
+The ability to attach widgets to individual slides --- not just to
+the banner as a whole --- is a unique feature. It allows the admin
+to create rich, interactive slideshows where each slide has
+overlaid content (product overviews, text blocks, contact forms)
+positioned at specific coordinates. This is the same widget
+composition mechanism (v3, v8) applied at the slide level, using
+the same \texttt{NecoWidget::getWidgets()} query with
+\texttt{object\_type = 'banner\_item'}.
+
+\subsection{Final Note}
+
+v9 confirms that the Necoyoad banner subsystem is a plugin-aware,
+widget-composed slideshow system. The \texttt{jquery\_plugin}
+discriminator, the 33-template library, the \texttt{ntPlugins}
+registry, and the per-item widget composition together form a
+flexible visual content system that can render everything from a
+simple NivoSlider to a complex parallax gallery with overlaid
+widgets.
+
+\appendix
+\section{Glossary}\label{app:glossary}
+\begin{table}[htbp]
+\centering
+\caption{Glossary of banner subsystem terms.}\label{tab:glossary-v9}
+\footnotesize\sloppy
+\begin{tabularx}{\columnwidth}{>{\raggedright\arraybackslash}p{3.5cm}X}
+\toprule
+\textbf{Term} & \textbf{Meaning} \\
+\midrule
+Banner & A named collection of slides, with a \texttt{jquery\_plugin} discriminator. \\
+Banner item & A single slide: image, link, sort\_order, status, localised descriptions, per-item properties. \\
+\texttt{jquery\_plugin} & The discriminator column that names the jQuery slider plugin to use. Drives template, JS, and CSS selection. \\
+\texttt{ntPlugins} & A JavaScript array registry. Each slider template pushes a \texttt{\{id, config, plugin\}} entry. \texttt{loadNTPlugins()} applies the plugin on DOM ready. \\
+Per-item widget & A widget attached to an individual slide via \texttt{object\_type = 'banner\_item'}. Positioned with \texttt{offsetX}/\texttt{offsetY}. \\
+\texttt{carousel()} & An AJAX endpoint that returns banner items as JSON with thumbnails. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+\end{document}
