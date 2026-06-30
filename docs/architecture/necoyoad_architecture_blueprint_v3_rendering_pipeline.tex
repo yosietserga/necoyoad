@@ -884,6 +884,111 @@ The inline mode reduces HTTP requests at the cost of larger HTML;
 the external mode allows browser caching. The choice is per-store,
 not per-page.
 
+\subsection{Async Widget Rendering}\label{sec:async-widgets}
+
+The presentation layer includes an \emph{async widget rendering}
+mechanism that allows a widget's content to be refreshed via AJAX
+without a full page reload. The source reveals three distinct
+``async'' concepts that are easily confused; v3 clarifies them
+here.
+
+\subsubsection{The \texttt{async()} Endpoint}
+
+The storefront module base
+\texttt{ControllerModuleModuleController} has a public
+\texttt{async()} method:
+
+\begin{lstlisting}[caption={\texttt{ControllerModuleModuleController::async()} --- the async widget refresh endpoint.},label={lst:async-endpoint}]
+public function async() {
+    $this->init();
+    $hasToReturn = $this->runHook("async", $this);
+    if ($hasToReturn) return $hasToReturn;
+
+    $this->load->helper('widgets');
+    $w = new NecoWidget($this->registry, $this->request->getQuery('route'));
+    $name = $this->request->hasPost('w') ? $this->request->getPost('w') : $this->request->getQuery('w');
+    $widget = $w->getWidget($name, false);
+    if ($widget) {
+        $this->index($widget, true);  // $render = true → JSON response
+    }
+}
+\end{lstlisting}
+
+When \texttt{\$render = true} is passed to \texttt{index()}, the
+widget is rendered as a JSON response containing:
+\texttt{\{id, settings, javascripts, scripts, styles, css, html\}}.
+The \texttt{html} key holds the widget's rendered HTML; the other
+keys hold the widget's CSS/JS assets. JavaScript on the client
+can call \texttt{?r=module/<name>/async\&w=<widget\_name>}, receive
+the JSON, and replace the widget's DOM element with the fresh HTML.
+
+This is an \emph{on-demand refresh} mechanism, not an
+\emph{initial-load optimisation}. During normal page load, all
+widgets (including those with the \texttt{async=on} setting) are
+rendered inline by \texttt{Controller::render()}'s child loop.
+The \texttt{async()} endpoint exists so that client-side JavaScript
+can re-render a widget after a user interaction (e.g.\ refreshing
+a ``latest products'' widget after a filter change).
+
+\subsubsection{The \texttt{data-async="1"} HTML Attribute}
+
+The \texttt{shared/widget-head.tpl} template emits
+\texttt{data-async="1"} when
+\texttt{\$settings['transition\_async']} is set:
+
+\begin{lstlisting}[caption={The \texttt{data-async} attribute in \texttt{widget-head.tpl}.},label={lst:data-async}]
+(isset($settings['transition_async']) && !empty($settings['transition_async'])
+    ? ' data-async="1"' : '') .
+\end{lstlisting}
+
+Despite the name, this attribute is for \emph{CSS transition
+animations}, not for async widget loading. The theme.js
+\texttt{animateTransition()} function reads
+\texttt{data-async} to decide whether to apply a transition
+effect when the widget appears on screen. It has nothing to do
+with the \texttt{async()} endpoint.
+
+\subsubsection{The \texttt{async=on} Widget Setting}
+
+\texttt{NecoWidget::getRows()} includes a
+\texttt{LIKE '\%async=on\%'} predicate when the caller explicitly
+passes \texttt{\$data['async'] = 1}:
+
+\begin{lstlisting}[caption={The \texttt{async=on} filter in \texttt{NecoWidget::getRows()}.},label={lst:async-setting}]
+if (isset($data['async']) && !empty($data['async'])) {
+    $criteria[] = " p.`value` LIKE '%async=on%' ";
+}
+\end{lstlisting}
+
+However, \texttt{Controller::loadWidgets()} does \emph{not} pass
+the \texttt{async} flag during normal page load. The flag is only
+passed by the admin widget manager
+(\texttt{app/admin/model/style/widget.php}) when filtering
+async-capable widgets for the admin UI. So the
+\texttt{async=on} setting is an admin-side label, not a
+storefront-side rendering directive.
+
+\subsubsection{Summary: Three Asyncs, Not One}
+
+\begin{table}[htbp]
+\centering
+\caption{The three distinct ``async'' concepts in the widget system.}\label{tab:async-three}
+\footnotesize\sloppy
+\begin{tabularx}{\columnwidth}{>{\raggedright\arraybackslash}p{2.8cm}lX}
+\toprule
+\textbf{Concept} & \textbf{Where} & \textbf{Purpose} \\
+\midrule
+\texttt{async()} endpoint & Storefront controller & On-demand widget refresh via AJAX. Returns JSON with HTML + assets. Client JS replaces the widget's DOM. \\
+\texttt{data-async="1"} & \texttt{widget-head.tpl} & CSS transition animation flag. Read by \texttt{theme.js::animateTransition()}. Not related to AJAX loading. \\
+\texttt{async=on} setting & Widget settings (serialised) & Admin-side label for async-capable widgets. Filtered by \texttt{NecoWidget} only when the admin explicitly passes \texttt{async=1}. Not used during storefront page load. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+The key takeaway: during normal page load, \emph{all} widgets are
+rendered inline. The async mechanism is an \emph{on-demand refresh}
+feature, not a lazy-loading or initial-render optimisation.
+
 % ============================================================
 \section{The Composite-View Pattern}\label{sec:composite-view}
 % ============================================================
