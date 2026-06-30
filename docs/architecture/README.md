@@ -1,9 +1,9 @@
 # Necoyoad Architecture Blueprint
 
-This folder contains the five-volume reverse-engineered architecture
+This folder contains the seven-volume reverse-engineered architecture
 blueprint of the Necoyoad web application.
 
-## Five Volumes
+## Seven Volumes
 
 | Volume | Focus | Pages | Based on |
 |--------|-------|-------|----------|
@@ -12,6 +12,8 @@ blueprint of the Necoyoad web application.
 | **v3** | Deep dive: the theme/widget rendering pipeline | 41 | The presentation layer (updated with async widget section) |
 | **v4** | Deep dive: the marketing/campaign subsystem | 28 | The email-marketing pipeline |
 | **v5** | Deep dive: multi-store/multi-language architecture | 21 | store_id + language_id composition, polymorphic object spine |
+| **v6** | Deep dive: the admin back-office | 12 | AdminController, file manager, visual editors |
+| **v7** | Deep dive: menu links in admin and apps | 12 | Menu/menu_link system, links widget, tree composition |
 
 ## Files
 
@@ -20,10 +22,10 @@ blueprint of the Necoyoad web application.
 | `necoyoad_architecture_blueprint_v1_sql_only.pdf` | **v1** final PDF. |
 | `necoyoad_architecture_blueprint_v1_sql_only.tex` | v1 LaTeX source. |
 | `cover_v1.html` | v1 cover HTML. |
-| `necoyoad_architecture_blueprint_v2_source_verified.pdf` | **v2** final PDF (includes expanded mobile/widget-scoping Section 12). |
+| `necoyoad_architecture_blueprint_v2_source_verified.pdf` | **v2** final PDF. |
 | `necoyoad_architecture_blueprint_v2_source_verified.tex` | v2 LaTeX source. |
 | `cover_v2.html` | v2 cover HTML. |
-| `necoyoad_architecture_blueprint_v3_rendering_pipeline.pdf` | **v3** final PDF (updated with async widget rendering section). |
+| `necoyoad_architecture_blueprint_v3_rendering_pipeline.pdf` | **v3** final PDF (updated with async widget section). |
 | `necoyoad_architecture_blueprint_v3_rendering_pipeline.tex` | v3 LaTeX source. |
 | `cover_v3.html` | v3 cover HTML. |
 | `necoyoad_architecture_blueprint_v4_marketing_campaign.pdf` | **v4** final PDF. |
@@ -32,47 +34,32 @@ blueprint of the Necoyoad web application.
 | `necoyoad_architecture_blueprint_v5_multistore_language.pdf` | **v5** final PDF. |
 | `necoyoad_architecture_blueprint_v5_multistore_language.tex` | v5 LaTeX source. |
 | `cover_v5.html` | v5 cover HTML. |
+| `necoyoad_architecture_blueprint_v6_admin_backoffice.pdf` | **v6** final PDF. |
+| `necoyoad_architecture_blueprint_v6_admin_backoffice.tex` | v6 LaTeX source. |
+| `cover_v6.html` | v6 cover HTML. |
+| `necoyoad_architecture_blueprint_v7_menu_links.pdf` | **v7** final PDF. |
+| `necoyoad_architecture_blueprint_v7_menu_links.tex` | v7 LaTeX source. |
+| `cover_v7.html` | v7 cover HTML. |
 
 ## Stance
 
-All five documents are **descriptive, not prescriptive**. They document
+All seven documents are **descriptive, not prescriptive**. They document
 how the system *is*. No improvements or modernisations are proposed.
 
-## v5: Multi-Store / Multi-Language Architecture
+## v6: The Admin Back-Office
 
-v5 covers how `store_id` and `language_id` compose, the per-store settings
-model, the polymorphic object spine, and widget composition by
-`object_type`:
+v6 covers the 70+ admin controllers, the AdminController declarative
+CRUD base (1,244 lines), the file manager (688 lines), the visual
+editors (1,853 lines), admin authentication and RBAC, and the
+843-line route-aware map.php preloader. 443 PHP files across 22
+controller folders.
 
-- **Store detection**: 3 strategies (URL path folder match,
-  `?store_id` GET, subdomain regex — hard-coded to `necoyoad.com`).
-- **No default+override settings merge**: each store loads only its own
-  `store_id` settings. No fallback to `store_id=0`.
-- **Language detection**: 6-level priority (`?language=` → `?hl=` →
-  session → cookie → browser → `config_language`).
-- **The polymorphic object spine**: 5 tables (`object_to_store`,
-  `object_to_category`, `description`, `property`, `url_alias`) all use
-  the `(object_id, object_type)` pair.
-- **Inconsistent `object_to_store` writes**: products/categories/
-  manufacturers use legacy column names; downloads/pages/posts use
-  polymorphic; posts and post-categories INSERTs forget `store_id`.
-- **Widget composition by `object_type`**: product/category controllers
-  set session `object_type`/`object_id`; `loadWidgets()` runs a second
-  query with `LIKE '%object_type=product%'` filters; per-object widgets
-  are merged into the default tree.
-- **The $S \times L$ composition matrix**: 5 filtering dimensions
-  (`store_id`, `language_id`, `object_type`, `object_id`,
-  `landing_page`) compose at query time.
-- **A multi-store request lifecycle trace**.
+## v7: Menu Links in Admin and Apps
 
-## v3 Update: Async Widget Rendering
-
-v3 has been updated with a new subsection (§2.5) clarifying the three
-distinct "async" concepts in the widget system:
-1. The `async()` endpoint — on-demand widget refresh via AJAX (returns JSON).
-2. The `data-async="1"` HTML attribute — CSS transition animation flag (not AJAX).
-3. The `async=on` widget setting — admin-side label (not used during page load).
-
-Key finding: during normal page load, all widgets are rendered inline.
-The async mechanism is an on-demand refresh feature, not a lazy-loading
-optimization.
+v7 covers the menu and menu_link system: admin CRUD (via
+AdminController), the model's on('save')/on('delete') hooks for
+tree management, the storefront's recursive getLinks() method, the
+links widget module, three submenu types (children, page_id,
+html_content), and the EAV property + polymorphic description tables
+for per-link metadata and localisation. The menu system is a microcosm
+that exercises every cross-cutting pattern in the platform.

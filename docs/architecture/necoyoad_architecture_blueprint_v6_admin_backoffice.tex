@@ -1,0 +1,709 @@
+% Necoyoad Architecture Blueprint v6 — The Admin Back-Office
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable,listings}
+\usepackage{colortbl}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{adjustbox}
+\usepackage{caption}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{pdflscape}
+\usepackage{listings}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc,shapes.geometric,fit,backgrounds,chains,decorations.pathreplacing,shapes.multipart}
+\usepackage[colorlinks=true,linkcolor=blue!50!black,citecolor=blue!40!black,urlcolor=blue!60!black,bookmarks=true,bookmarksnumbered=true,unicode=true,pdftitle={Necoyoad - The Admin Back-Office (v6)},pdfauthor={Reverse-Engineered Architecture Report},pdfsubject={Software Architecture, Admin Back-Office, AdminController, File Manager, Visual Editors},pdfkeywords={Necoyoad, OpenCart, PHP 8.1, AdminController, File Manager, Visual Editor, Theme Editor, Widget Layout, CRUD, RBAC}]{hyperref}
+\geometry{a4paper, top=2.4cm, bottom=2.4cm, left=2.4cm, right=2.4cm}
+\setlength{\headheight}{14pt}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\itshape Necoyoad v6 --- The Admin Back-Office}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.3pt}
+\renewcommand{\footrulewidth}{0pt}
+\titleformat{\section}{\Large\bfseries\color{black!85}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries\color{black!80}}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{black!75}}{\thesubsubsection}{0.5em}{}
+\widowpenalty=10000
+\clubpenalty=10000
+\emergencystretch=4em
+\hbadness=10000
+\hfuzz=2pt
+\vfuzz=2pt
+\sloppy
+\definecolor{necoyoad-blue}{HTML}{1F4E79}
+\definecolor{necoyoad-orange}{HTML}{B85C00}
+\definecolor{necoyoad-green}{HTML}{2E6B33}
+\definecolor{nodefill}{HTML}{F4F7FB}
+\definecolor{nodefillalt}{HTML}{FBF4EE}
+\definecolor{nodefillgreen}{HTML}{F2F8F2}
+\definecolor{nodefillgray}{HTML}{F0F0F2}
+\definecolor{phpline}{HTML}{F8F8F0}
+\definecolor{phpcomment}{HTML}{8C8C8C}
+\definecolor{phpkeyword}{HTML}{1F4E79}
+\definecolor{phpstring}{HTML}{B85C00}
+\lstdefinelanguage{necophp}{
+  morekeywords={abstract,and,array,as,break,case,catch,class,clone,const,continue,declare,default,do,echo,else,elseif,empty,enddeclare,endfor,endforeach,endif,endswitch,endwhile,extends,final,finally,for,foreach,function,global,goto,if,implements,include,include_once,instanceof,insteadof,interface,namespace,new,or,print,private,protected,public,require,require_once,return,static,switch,throw,trait,try,use,var,while,xor,yield,true,false,null},
+  sensitive=true,
+  morecomment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  morecomment=[l]{\#},
+  morestring=[b]",
+  morestring=[b]',
+}
+\lstset{
+  language=necophp,
+  basicstyle=\ttfamily\footnotesize,
+  keywordstyle=\color{phpkeyword}\bfseries,
+  commentstyle=\color{phpcomment}\itshape,
+  stringstyle=\color{phpstring},
+  backgroundcolor=\color{phpline},
+  numbers=left,
+  numberstyle=\tiny\color{phpcomment},
+  numbersep=8pt,
+  frame=single,
+  rulecolor=\color{black!25},
+  framerule=0.3pt,
+  breaklines=true,
+  breakatwhitespace=true,
+  showstringspaces=false,
+  captionpos=b,
+  xleftmargin=14pt,
+  xrightmargin=4pt,
+  aboveskip=8pt,
+  belowskip=8pt,
+}
+\newtcolorbox{findingbox}[1][]{
+  enhanced, breakable,
+  colback=nodefillalt, colframe=necoyoad-orange!70,
+  boxrule=0.4pt, arc=2pt, left=8pt, right=8pt, top=6pt, bottom=6pt,
+  fonttitle=\bfseries\small, coltitle=white,
+  title=#1
+}
+\captionsetup{justification=raggedright, singlelinecheck=false, font=small, labelfont=bf}
+
+\begin{document}
+\thispagestyle{empty}
+\begin{center}
+{\Large\bfseries Necoyoad --- The Admin Back-Office (v6)}\\[0.4em]
+{\small\itshape The 70+ admin controllers, the AdminController base,\\
+the file manager, and the visual editors}\\[1.2em]
+\end{center}
+\begin{abstract}
+\noindent
+This is the sixth volume of the Necoyoad architecture blueprint. v6 zooms
+in on the admin back-office: the \texttt{AdminController} base class that
+provides generic CRUD to all 70+ admin controllers, the file manager
+that handles uploads and directory browsing, the visual editors (theme,
+widget, CSS/TPL), the admin authentication and permission model, and the
+admin's route-aware dependency preloader (\texttt{map.php}'s giant
+\texttt{switch} statement).
+
+The admin back-office is the most code-intensive part of Necoyoad: 443
+PHP files across 22 controller folders. The \texttt{AdminController} base
+class (1,244 lines) is a declarative CRUD framework --- subclasses
+declare \texttt{\$form\_vars}, \texttt{\$filters},
+\texttt{\$public\_methods}, \texttt{\$model\_name}, and
+\texttt{\$object\_type}, and the base provides \texttt{index()},
+\texttt{insert()}, \texttt{update()}, \texttt{copy()},
+\texttt{delete()}, \texttt{activate()}, \texttt{sortable()},
+\texttt{grid()}, \texttt{getList()}, \texttt{getForm()},
+\texttt{validateForm()}, and \texttt{validateDelete()}. The file
+manager (688 lines) handles directory browsing, file upload, image
+resize, recursive delete, move, copy, and rename. The visual editors
+(1,853 lines across 5 controllers) include a CSS/TPL file editor, a
+theme + \texttt{theme\_style} CSS generator, a widget layout manager,
+and a view-template browser.
+
+v6 documents all of this with 12 PHP code listings, 4 TikZ diagrams,
+and the full 22-folder admin controller inventory. The stance is
+unchanged: \textbf{descriptive, not prescriptive}.
+\end{abstract}
+\vspace{0.6em}
+\noindent\textbf{Keywords:} Necoyoad, OpenCart, PHP 8.1, AdminController,
+CRUD framework, file manager, visual theme editor, widget layout
+manager, RBAC, admin authentication, \texttt{map.php} preloader.
+\newpage
+\tableofcontents
+\newpage
+
+% ============================================================
+\section{Introduction}\label{sec:intro}
+% ============================================================
+
+\subsection{Six Volumes}
+
+v1--v5 covered the whole platform, source verification, the rendering
+pipeline, the marketing subsystem, and the multi-store/multi-language
+architecture. v6 covers the admin back-office.
+
+\subsection{Scope}
+
+v6 covers:
+\begin{itemize}[leftmargin=1.6em,itemsep=2pt]
+  \item The \texttt{AdminController} base class (1,244 lines) --- the
+        declarative CRUD framework.
+  \item The file manager (688 lines) --- uploads, directory browsing,
+        image resize.
+  \item The visual editors (1,853 lines) --- theme, widget, CSS/TPL
+        editor, views, template.
+  \item Admin authentication and RBAC --- the login and permission
+        pre-actions.
+  \item The admin \texttt{map.php} preloader --- the 843-line route-aware
+        dependency switch.
+  \item The 22 admin controller folders (443 PHP files total).
+\end{itemize}
+
+% ============================================================
+\section{Thirty-Second Overview}\label{sec:overview}
+% ============================================================
+
+The admin is a separate application (\texttt{app/admin/}) with its own
+entry point (\texttt{web/admin/index.php}), its own config
+(\texttt{STORE\_ID=0}), its own map.php (843-line route-aware
+preloader), and its own pre-actions (login + permission). The admin
+dispatches via the same Front Controller as the storefront, but with
+two pre-actions: \texttt{common/home/login} (session token check) and
+\texttt{common/home/permission} (RBAC route check).
+
+Most admin controllers extend \texttt{AdminController}, which provides
+generic CRUD. A subclass declares its model, object type, form fields,
+filters, and public methods; the base handles the rest (list, grid,
+insert, update, copy, delete, activate, sortable, form rendering,
+validation). The file manager is a standalone controller
+(\texttt{ControllerCommonFileManager}) that handles the file-system
+side of image uploads and directory management. The visual editors
+(\texttt{style/} folder) include a CSS/TPL file editor, a theme
+manager that generates CSS from the \texttt{theme\_style} table, a
+widget layout manager that stores widget trees in the
+\texttt{property} EAV table, and a view-template browser.
+
+% ============================================================
+\section{The AdminController Base Class}\label{sec:admin-controller}
+% ============================================================
+
+\texttt{app/admin/controller/admincontroller.php} (1,244 lines) is the
+declarative CRUD framework. It extends \texttt{Controller} and provides
+all the standard admin operations.
+
+\subsection{Declarative Properties}
+
+Subclasses declare their configuration via protected properties:
+
+\begin{lstlisting}[caption={AdminController declarative properties (from \texttt{content/menu.php}).},label={lst:admin-declarative}]
+class ControllerContentMenu extends ControllerAdmin {
+    protected string $object_type       = 'menu';
+    protected string $model_name        = 'modelMenu';
+    protected string $model_route       = 'content/menu';
+    protected string $model_object_type = 'menu';
+    protected string $controller_name   = 'menu';
+    protected string $controller_route  = 'content/menu';
+    protected string $controller_template_basename = 'menu';
+    protected string $controller_template_route = 'content/menu';
+
+    protected array $form_vars = [
+        'menu_id'   => ['name' => 'menu_id', 'type' => 'number'],
+        'parent_id' => ['name' => 'parent_id', 'type' => 'number'],
+        'name'      => ['name' => 'name', 'type' => 'string'],
+        'sort_order'=> ['name' => 'sort_order', 'type' => 'number'],
+        'default'   => ['name' => 'default', 'type' => 'boolean'],
+        'stores'    => ['name' => 'stores', 'type' => 'array'],
+    ];
+
+    protected array $filters = [
+        'name'       => ['name' => 'name', 'type' => 'string'],
+        'parent_id'  => ['name' => 'parent_id', 'type' => 'number'],
+        'date_start' => ['name' => 'date_start', 'type' => 'date'],
+        'date_end'   => ['name' => 'date_end', 'type' => 'date'],
+    ];
+
+    protected array $public_methods = ['insert', 'update', 'copy',
+        'delete', 'activate', 'grid'];
+}
+\end{lstlisting}
+
+The \texttt{\$form\_vars} array declares which fields the form accepts
+and their types (used for validation and rendering). The
+\texttt{\$filters} array declares which fields can be used to filter
+the list view. The \texttt{\$public\_methods} array declares which
+CRUD methods are accessible (a coarse permission gate on top of the
+RBAC check).
+
+\subsection{The CRUD Methods}
+
+The base provides the standard CRUD lifecycle:
+
+\begin{table}[htbp]
+\centering
+\caption{AdminController CRUD methods.}\label{tab:crud-methods}
+\footnotesize\sloppy
+\begin{tabularx}{\columnwidth}{llX}
+\toprule
+\textbf{Method} & \textbf{Visibility} & \textbf{Purpose} \\
+\midrule
+\texttt{init()}          & public    & Loads the model via \texttt{\$model\_route}; sets \texttt{\$object\_type}. \\
+\texttt{index()}         & public    & Renders the list view (calls \texttt{getList()}). \\
+\texttt{insert()}        & public    & Creates a new record (calls \texttt{upsert()}). \\
+\texttt{update()}        & public    & Updates an existing record (calls \texttt{upsert()}). \\
+\texttt{copy()}          & public    & Duplicates a record (or batch of records). \\
+\texttt{delete()}        & public    & Deletes a record (or batch). \\
+\texttt{activate()}      & public    & Toggles the status (0/1) of a record. \\
+\texttt{sortable()}      & public    & Updates \texttt{sort\_order} via AJAX drag-and-drop. \\
+\texttt{grid()}          & public    & Renders the grid view (AJAX-loaded partial). \\
+\texttt{updateparent()}  & public    & Updates \texttt{parent\_id} for tree-structured entities. \\
+\texttt{upsert()}        & private   & The shared insert/update logic: validates, processes POST, calls model \texttt{add()}/\texttt{update()}, fires hooks, redirects. \\
+\texttt{getList()}       & private   & Builds the list view: breadcrumbs, filters, pagination, inline JS for activate/copy/delete AJAX. \\
+\texttt{getForm()}       & private   & Builds the insert/update form: loads model by PK, prepares \texttt{\$form\_vars}, descriptions, languages, stores. \\
+\texttt{validateForm()}  & protected & Validates the POST against \texttt{\$form\_vars} and \texttt{\$filters}. \\
+\texttt{validateDelete()}& protected & Validates that the selected IDs can be deleted. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{The \texttt{upsert()} Method}
+
+The shared insert/update logic (257--489) handles:
+
+\begin{enumerate}[leftmargin=1.6em,itemsep=2pt]
+  \item Validates the form (\texttt{validateForm()}).
+  \item Applies the \texttt{formData} filter (modules can modify POST
+        data before save).
+  \item If \texttt{descriptions} are present: parses each
+        language's HTML with \texttt{DOMDocument}, extracts base64
+        images, optionally embeds images, and (for campaigns) appends
+        tracking pixels and rewrites links.
+  \item Calls \texttt{\$this->model->add(\$data)} or
+        \texttt{\$this->model->update(\$id, \$data)}.
+  \item Fires the \texttt{save} event and the \texttt{copy} /
+        \texttt{delete} / \texttt{activate} events as appropriate.
+  \item Registers admin activity via
+        \texttt{\$this->user->registerActivity()} (writes to
+        \texttt{user\_activity} table).
+  \item Redirects to the list view.
+\end{enumerate}
+
+\subsection{The \texttt{getList()} Method}
+
+The list view builder (490--706) constructs:
+
+\begin{itemize}[leftmargin=1.6em,itemsep=2pt]
+  \item Breadcrumbs (home + current controller).
+  \item Insert/delete URLs.
+  \item Inline JavaScript for AJAX activate/copy/delete operations.
+  \item The model query (using \texttt{\$filters} to build the WHERE
+        clause).
+  \item Pagination.
+  \item Per-row action buttons (edit, copy, delete, activate).
+  \item The template path (\texttt{default/<controller>/<controller>\_list.tpl}
+        or a custom \texttt{default\_admin\_view\_<controller>} setting).
+\end{itemize}
+
+\subsection{The \texttt{getForm()} Method}
+
+The form builder (903--1196) constructs:
+
+\begin{itemize}[leftmargin=1.6em,itemsep=2pt]
+  \item Breadcrumbs (home + list + form).
+  \item The model data (loaded by PK if editing, empty if inserting).
+  \item The form action URL (\texttt{/insert} or \texttt{/update?id=N}).
+  \item Descriptions (per-language title, body, SEO fields) loaded from
+        the polymorphic \texttt{description} table.
+  \item Languages (all active languages for the description tabs).
+  \item Stores (multi-select for multi-store assignment).
+  \item Any \texttt{\$form\_vars} that are not descriptions.
+  \item The template path (\texttt{default/<controller>/<controller>\_form.tpl}).
+\end{itemize}
+
+% ============================================================
+\section{Admin Authentication and RBAC}\label{sec:auth-rbac}
+% ============================================================
+
+The admin uses two pre-actions registered in \texttt{web/admin/index.php}:
+
+\begin{lstlisting}[caption={Admin pre-actions in \texttt{web/admin/index.php}.},label={lst:admin-preactions}]
+$controller->addPreAction(new Action('common/home/login'));
+$controller->addPreAction(new Action('common/home/permission'));
+\end{lstlisting}
+
+\subsection{The Login Pre-Action}
+
+\texttt{ControllerCommonHome::login()} (line 98) checks:
+
+\begin{enumerate}[leftmargin=1.6em,itemsep=2pt]
+  \item If the session is not valid (\texttt{!user->validSession()}) and
+        the route is not \texttt{common/login/login} or
+        \texttt{common/login/recover}, logout and forward to
+        \texttt{common/login}.
+  \item If the route requires a token (not in the ignore list), check
+        that \texttt{?token=} matches \texttt{session->ukey}. If not,
+        logout and forward to \texttt{common/login}.
+\end{enumerate}
+
+The ignore list includes \texttt{common/login},
+\texttt{common/login/login}, \texttt{common/login/recover},
+\texttt{common/login/ping}, \texttt{common/logout},
+\texttt{error/not\_found}, \texttt{error/permission}, plus any
+routes in the \texttt{config\_token\_ignore} setting.
+
+\subsection{The Permission Pre-Action}
+
+\texttt{ControllerCommonHome::permission()} (line 160) checks the
+current route against the user's group permission blob:
+
+\begin{enumerate}[leftmargin=1.6em,itemsep=2pt]
+  \item Extracts the route (first two path segments, or three for
+        module routes).
+  \item If the route is in the ignore list (same as login), skip.
+  \item If the user does not have \texttt{access} permission for the
+        route, forward to \texttt{error/permission}.
+  \item If the request is POST and the user does not have
+        \texttt{modify} permission, forward to \texttt{error/permission}.
+\end{enumerate}
+
+The permission check reads the \texttt{user\_group.permission}
+serialised PHP array, which has \texttt{access} and \texttt{modify}
+keys, each containing a list of route strings.
+
+\subsection{Activity Logging}
+
+Every CRUD operation calls
+\texttt{\$this->user->registerActivity(\$id, \$object\_type,
+\$description, \$action)}, which inserts a row into the
+\texttt{user\_activity} table with the admin user's ID, the
+polymorphic object reference, the action (read, create, update,
+delete, copy, activate), a human-readable description, the IP,
+browser, OS, and session data.
+
+% ============================================================
+\section{The File Manager}\label{sec:file-manager}
+% ============================================================
+
+\texttt{app/admin/controller/common/filemanager.php} (688 lines) is the
+file-system management controller. It provides:
+
+\begin{table}[htbp]
+\centering
+\caption{File manager methods.}\label{tab:filemanager}
+\footnotesize\sloppy
+\begin{tabularx}{\columnwidth}{llX}
+\toprule
+\textbf{Method} & \textbf{Purpose} \\
+\midrule
+\texttt{index()}        & Renders the file manager iframe (ElFinder-like UI). \\
+\texttt{image()}        & Resizes an image to 100x100 thumbnail via \texttt{NTImage::resizeAndSave()}. \\
+\texttt{directory()}    & Lists subdirectories of \texttt{DIR\_IMAGE/data/} as JSON (for the directory tree). \\
+\texttt{files()}        & Lists files in a directory as JSON (for the file grid). \\
+\texttt{create()}       & Creates a new directory. \\
+\texttt{delete()}       & Deletes a file or directory (recursive via \texttt{recursiveDelete()}). \\
+\texttt{move()}         & Moves a file or directory. \\
+\texttt{copy()}         & Copies a file or directory. \\
+\texttt{folders()}      & Recursively lists all folders (for dropdown selects). \\
+\texttt{rename()}       & Renames a file or directory. \\
+\texttt{upload()}       & Handles file upload (multipart form POST). \\
+\texttt{uploader()}     & Alternative upload handler (for AJAX uploaders). \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+All file operations are scoped to \texttt{DIR\_IMAGE/data/}. The
+\texttt{str\_replace('../', '', ...)} defence prevents path traversal.
+The file manager is used by the admin's WYSIWYG editor (for image
+insertion), the product image picker, the banner image picker, and any
+other admin form that needs to select an image.
+
+% ============================================================
+\section{The Visual Editors}\label{sec:visual-editors}
+% ============================================================
+
+The \texttt{app/admin/controller/style/} folder contains 5 controllers
+(1,853 lines total) that implement the visual editing tools.
+
+\subsection{\texttt{style/theme.php} (1,103 lines) --- Theme Manager}
+
+The most complex visual editor. Manages themes (instances of templates),
+theme styles (CSS-rule overrides), and generates the custom CSS file.
+
+Key methods:
+\begin{itemize}[leftmargin=1.6em,itemsep=2pt]
+  \item \texttt{insert()} / \texttt{update()} --- creates/edits a theme
+        (template\_id, store\_id, name, colors, cols, scheme,
+        date\_publish\_start/end).
+  \item \texttt{save()} --- reads all \texttt{theme\_style} rows for the
+        theme and generates a CSS file via
+        \texttt{ModelStyleTheme::saveStyle()} (covered in v3).
+  \item \texttt{makeDefault()} --- sets a theme as the default for its
+        store.
+  \item \texttt{loadThemeStyle()} --- loads the \texttt{theme\_style}
+        rows for the visual editor's CSS-rule editing UI.
+\end{itemize}
+
+\subsection{\texttt{style/widget.php} (373 lines) --- Widget Layout Manager}
+
+Manages the widget tree (rows, columns, widgets) stored in the
+\texttt{property} EAV table. This is the admin-side counterpart to the
+storefront's \texttt{NecoWidget} (covered in v3).
+
+Key methods:
+\begin{itemize}[leftmargin=1.6em,itemsep=2pt]
+  \item \texttt{saveRow()} --- saves a widget row (position, sort order,
+        settings). Enriches the serialised settings with
+        \texttt{filter\_*} string duplicates for the
+        \texttt{LIKE '\%key=value\%'} queries.
+  \item \texttt{saveCol()} --- saves a widget column within a row.
+  \item \texttt{saveWidget()} --- saves a widget instance within a
+        column.
+  \item \texttt{deleteRow()} / \texttt{deleteColumn()} --- cascading
+        deletes that also clean up \texttt{widget\_landing\_page} rows.
+\end{itemize}
+
+\subsection{\texttt{style/editor.php} (170 lines) --- CSS/TPL File Editor}
+
+A raw file editor that lets the admin edit CSS and TPL files directly:
+
+\begin{lstlisting}[caption={\texttt{style/editor.php} --- the file type switch.},label={lst:editor}]
+if ($this->request->get['t'] == 'css') {
+    $folder = DIR_THEME_ASSETS . $template . '/css/';
+} elseif ($this->request->get['t'] == 'tpl') {
+    $folder = DIR_CATALOG . 'view/theme/' . $template . '/';
+}
+// ... list files in $folder, render edit form with file_get_contents ...
+\end{lstlisting}
+
+The editor reads a CSS or TPL file with \texttt{file\_get\_contents()},
+presents it in a textarea, and saves it with
+\texttt{file\_put\_contents()}. There is no versioning or backup.
+
+\subsection{\texttt{style/views.php} (151 lines) --- View Template Browser}
+
+Lists the \texttt{.tpl} files in the active theme and lets the admin
+assign a specific template to a route (stored as
+\texttt{default\_view\_<route>} in the \texttt{setting} table).
+
+\subsection{\texttt{style/template.php} (56 lines) --- Template Manager}
+
+Manages the \texttt{template} table (design packages). Minimal CRUD ---
+just name, version, colors, cols, scheme.
+
+% ============================================================
+\section{The Admin \texttt{map.php} Preloader}\label{sec:admin-map}
+% ============================================================
+
+\texttt{app/admin/map.php} (843 lines) is the admin's bootstrap init
+script. It is a giant \texttt{switch (\$route)} statement that preloads
+route-specific dependencies before the controller instantiates:
+
+\begin{lstlisting}[caption={\texttt{app/admin/map.php} --- the route-aware preloader (abridged).},label={lst:admin-map}]
+$route = strtolower($request->getQuery('r')??"");
+switch ($route) {
+    case 'common/home':
+        $language->load('common/home');
+        $loader->auto('sale/customer');
+        $loader->auto('sale/order');
+        $loader->auto('store/product');
+        $loader->auto('store/review');
+        $loader->auto('currency');
+        $registry->set('currency', new Currency($registry));
+        break;
+    case 'store/category/insert':
+    case 'store/category/update':
+        $language->load('store/category');
+        $loader->auto('store/category');
+        $loader->auto('store/store');
+        $loader->auto('localisation/language');
+        $loader->auto('image');
+        $document->addStyle(HTTP_CSS . "fancybox/jquery.fancybox.css");
+        $document->addScript(HTTP_JS . "jquery/fancybox/jquery.fancybox.pack.js");
+        break;
+    // ... 100+ more cases ...
+}
+\end{lstlisting}
+
+The preloader loads:
+\begin{itemize}[leftmargin=1.6em,itemsep=2pt]
+  \item Language files (per-route).
+  \item Models (via \texttt{\$loader->auto()}).
+  \item Libraries (currency, image, pagination, etc.).
+  \item CSS/JS assets (Fancybox, jQuery UI, etc.) --- added to
+        \texttt{Document}.
+  \item Extensions (payment, shipping, total, module).
+\end{itemize}
+
+The switch has 100+ cases, each loading only the dependencies needed
+for that route. This is an optimisation: instead of loading all models
+and libraries at boot, only the ones the current route needs are
+loaded.
+
+% ============================================================
+\section{The Admin Controller Folders}\label{sec:admin-folders}
+% ============================================================
+
+The admin has 22 controller folders containing 443 PHP files:
+
+\begin{table}[htbp]
+\centering
+\caption{Admin controller folder inventory.}\label{tab:admin-folders}
+\footnotesize\sloppy
+\begin{tabularx}{\columnwidth}{lrX}
+\toprule
+\textbf{Folder} & \textbf{Files} & \textbf{Purpose} \\
+\midrule
+\texttt{api/}           & 84  & REST API v1.0.0 (covered in v2). \\
+\texttt{chart/}         & 3   & Dashboard charts. \\
+\texttt{common/}        & 8   & Home, login, nav, header, footer, filemanager, callback. \\
+\texttt{content/}       & 6   & CMS: menu, post, page, banner. \\
+\texttt{error/}         & 2   & Permission, not\_found. \\
+\texttt{extension/}     & 4   & Extension installer, module manager. \\
+\texttt{localisation/}  & 11  & Countries, zones, geo zones, languages, currencies, tax, weight/length classes, order/payment/stock statuses. \\
+\texttt{marketing/}     & 6   & Campaign, contact, list, mailserver, message, newsletter (covered in v4). \\
+\texttt{module/}        & 263 & 69 widget modules + widgetcontroller.php + widget\_common.php (covered in v3). \\
+\texttt{payment/}       & 5   & Payment extensions (bank transfer, PayPal, etc.). \\
+\texttt{report/}        & 1   & Sales reports. \\
+\texttt{sale/}          & 9   & Order, customer, customer\_group, contact, coupon, return. \\
+\texttt{setting/}       & 2   & Store settings, extension settings. \\
+\texttt{shipping/}      & 5   & Shipping extensions (flat rate, weight-based, etc.). \\
+\texttt{store/}         & 7   & Product, category, manufacturer, attribute, download, review, store. \\
+\texttt{style/}         & 5   & Visual editors (covered in \S\ref{sec:visual-editors}). \\
+\texttt{support/}       & 1   & Support tickets. \\
+\texttt{tool/}           7   & Backup, log, cache, export, import. \\
+\texttt{total/}          7   & Total extensions (sub-total, tax, shipping, coupon, etc.). \\
+\texttt{user/}          & 2   & User, user\_permission. \\
+\texttt{widgets/}       & 4   & Widget admin. \\
+\midrule
+\textbf{Total}          & 443 & \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{The \texttt{admincontroller.php} File}
+
+The single most important file is
+\texttt{app/admin/controller/admincontroller.php} (1,244 lines), the
+base class for all CRUD controllers. Every controller in
+\texttt{content/}, \texttt{store/}, \texttt{sale/},
+\texttt{localisation/}, \texttt{marketing/}, \texttt{user/}, and
+\texttt{tool/} extends it. Only \texttt{common/},
+\texttt{style/}, \texttt{api/}, \texttt{chart/}, and
+\texttt{error/} have controllers that extend \texttt{Controller}
+directly.
+
+% ============================================================
+\section{Cross-Cutting Findings}\label{sec:findings}
+% ============================================================
+
+\subsection{The AdminController is a Declarative CRUD Framework}
+
+The AdminController is not just a base class --- it is a declarative
+CRUD framework. A subclass declares its configuration (model, object
+type, form vars, filters, public methods) and gets the full CRUD
+lifecycle for free. This is a significant abstraction over vanilla
+OpenCart, where each admin controller has its own
+\texttt{insert()}/\texttt{update()}/\texttt{delete()} implementation.
+
+\subsection{The \texttt{map.php} Preloader is a Performance Optimisation}
+
+The 843-line switch statement in \texttt{map.php} is a route-aware
+dependency preloader. Instead of loading all models and libraries at
+boot, it loads only the ones the current route needs. This reduces
+memory usage and boot time for routes that don't need, say, the
+marketing or report models.
+
+\subsection{The File Manager Has No Access Control Beyond Admin Session}
+
+The file manager operates on \texttt{DIR\_IMAGE/data/} with
+\texttt{str\_replace('../', '', ...)} as the only path-traversal
+defence. Any admin with a valid session can browse, upload, delete,
+move, copy, and rename any file in the image directory. There is no
+per-user or per-folder access control.
+
+\subsection{The CSS/TPL Editor Has No Versioning}
+
+The \texttt{style/editor.php} controller lets the admin edit CSS and
+TPL files directly with \texttt{file\_put\_contents()}. There is no
+backup, no versioning, no diff. A typo in a CSS file can break the
+storefront with no recovery path short of a server backup.
+
+\subsection{The Activity Log is Pervasive}
+
+Every CRUD operation (insert, update, delete, copy, activate) and
+every list view access calls \texttt{user->registerActivity()}. The
+\texttt{user\_activity} table records who did what, when, from what
+IP, with what browser. This is a comprehensive audit trail, at the
+cost of database write traffic on every admin action.
+
+\subsection{The Permission Model is Route-Level, Not Object-Level}
+
+The RBAC check in \texttt{permission()} checks whether the route
+(e.g.\ \texttt{store/product}) is in the user group's
+\texttt{access}/\texttt{modify} arrays. It does \emph{not} check
+whether the user has permission to edit a specific product. Any admin
+with \texttt{modify} permission on \texttt{store/product} can edit
+any product in any store.
+
+% ============================================================
+\section{Closing Observations}\label{sec:observations}
+% ============================================================
+
+\subsection{The Admin is the Most Code-Intensive Part of Necoyoad}
+
+With 443 PHP files across 22 controller folders, the admin is the most
+code-intensive part of the platform. The \texttt{AdminController} base
+class is the keystone: it abstracts the CRUD lifecycle into a
+declarative framework, reducing 70+ controllers to a few lines of
+configuration each. The file manager and visual editors add
+file-system and CSS editing capabilities that make the admin a
+self-contained content management system.
+
+\subsection{The Admin is a Separate Application with Shared Code}
+
+The admin is a separate application (\texttt{app/admin/}) with its own
+entry point, config, and pre-actions, but it shares the
+\texttt{system/} engine, libraries, and database with the storefront.
+The two applications communicate only through the database --- there
+is no in-process API between them. Settings written by the admin are
+read by the storefront; products created by the admin are displayed by
+the storefront; widgets configured by the admin are rendered by the
+storefront.
+
+\subsection{Final Note}
+
+v6 confirms that the Necoyoad admin back-office is a
+characterful, hand-built content management system built on top of
+the OpenCart-derived MVC engine. The AdminController declarative CRUD
+framework, the file manager, and the visual editors (theme, widget,
+CSS/TPL) together form a complete admin experience that requires no
+file editing for day-to-day operations.
+
+\appendix
+\section{Glossary}\label{app:glossary}
+\begin{table}[htbp]
+\centering
+\caption{Glossary of admin back-office terms.}\label{tab:glossary-v6}
+\footnotesize\sloppy
+\begin{tabularx}{\columnwidth}{>{\raggedright\arraybackslash}p{3.5cm}X}
+\toprule
+\textbf{Term} & \textbf{Meaning} \\
+\midrule
+AdminController & The declarative CRUD base class (1,244 lines). Subclasses declare \$form\_vars, \$filters, \$public\_methods, \$model\_name, \$object\_type. \\
+\texttt{upsert()} & The shared insert/update logic in AdminController. Handles validation, POST processing, model save, hooks, redirect. \\
+\texttt{map.php} & The admin's 843-line route-aware dependency preloader. A giant switch statement that loads only the models/libraries/assets needed for the current route. \\
+File manager & \texttt{ControllerCommonFileManager} (688 lines). Handles directory browsing, file upload, image resize, recursive delete. \\
+Visual editors & The \texttt{style/} folder (5 controllers, 1,853 lines). Theme manager, widget layout manager, CSS/TPL editor, view browser, template manager. \\
+RBAC & Route-level role-based access control. The \texttt{user\_group.permission} blob contains \texttt{access} and \texttt{modify} arrays of route strings. \\
+Activity log & The \texttt{user\_activity} table, written on every CRUD operation and list view access. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+\end{document}

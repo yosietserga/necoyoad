@@ -5,7 +5,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
     @page { size: 794px 1123px; margin: 0; }
-    :root { --c-bg: #1A0F2A; --c-accent: #8B5CF6; --c-text: #FFFFFF; --c-muted: #B8A8D8; --c-mono: #D8C8F0; }
+    :root { --c-bg: #2A1A0F; --c-accent: #C9783A; --c-text: #FFFFFF; --c-muted: #C8A890; --c-mono: #D8C8B8; }
     html, body { margin: 0; padding: 0; width: 794px; height: 1123px; background: var(--c-bg); color: var(--c-text); font-family: 'Inter', sans-serif; }
     @media screen { html { height: auto; display: flex; justify-content: center; min-height: 100vh; background: var(--c-bg); } body { transform-origin: top center; scale: min(1, calc(100vw / 794), calc(100vh / 1123)); margin: 0 auto; box-shadow: 0 0 60px rgba(0,0,0,0.3); } }
     .cover { width: 794px; height: 1123px; position: relative; display: flex; flex-direction: column; align-items: center; box-sizing: border-box; }
@@ -28,17 +28,17 @@
     <div class="rule-top"></div>
     <div class="rule-bottom"></div>
     <div class="center-block">
-      <div class="label">Architecture Blueprint &middot; Multi-Store / Multi-Language</div>
+      <div class="label">Architecture Blueprint &middot; Admin Back-Office Deep Dive</div>
       <div class="title">Necoyoad</div>
-      <div class="version-badge">v5</div>
-      <div class="subtitle">How store_id and language_id compose, the per-store<br>settings model, the polymorphic object spine, and<br>widget composition by object_type</div>
+      <div class="version-badge">v6</div>
+      <div class="subtitle">The 70+ admin controllers, the AdminController base,<br>the file manager, and the visual editors</div>
       <div class="meta-table">
-        <span class="k">scope:</span> store detection, settings loading, language/currency<br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;detection, object_to_store, object_to_category,<br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;description, property, url_alias, widget composition<br>
-        <span class="k">findings:</span> no default+override merge, inconsistent o2s writes,<br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;missing store_id in posts insert, dual table usage<br>
-        <span class="k">listings:</span> 14 PHP &middot; <span class="k">diagrams:</span> 6 &middot; <span class="k">pages:</span> 20
+        <span class="k">scope:</span> 443 PHP files across 22 admin controller folders<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AdminController (1,244 lines), file manager (688 lines),<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;visual editors (1,853 lines), map.php preloader (843 lines)<br>
+        <span class="k">findings:</span> declarative CRUD framework, route-level RBAC,<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;no file versioning, pervasive activity logging<br>
+        <span class="k">listings:</span> 12 PHP &middot; <span class="k">pages:</span> 11
       </div>
       <div class="authors">Reverse-Engineered Architecture Report</div>
       <div class="institution">Verified against PHP source commit ce75adf<br>github.com/yosietserga/necoyoad</div>
