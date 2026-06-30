@@ -417,7 +417,7 @@ become \texttt{\$header}, \texttt{\$footer}, \texttt{\$column\_left},
 marker).
 
 After the child loop, the parent's own template is fetched:
-\texttt{fetch()} injects five magic services into the view-model,
+\texttt{fetch()} injects six magic services into the view-model,
 extracts it into local scope, requires the \texttt{.tpl} file, then
 runs two passes of \texttt{str\_replace} to substitute
 \texttt{\{\%widget\_name\%\}} tokens with the corresponding
@@ -601,7 +601,7 @@ protected function fetch($filename) {
         return '';
     }
 
-    // 4. Inject five magic services into the view-model
+    // 4. Inject six magic services into the view-model
     $this->data['Config']   = $this->registry->get('config');
     $this->data['Language'] = $this->registry->get('language');
     $this->data['l']        = function($str) { return $this->language->get($str); };
@@ -656,9 +656,9 @@ protected function fetch($filename) {
 }
 \end{lstlisting}
 
-\subsubsection{The Five Magic Services}
+\subsubsection{The Six Magic Services}
 
-Every \texttt{.tpl} file has access to five injected services,
+Every \texttt{.tpl} file has access to six injected services,
 without any explicit imports:
 
 \begin{itemize}[leftmargin=1.6em,itemsep=2pt]
@@ -2705,7 +2705,7 @@ NecoWidget & The widget data-access object (\texttt{system/helper/widgets.php}).
 \texttt{nt-editable} & HTML attribute on every widget wrapper. The visual theme editor scans the DOM for this attribute. \\
 \texttt{theme\_style} & Table storing CSS-rule overrides at the selector/property/value granularity. \\
 \texttt{\$tpl} & The theme-inheritance variable. If the active theme has a \texttt{/shared} folder, use it; otherwise fall back to \texttt{'choroni'}. \\
-Magic services & The five services injected into every template by \texttt{Controller::fetch()}: \texttt{\$Config}, \texttt{\$Language}, \texttt{\$l}, \texttt{\$Request}, \texttt{\$Url}, \texttt{\$Image}. \\
+Magic services & The six services injected into every template by \texttt{Controller::fetch()}: \texttt{\$Config}, \texttt{\$Language}, \texttt{\$l}, \texttt{\$Request}, \texttt{\$Url}, \texttt{\$Image}. \\
 \bottomrule
 \end{tabularx}
 \end{table}

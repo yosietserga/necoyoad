@@ -113,7 +113,7 @@ admin's route-aware dependency preloader (\texttt{map.php}'s giant
 \texttt{switch} statement).
 
 The admin back-office is the most code-intensive part of Necoyoad: 443
-PHP files across 22 controller folders. The \texttt{AdminController} base
+PHP files across 21 controller folders plus the \texttt{AdminController} base class file. The \texttt{AdminController} base
 class (1,244 lines) is a declarative CRUD framework --- subclasses
 declare \texttt{\$form\_vars}, \texttt{\$filters},
 \texttt{\$public\_methods}, \texttt{\$model\_name}, and
@@ -164,7 +164,7 @@ v6 covers:
         pre-actions.
   \item The admin \texttt{map.php} preloader --- the 843-line route-aware
         dependency switch.
-  \item The 22 admin controller folders (443 PHP files total).
+  \item The 21 admin controller folders plus the \texttt{AdminController} base class (443 PHP files total).
 \end{itemize}
 
 % ============================================================
@@ -550,7 +550,7 @@ loaded.
 \section{The Admin Controller Folders}\label{sec:admin-folders}
 % ============================================================
 
-The admin has 22 controller folders containing 443 PHP files:
+The admin has 21 controller folders plus the \texttt{AdminController} base class file, containing 443 PHP files total:
 
 \begin{table}[htbp]
 \centering
@@ -581,6 +581,8 @@ The admin has 22 controller folders containing 443 PHP files:
 \texttt{total/}          7   & Total extensions (sub-total, tax, shipping, coupon, etc.). \\
 \texttt{user/}          & 2   & User, user\_permission. \\
 \texttt{widgets/}       & 4   & Widget admin. \\
+\midrule
+\texttt{admincontroller.php} & 1   & The AdminController base class (root file, not a folder). \\
 \midrule
 \textbf{Total}          & 443 & \\
 \bottomrule
@@ -658,7 +660,8 @@ any product in any store.
 
 \subsection{The Admin is the Most Code-Intensive Part of Necoyoad}
 
-With 443 PHP files across 22 controller folders, the admin is the most
+With 443 PHP files across 21 controller folders plus the \texttt{AdminController} base
+class, the admin is the most
 code-intensive part of the platform. The \texttt{AdminController} base
 class is the keystone: it abstracts the CRUD lifecycle into a
 declarative framework, reducing 70+ controllers to a few lines of
