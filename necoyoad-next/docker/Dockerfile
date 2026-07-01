@@ -13,13 +13,18 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Set working directory
 WORKDIR /var/www/html
 
+# Create application directory structure
+RUN mkdir -p bootstrap/cache storage/logs
+
 # Copy application
 COPY . .
 
-# Install PHP dependencies
-RUN composer install --no-dev --optimize-autoloader --no-interaction
+# Install PHP dependencies, skipping problematic post-autoload-dump
+RUN composer install --no-dev --optimize-autoloader --no-interaction --no-scripts && \
+    mkdir -p bootstrap/cache && \
+    composer run-script post-autoload-dump || true
 
-# Set permissions
+# Set final permissions
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 775 storage bootstrap/cache
 
