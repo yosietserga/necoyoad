@@ -6,6 +6,7 @@ namespace App\Models;
 
 use App\Traits\HasDescriptions;
 use App\Traits\HasProperties;
+use App\Traits\HasSeoUrl;
 use App\Traits\HasStoreAssignment;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
