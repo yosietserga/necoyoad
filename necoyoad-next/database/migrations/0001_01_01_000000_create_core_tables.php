@@ -12,7 +12,8 @@ return new class extends Migration
         // MULTI-TENANCY & LOCALISATION
         // ============================================
 
-        Schema::create('stores', function (Blueprint $table) {
+        if (!Schema::hasTable('stores')) {
+            Schema::create('stores', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('folder')->unique();
@@ -23,8 +24,10 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
+        }
 
-        Schema::create('languages', function (Blueprint $table) {
+        if (!Schema::hasTable('languages')) {
+            Schema::create('languages', function (Blueprint $table) {
             $table->id();
             $table->string('name', 64);
             $table->string('code', 5)->unique();
@@ -34,14 +37,18 @@ return new class extends Migration
             $table->boolean('status')->default(true);
             $table->timestamps();
         });
+        }
 
-        Schema::create('store_languages', function (Blueprint $table) {
+        if (!Schema::hasTable('store_languages')) {
+            Schema::create('store_languages', function (Blueprint $table) {
             $table->foreignId('store_id')->constrained()->cascadeOnDelete();
             $table->foreignId('language_id')->constrained()->cascadeOnDelete();
             $table->primary(['store_id', 'language_id']);
         });
+        }
 
-        Schema::create('currencies', function (Blueprint $table) {
+        if (!Schema::hasTable('currencies')) {
+            Schema::create('currencies', function (Blueprint $table) {
             $table->id();
             $table->string('code', 3)->unique();
             $table->string('symbol_left', 12)->nullable();
@@ -52,8 +59,10 @@ return new class extends Migration
             $table->timestamp('date_modified')->useCurrent();
             $table->timestamps();
         });
+        }
 
-        Schema::create('countries', function (Blueprint $table) {
+        if (!Schema::hasTable('countries')) {
+            Schema::create('countries', function (Blueprint $table) {
             $table->id();
             $table->string('name', 128);
             $table->string('iso_code_2', 2);
@@ -62,8 +71,10 @@ return new class extends Migration
             $table->boolean('status')->default(true);
             $table->timestamps();
         });
+        }
 
-        Schema::create('zones', function (Blueprint $table) {
+        if (!Schema::hasTable('zones')) {
+            Schema::create('zones', function (Blueprint $table) {
             $table->id();
             $table->foreignId('country_id')->constrained()->cascadeOnDelete();
             $table->string('code', 32);
@@ -71,19 +82,23 @@ return new class extends Migration
             $table->boolean('status')->default(true);
             $table->timestamps();
         });
+        }
 
-        Schema::create('geo_zones', function (Blueprint $table) {
+        if (!Schema::hasTable('geo_zones')) {
+            Schema::create('geo_zones', function (Blueprint $table) {
             $table->id();
             $table->string('name', 32);
             $table->string('description', 255)->nullable();
             $table->timestamps();
         });
+        }
 
         // ============================================
         // POLYMORPHIC SPINE
         // ============================================
 
-        Schema::create('descriptions', function (Blueprint $table) {
+        if (!Schema::hasTable('descriptions')) {
+            Schema::create('descriptions', function (Blueprint $table) {
             $table->id();
             $table->morphs('describable');
             $table->foreignId('language_id')->constrained()->cascadeOnDelete();
@@ -96,8 +111,10 @@ return new class extends Migration
             $table->timestamps();
             $table->unique(['describable_type', 'describable_id', 'language_id']);
         });
+        }
 
-        Schema::create('properties', function (Blueprint $table) {
+        if (!Schema::hasTable('properties')) {
+            Schema::create('properties', function (Blueprint $table) {
             $table->id();
             $table->morphs('propertiable');
             $table->foreignId('store_id')->nullable()->constrained()->nullOnDelete();
@@ -108,8 +125,10 @@ return new class extends Migration
             $table->timestamps();
             $table->index(['propertiable_type', 'propertiable_id', 'group', 'key']);
         });
+        }
 
-        Schema::create('url_aliases', function (Blueprint $table) {
+        if (!Schema::hasTable('url_aliases')) {
+            Schema::create('url_aliases', function (Blueprint $table) {
             $table->id();
             $table->morphs('aliasable');
             $table->foreignId('language_id')->constrained()->cascadeOnDelete();
@@ -119,26 +138,32 @@ return new class extends Migration
             $table->unique(['keyword', 'language_id']);
             $table->unique(['aliasable_type', 'aliasable_id', 'language_id']);
         });
+        }
 
-        Schema::create('categorizables', function (Blueprint $table) {
+        if (!Schema::hasTable('categorizables')) {
+            Schema::create('categorizables', function (Blueprint $table) {
             $table->id();
             $table->foreignId('category_id')->constrained()->cascadeOnDelete();
             $table->morphs('categorizable');
             $table->unique(['category_id', 'categorizable_type', 'categorizable_id']);
         });
+        }
 
-        Schema::create('store_assignments', function (Blueprint $table) {
+        if (!Schema::hasTable('store_assignments')) {
+            Schema::create('store_assignments', function (Blueprint $table) {
             $table->id();
             $table->foreignId('store_id')->constrained()->cascadeOnDelete();
             $table->morphs('assignable');
             $table->unique(['store_id', 'assignable_type', 'assignable_id']);
         });
+        }
 
         // ============================================
         // CATALOG
         // ============================================
 
-        Schema::create('categories', function (Blueprint $table) {
+        if (!Schema::hasTable('categories')) {
+            Schema::create('categories', function (Blueprint $table) {
             $table->id();
             $table->foreignId('parent_id')->nullable();
             $table->string('object_type', 50)->default('product');
@@ -149,8 +174,10 @@ return new class extends Migration
             $table->softDeletes();
             $table->index('parent_id');
         });
+        }
 
-        Schema::create('products', function (Blueprint $table) {
+        if (!Schema::hasTable('products')) {
+            Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('sku', 64)->unique();
             $table->string('model', 64)->nullable();
@@ -176,8 +203,10 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
+        }
 
-        Schema::create('manufacturers', function (Blueprint $table) {
+        if (!Schema::hasTable('manufacturers')) {
+            Schema::create('manufacturers', function (Blueprint $table) {
             $table->id();
             $table->string('name', 64);
             $table->string('image', 255)->nullable();
@@ -185,16 +214,20 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
+        }
 
-        Schema::create('product_images', function (Blueprint $table) {
+        if (!Schema::hasTable('product_images')) {
+            Schema::create('product_images', function (Blueprint $table) {
             $table->id();
             $table->foreignId('product_id')->constrained()->cascadeOnDelete();
             $table->string('image', 255);
             $table->integer('sort_order')->default(0);
             $table->timestamps();
         });
+        }
 
-        Schema::create('reviews', function (Blueprint $table) {
+        if (!Schema::hasTable('reviews')) {
+            Schema::create('reviews', function (Blueprint $table) {
             $table->id();
             $table->morphs('reviewable');
             $table->foreignId('customer_id')->nullable();
@@ -205,12 +238,14 @@ return new class extends Migration
             $table->boolean('status')->default(false);
             $table->timestamps();
         });
+        }
 
         // ============================================
         // CMS
         // ============================================
 
-        Schema::create('posts', function (Blueprint $table) {
+        if (!Schema::hasTable('posts')) {
+            Schema::create('posts', function (Blueprint $table) {
             $table->id();
             $table->string('type', 50)->default('post'); // 'post' or 'page'
             $table->foreignId('parent_id')->nullable();
@@ -228,8 +263,10 @@ return new class extends Migration
             $table->softDeletes();
             $table->index('type');
         });
+        }
 
-        Schema::create('menus', function (Blueprint $table) {
+        if (!Schema::hasTable('menus')) {
+            Schema::create('menus', function (Blueprint $table) {
             $table->id();
             $table->foreignId('store_id')->constrained()->cascadeOnDelete();
             $table->string('name', 100);
@@ -240,8 +277,10 @@ return new class extends Migration
             $table->boolean('status')->default(true);
             $table->timestamps();
         });
+        }
 
-        Schema::create('menu_links', function (Blueprint $table) {
+        if (!Schema::hasTable('menu_links')) {
+            Schema::create('menu_links', function (Blueprint $table) {
             $table->id();
             $table->foreignId('menu_id')->constrained()->cascadeOnDelete();
             $table->foreignId('parent_id')->nullable();
@@ -251,8 +290,10 @@ return new class extends Migration
             $table->timestamps();
             $table->index('parent_id');
         });
+        }
 
-        Schema::create('banners', function (Blueprint $table) {
+        if (!Schema::hasTable('banners')) {
+            Schema::create('banners', function (Blueprint $table) {
             $table->id();
             $table->string('name', 250);
             $table->string('jquery_plugin', 150)->default('nivo-slider');
@@ -263,8 +304,10 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
+        }
 
-        Schema::create('banner_items', function (Blueprint $table) {
+        if (!Schema::hasTable('banner_items')) {
+            Schema::create('banner_items', function (Blueprint $table) {
             $table->id();
             $table->foreignId('banner_id')->constrained()->cascadeOnDelete();
             $table->string('image', 250);
@@ -273,12 +316,14 @@ return new class extends Migration
             $table->boolean('status')->default(true);
             $table->timestamps();
         });
+        }
 
         // ============================================
         // WIDGET ENGINE
         // ============================================
 
-        Schema::create('widget_rows', function (Blueprint $table) {
+        if (!Schema::hasTable('widget_rows')) {
+            Schema::create('widget_rows', function (Blueprint $table) {
             $table->id();
             $table->foreignId('store_id')->constrained()->cascadeOnDelete();
             $table->string('position', 50);
@@ -289,8 +334,10 @@ return new class extends Migration
             $table->timestamps();
             $table->index(['store_id', 'position']);
         });
+        }
 
-        Schema::create('widget_columns', function (Blueprint $table) {
+        if (!Schema::hasTable('widget_columns')) {
+            Schema::create('widget_columns', function (Blueprint $table) {
             $table->id();
             $table->foreignId('row_id')->constrained('widget_rows')->cascadeOnDelete();
             $table->string('key', 100);
@@ -298,8 +345,10 @@ return new class extends Migration
             $table->integer('sort_order')->default(0);
             $table->timestamps();
         });
+        }
 
-        Schema::create('widgets', function (Blueprint $table) {
+        if (!Schema::hasTable('widgets')) {
+            Schema::create('widgets', function (Blueprint $table) {
             $table->id();
             $table->foreignId('column_id')->constrained('widget_columns')->cascadeOnDelete();
             $table->string('name', 250);
@@ -315,20 +364,24 @@ return new class extends Migration
             $table->index(['column_id', 'sort_order']);
             $table->index(['object_type', 'object_id']);
         });
+        }
 
         // ============================================
         // COMMERCE
         // ============================================
 
-        Schema::create('customer_groups', function (Blueprint $table) {
+        if (!Schema::hasTable('customer_groups')) {
+            Schema::create('customer_groups', function (Blueprint $table) {
             $table->id();
             $table->string('name', 32);
             $table->json('params')->nullable();
             $table->boolean('status')->default(true);
             $table->timestamps();
         });
+        }
 
-        Schema::create('customers', function (Blueprint $table) {
+        if (!Schema::hasTable('customers')) {
+            Schema::create('customers', function (Blueprint $table) {
             $table->id();
             $table->foreignId('store_id')->nullable()->constrained()->nullOnDelete();
             $table->foreignId('customer_group_id')->nullable()->constrained()->nullOnDelete();
@@ -344,8 +397,10 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
+        }
 
-        Schema::create('addresses', function (Blueprint $table) {
+        if (!Schema::hasTable('addresses')) {
+            Schema::create('addresses', function (Blueprint $table) {
             $table->id();
             $table->foreignId('customer_id')->constrained()->cascadeOnDelete();
             $table->string('firstname', 32);
@@ -359,8 +414,10 @@ return new class extends Migration
             $table->foreignId('zone_id')->nullable()->constrained()->nullOnDelete();
             $table->timestamps();
         });
+        }
 
-        Schema::create('orders', function (Blueprint $table) {
+        if (!Schema::hasTable('orders')) {
+            Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->foreignId('store_id')->nullable()->constrained()->nullOnDelete();
             $table->foreignId('customer_id')->nullable()->constrained()->nullOnDelete();
@@ -380,8 +437,10 @@ return new class extends Migration
             $table->string('ip', 45)->nullable();
             $table->timestamps();
         });
+        }
 
-        Schema::create('order_items', function (Blueprint $table) {
+        if (!Schema::hasTable('order_items')) {
+            Schema::create('order_items', function (Blueprint $table) {
             $table->id();
             $table->foreignId('order_id')->constrained()->cascadeOnDelete();
             $table->foreignId('product_id')->nullable();
@@ -393,8 +452,10 @@ return new class extends Migration
             $table->integer('quantity')->default(1);
             $table->timestamps();
         });
+        }
 
-        Schema::create('order_totals', function (Blueprint $table) {
+        if (!Schema::hasTable('order_totals')) {
+            Schema::create('order_totals', function (Blueprint $table) {
             $table->id();
             $table->foreignId('order_id')->constrained()->cascadeOnDelete();
             $table->string('title', 255);
@@ -402,8 +463,10 @@ return new class extends Migration
             $table->decimal('value', 15, 4)->default(0);
             $table->integer('sort_order')->default(0);
         });
+        }
 
-        Schema::create('coupons', function (Blueprint $table) {
+        if (!Schema::hasTable('coupons')) {
+            Schema::create('coupons', function (Blueprint $table) {
             $table->id();
             $table->string('code', 24)->unique();
             $table->char('type', 1)->default('F'); // F=fixed, P=percent
@@ -417,12 +480,14 @@ return new class extends Migration
             $table->boolean('status')->default(true);
             $table->timestamps();
         });
+        }
 
         // ============================================
         // MARKETING
         // ============================================
 
-        Schema::create('contacts', function (Blueprint $table) {
+        if (!Schema::hasTable('contacts')) {
+            Schema::create('contacts', function (Blueprint $table) {
             $table->id();
             $table->foreignId('customer_id')->nullable();
             $table->string('name', 250);
@@ -432,24 +497,30 @@ return new class extends Migration
             $table->timestamp('date_deleted')->nullable();
             $table->timestamps();
         });
+        }
 
-        Schema::create('contact_lists', function (Blueprint $table) {
+        if (!Schema::hasTable('contact_lists')) {
+            Schema::create('contact_lists', function (Blueprint $table) {
             $table->id();
             $table->string('name', 250);
             $table->string('description', 250)->nullable();
             $table->boolean('status')->default(true);
             $table->timestamps();
         });
+        }
 
-        Schema::create('contact_list_subscriptions', function (Blueprint $table) {
+        if (!Schema::hasTable('contact_list_subscriptions')) {
+            Schema::create('contact_list_subscriptions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('contact_id')->constrained()->cascadeOnDelete();
             $table->foreignId('contact_list_id')->constrained()->cascadeOnDelete();
             $table->timestamp('subscribed_at')->useCurrent();
             $table->unique(['contact_id', 'contact_list_id']);
         });
+        }
 
-        Schema::create('newsletters', function (Blueprint $table) {
+        if (!Schema::hasTable('newsletters')) {
+            Schema::create('newsletters', function (Blueprint $table) {
             $table->id();
             $table->string('name', 250);
             $table->text('textbody')->nullable();
@@ -457,8 +528,10 @@ return new class extends Migration
             $table->boolean('status')->default(true);
             $table->timestamps();
         });
+        }
 
-        Schema::create('campaigns', function (Blueprint $table) {
+        if (!Schema::hasTable('campaigns')) {
+            Schema::create('campaigns', function (Blueprint $table) {
             $table->id();
             $table->foreignId('newsletter_id')->nullable()->constrained()->nullOnDelete();
             $table->string('name', 250);
@@ -475,8 +548,10 @@ return new class extends Migration
             $table->boolean('status')->default(true);
             $table->timestamps();
         });
+        }
 
-        Schema::create('campaign_links', function (Blueprint $table) {
+        if (!Schema::hasTable('campaign_links')) {
+            Schema::create('campaign_links', function (Blueprint $table) {
             $table->id();
             $table->foreignId('campaign_id')->constrained()->cascadeOnDelete();
             $table->string('url', 250);
@@ -484,8 +559,10 @@ return new class extends Migration
             $table->string('link', 250)->nullable();
             $table->timestamps();
         });
+        }
 
-        Schema::create('campaign_stats', function (Blueprint $table) {
+        if (!Schema::hasTable('campaign_stats')) {
+            Schema::create('campaign_stats', function (Blueprint $table) {
             $table->id();
             $table->foreignId('campaign_id')->constrained()->cascadeOnDelete();
             $table->foreignId('contact_id')->nullable();
@@ -499,8 +576,10 @@ return new class extends Migration
             $table->string('ip', 45)->nullable();
             $table->timestamp('date_added')->useCurrent();
         });
+        }
 
-        Schema::create('campaign_link_stats', function (Blueprint $table) {
+        if (!Schema::hasTable('campaign_link_stats')) {
+            Schema::create('campaign_link_stats', function (Blueprint $table) {
             $table->id();
             $table->foreignId('campaign_id')->constrained()->cascadeOnDelete();
             $table->foreignId('contact_id')->nullable();
@@ -515,12 +594,14 @@ return new class extends Migration
             $table->string('ip', 45)->nullable();
             $table->timestamp('date_added')->useCurrent();
         });
+        }
 
         // ============================================
         // ADMIN
         // ============================================
 
-        Schema::create('users', function (Blueprint $table) {
+        if (!Schema::hasTable('users')) {
+            Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('username', 20)->unique();
             $table->string('password');
@@ -532,8 +613,10 @@ return new class extends Migration
             $table->string('ip', 45)->nullable();
             $table->timestamps();
         });
+        }
 
-        Schema::create('user_activity', function (Blueprint $table) {
+        if (!Schema::hasTable('user_activity')) {
+            Schema::create('user_activity', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->nullable();
             $table->morphs('activitable');
@@ -544,8 +627,10 @@ return new class extends Migration
             $table->string('browser', 50)->nullable();
             $table->timestamp('date_added')->useCurrent();
         });
+        }
 
-        Schema::create('settings', function (Blueprint $table) {
+        if (!Schema::hasTable('settings')) {
+            Schema::create('settings', function (Blueprint $table) {
             $table->id();
             $table->foreignId('store_id')->default(0);
             $table->string('group', 32);
@@ -554,6 +639,7 @@ return new class extends Migration
             $table->timestamps();
             $table->unique(['store_id', 'group', 'key']);
         });
+        }
     }
 
     public function down(): void
