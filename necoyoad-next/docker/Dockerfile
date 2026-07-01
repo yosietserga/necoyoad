@@ -32,9 +32,19 @@ RUN chown -R www-data:www-data /var/www/html \
 COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN sed -i 's/\r$//' /usr/local/bin/entrypoint.sh && chmod +x /usr/local/bin/entrypoint.sh
 
+# Caddyfile: tells FrankenPHP to use Laravel's public/ as document root
+# and route all requests through index.php (Laravel's front controller).
+# Without this, FrankenPHP serves from /var/www/html and returns 404 for /
+COPY docker/Caddyfile /etc/frankenphp/Caddyfile
+
+# Ensure storage and bootstrap cache are writable by www-data
+RUN mkdir -p storage/framework/{sessions,views,cache} storage/logs bootstrap/cache && \
+    chown -R www-data:www-data storage bootstrap/cache && \
+    chmod -R 775 storage bootstrap/cache
+
 # FrankenPHP serves on port 80
 EXPOSE 80
 
-# Start FrankenPHP (entrypoint runs bootstrap first)
+# Start FrankenPHP with the Caddyfile (entrypoint runs bootstrap first)
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
-CMD ["frankenphp", "run"]
+CMD ["frankenphp", "run", "--config", "/etc/frankenphp/Caddyfile"]

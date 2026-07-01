@@ -48,13 +48,5 @@ Route::get('/track/click/{nonce}', [StorefrontController::class, 'trackClick'])-
 // Unsubscribe
 Route::get('/unsubscribe/{token}', [StorefrontController::class, 'unsubscribe'])->name('marketing.unsubscribe');
 
-// Healthcheck probe (used by Docker's HEALTHCHECK and orchestrators)
-Route::get('/up', function () {
-    try {
-        \Illuminate\Support\Facades\DB::connection()->getPdo();
-        return response('ok', 200)->header('Content-Type', 'text/plain');
-    } catch (\Throwable $e) {
-        return response('down: ' . $e->getMessage(), 503)
-            ->header('Content-Type', 'text/plain');
-    }
-})->name('health');
+// Healthcheck: bootstrap/app.php registers '/up' via withRouting(health: '/up')
+// which serves Laravel's built-in health route. No explicit route needed here.
