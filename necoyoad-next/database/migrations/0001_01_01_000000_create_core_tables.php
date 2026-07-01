@@ -154,7 +154,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('category_id')->constrained()->cascadeOnDelete();
             $table->morphs('categorizable');
-            $table->unique(['category_id', 'categorizable_type', 'categorizable_id']);
+            $table->unique(['category_id', 'categorizable_type', 'categorizable_id'], 'categorizables_unique');
         });
         }
 
