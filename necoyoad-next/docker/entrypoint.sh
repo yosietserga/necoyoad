@@ -12,7 +12,19 @@ fi
 # 2. Force DB/Redis to the compose service names (overrides any localhost in .env)
 sed -i 's/^DB_HOST=.*/DB_HOST=mysql/'        .env 2>/dev/null || true
 sed -i 's/^DB_PORT=.*/DB_PORT=3306/'          .env 2>/dev/null || true
+sed -i 's/^DB_USERNAME=.*/DB_USERNAME=necoyoad/' .env 2>/dev/null || true
+sed -i 's/^DB_PASSWORD=.*/DB_PASSWORD=secret/'   .env 2>/dev/null || true
 sed -i 's/^REDIS_HOST=.*/REDIS_HOST=redis/'   .env 2>/dev/null || true
+# Use file-based session/cache for maximum dev stability (redis causes 500s
+# if the connection has any issue; switch to redis in production .env)
+sed -i 's/^SESSION_DRIVER=.*/SESSION_DRIVER=file/' .env 2>/dev/null || true
+sed -i 's/^CACHE_STORE=.*/CACHE_STORE=file/'       .env 2>/dev/null || true
+sed -i 's/^QUEUE_CONNECTION=.*/QUEUE_CONNECTION=sync/' .env 2>/dev/null || true
+
+# 2b. Ensure storage directory structure exists and is writable
+mkdir -p storage/framework/sessions storage/framework/views storage/framework/cache \
+         storage/logs bootstrap/cache
+chmod -R 775 storage bootstrap/cache 2>/dev/null || true
 
 # 3. Install composer deps if the bind mount hid them
 if [ ! -f vendor/autoload.php ]; then
