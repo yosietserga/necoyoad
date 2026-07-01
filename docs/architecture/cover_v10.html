@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    @page { size: 794px 1123px; margin: 0; }
+    :root { --c-bg: #1A1A2E; --c-accent: #E94560; --c-text: #FFFFFF; --c-muted: #B8A8C8; --c-mono: #D8C8E8; }
+    html, body { margin: 0; padding: 0; width: 794px; height: 1123px; background: var(--c-bg); color: var(--c-text); font-family: 'Inter', sans-serif; }
+    @media screen { html { height: auto; display: flex; justify-content: center; min-height: 100vh; background: var(--c-bg); } body { transform-origin: top center; scale: min(1, calc(100vw / 794), calc(100vh / 1123)); margin: 0 auto; box-shadow: 0 0 60px rgba(0,0,0,0.3); } }
+    .cover { width: 794px; height: 1123px; position: relative; display: flex; flex-direction: column; align-items: center; box-sizing: border-box; }
+    .rule-top, .rule-bottom { position: absolute; left: 114px; right: 114px; height: 2px; background: var(--c-accent); }
+    .rule-top { top: 114px; } .rule-bottom { bottom: 114px; }
+    .center-block { position: absolute; top: 0; bottom: 0; left: 114px; right: 114px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+    .label { font-size: 9pt; color: var(--c-accent); letter-spacing: 4px; text-transform: uppercase; margin-bottom: 28px; font-weight: 500; }
+    .title { font-size: 28pt; font-weight: 700; line-height: 1.2; font-family: 'Playfair Display', serif; margin-bottom: 14px; max-width: 540px; }
+    .version-badge { display: inline-block; background: var(--c-accent); color: var(--c-bg); font-family: 'JetBrains Mono', monospace; font-size: 11pt; font-weight: 700; padding: 4pt 14pt; margin-bottom: 28px; letter-spacing: 1px; }
+    .subtitle { font-size: 13pt; color: var(--c-muted); margin-bottom: 32px; max-width: 500px; line-height: 1.55; font-style: italic; }
+    .meta-table { font-family: 'JetBrains Mono', monospace; font-size: 9pt; color: var(--c-mono); margin-bottom: 28px; line-height: 1.7; }
+    .meta-table .k { color: var(--c-accent); margin-right: 8px; }
+    .authors { font-size: 11pt; margin-bottom: 8px; font-weight: 500; }
+    .institution { font-size: 9pt; color: var(--c-muted); line-height: 1.4; max-width: 440px; }
+    .footer { position: absolute; bottom: 57px; left: 114px; right: 114px; text-align: center; font-size: 9pt; color: var(--c-muted); letter-spacing: 1px; }
+  </style>
+</head>
+<body>
+  <div class="cover">
+    <div class="rule-top"></div>
+    <div class="rule-bottom"></div>
+    <div class="center-block">
+      <div class="label">Technical Assessment &middot; Remastering Feasibility</div>
+      <div class="title">Necoyoad</div>
+      <div class="version-badge">v10</div>
+      <div class="subtitle">What was good, what was bad, what to keep,<br>and whether to rebuild from scratch with Laravel</div>
+      <div class="meta-table">
+        <span class="k">based on:</span> 9 volumes, 216 pages of verified analysis<br>
+        <span class="k">part I:</span> 10 architectural strengths (good)<br>
+        <span class="k">part II:</span> 15 technical debts (bad)<br>
+        <span class="k">part III:</span> 8 patterns to preserve (keep)<br>
+        <span class="k">part IV:</span> Laravel mapping + 22-month effort estimate<br>
+        <span class="k">pages:</span> 16 &middot; <span class="k">stance:</span> prescriptive
+      </div>
+      <div class="authors">Reverse-Engineered Architecture Report</div>
+      <div class="institution">Based on PHP source commit ce75adf<br>github.com/yosietserga/necoyoad</div>
+    </div>
+    <div class="footer">PRESCRIPTIVE &nbsp;&middot;&nbsp; ASSESSMENT &nbsp;&middot;&nbsp; RECOMMENDATIONS INCLUDED</div>
+  </div>
+</body>
+</html>

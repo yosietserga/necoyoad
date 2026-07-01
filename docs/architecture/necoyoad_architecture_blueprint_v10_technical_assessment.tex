@@ -1,0 +1,847 @@
+% Necoyoad Architecture Blueprint v10 — Technical Assessment and Remastering Feasibility
+% This volume is PRESCRIPTIVE (unlike v1-v9 which were descriptive)
+
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable,listings}
+\usepackage{colortbl}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{adjustbox}
+\usepackage{caption}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{pdflscape}
+\usepackage{listings}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc,shapes.geometric,fit,backgrounds,chains,decorations.pathreplacing,shapes.multipart}
+\usepackage[colorlinks=true,linkcolor=blue!50!black,citecolor=blue!40!black,urlcolor=blue!60!black,bookmarks=true,bookmarksnumbered=true,unicode=true,pdftitle={Necoyoad - Technical Assessment and Remastering Feasibility (v10)},pdfauthor={Reverse-Engineered Architecture Report},pdfsubject={Technical Assessment, Code Review, Remastering Feasibility, Laravel Migration},pdfkeywords={Necoyoad, OpenCart, PHP 8.1, Technical Assessment, Code Review, Remastering, Laravel, Symfony, Migration, Feasibility}]{hyperref}
+\geometry{a4paper, top=2.4cm, bottom=2.4cm, left=2.4cm, right=2.4cm}
+\setlength{\headheight}{14pt}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\itshape Necoyoad v10 --- Technical Assessment \& Remastering Feasibility}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.3pt}
+\renewcommand{\footrulewidth}{0pt}
+\titleformat{\section}{\Large\bfseries\color{black!85}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries\color{black!80}}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{black!75}}{\thesubsubsection}{0.5em}{}
+\widowpenalty=10000
+\clubpenalty=10000
+\emergencystretch=4em
+\hbadness=10000
+\hfuzz=2pt
+\vfuzz=2pt
+\sloppy
+
+\definecolor{necoyoad-blue}{HTML}{1F4E79}
+\definecolor{necoyoad-orange}{HTML}{B85C00}
+\definecolor{necoyoad-green}{HTML}{2E6B33}
+\definecolor{necoyoad-red}{HTML}{B22222}
+\definecolor{nodefill}{HTML}{F4F7FB}
+\definecolor{nodefillalt}{HTML}{FBF4EE}
+\definecolor{nodefillgreen}{HTML}{F2F8F2}
+\definecolor{nodefillred}{HTML}{FFF0F0}
+\definecolor{nodefillgray}{HTML}{F0F0F2}
+
+\newtcolorbox{goodbox}[1][]{
+  enhanced, breakable,
+  colback=nodefillgreen, colframe=necoyoad-green!70,
+  boxrule=0.4pt, arc=2pt, left=8pt, right=8pt, top=6pt, bottom=6pt,
+  fonttitle=\bfseries\small, coltitle=white,
+  title=#1
+}
+\newtcolorbox{badbox}[1][]{
+  enhanced, breakable,
+  colback=nodefillred, colframe=necoyoad-red!70,
+  boxrule=0.4pt, arc=2pt, left=8pt, right=8pt, top=6pt, bottom=6pt,
+  fonttitle=\bfseries\small, coltitle=white,
+  title=#1
+}
+\newtcolorbox{reusebox}[1][]{
+  enhanced, breakable,
+  colback=nodefill, colframe=necoyoad-blue!60,
+  boxrule=0.4pt, arc=2pt, left=8pt, right=8pt, top=6pt, bottom=6pt,
+  fonttitle=\bfseries\small, coltitle=white,
+  title=#1
+}
+
+\captionsetup{justification=raggedright, singlelinecheck=false, font=small, labelfont=bf}
+
+\begin{document}
+\thispagestyle{empty}
+\begin{center}
+{\Large\bfseries Necoyoad --- Technical Assessment \& Remastering Feasibility (v10)}\\[0.4em]
+{\small\itshape What was good, what was bad, what to keep, and whether to rebuild\\
+from scratch with Laravel or another modern framework}\\[1.2em]
+\end{center}
+
+\begin{abstract}
+\noindent
+This is the tenth and final volume of the Necoyoad architecture blueprint.
+Unlike volumes v1--v9 (which were strictly descriptive), v10 is
+\textbf{prescriptive}: it evaluates the codebase, identifies what was well
+designed, what was poorly designed, what is worth preserving in a remastering
+effort, and assesses the feasibility of rebuilding the platform from scratch
+using Laravel (or a similar modern PHP framework).
+
+The assessment is based on the exhaustive source-code analysis conducted
+across v1--v9: 1,450 PHP files, 87 database tables, 202 pages of verified
+architecture documentation. The findings are organised into four parts:
+\textbf{Part I --- What Was Good} (10 architectural strengths worth
+preserving); \textbf{Part II --- What Was Bad} (15 technical debts and
+design flaws); \textbf{Part III --- What to Keep} (8 patterns and
+abstractions that should survive a remastering); and \textbf{Part IV ---
+Feasibility of a Laravel Rebuild} (a pattern-by-pattern mapping from
+Necoyoad to Laravel, with effort estimates and a recommended migration
+strategy).
+\end{abstract}
+
+\vspace{0.6em}
+\noindent\textbf{Keywords:} Necoyoad, OpenCart, PHP 8.1, technical
+assessment, code review, remastering, Laravel, Symfony, migration
+feasibility, architecture patterns.
+
+\newpage
+\tableofcontents
+\newpage
+
+% ============================================================
+\section{Introduction}\label{sec:intro}
+% ============================================================
+
+\subsection{From Descriptive to Prescriptive}
+
+Volumes v1--v9 were strictly descriptive: they documented how the system
+\emph{is}, without proposing improvements. This volume changes stance.
+The user has asked for an evaluative assessment: what was good, what was
+bad, what can be reused, and whether to rebuild from scratch. v10 answers
+those questions directly.
+
+\subsection{Basis for Assessment}
+
+The assessment draws on:
+\begin{itemize}[leftmargin=1.6em,itemsep=2pt]
+  \item v1 (SQL-only reconstruction) --- the 87-table schema.
+  \item v2 (source verification) --- the bootstrap, engine, auth, API.
+  \item v3 (rendering pipeline) --- the widget composition system.
+  \item v4 (marketing subsystem) --- the campaign pipeline.
+  \item v5 (multi-store/multi-language) --- the polymorphic object spine.
+  \item v6 (admin back-office) --- the AdminController declarative CRUD.
+  \item v7 (menu links) --- the recursive tree rendering.
+  \item v8 (CMS posts/pages) --- the widget composition modes.
+  \item v9 (banner subsystem) --- the jQuery plugin discriminator.
+\end{itemize}
+
+Total: 216 pages of verified architecture documentation, covering every
+subsystem of the platform.
+
+\subsection{Context}
+
+Necoyoad is a PHP 8.1 / MySQL 5.7 e-commerce and CMS platform, derived
+from OpenCart 1.x/2.x, with significant proprietary extensions. The
+codebase is $\sim$17,000 lines of PHP (excluding vendor libraries),
+1,450 files, 87 database tables. It was built for the Venezuelan market
+(RIF tax IDs, bank-transfer payments, Spanish-first UI) circa 2009--2023.
+
+% ============================================================
+\part{What Was Good}\label{part:good}
+% ============================================================
+
+\section{Architectural Strengths}\label{sec:good}
+
+\subsection{The AdminController Declarative CRUD Framework}
+
+\begin{goodbox}[AdminController --- the crown jewel of the admin]
+The \texttt{AdminController} base class (1,244 lines, v6) is a declarative
+CRUD framework that reduces 70+ admin controllers to a few lines of
+configuration each. A subclass declares:
+\texttt{\$form\_vars} (field definitions with types),
+\texttt{\$filters} (list-view filter definitions),
+\texttt{\$public\_methods} (accessible CRUD methods),
+\texttt{\$model\_name}/\texttt{\$model\_route} (the model to load),
+and \texttt{\$object\_type} (the polymorphic discriminator).
+
+The base provides the entire CRUD lifecycle:
+\texttt{index()} (list), \texttt{insert()}/\texttt{update()} (via
+shared \texttt{upsert()}), \texttt{copy()}, \texttt{delete()},
+\texttt{activate()}, \texttt{sortable()}, \texttt{grid()} (AJAX grid),
+\texttt{getList()}, \texttt{getForm()}, \texttt{validateForm()},
+\texttt{validateDelete()}.
+
+This is a significant abstraction over vanilla OpenCart (where each
+controller has its own CRUD) and over many modern frameworks (where
+CRUD is typically generated by Artisan commands rather than declared
+at the class level). The declarative approach means adding a new admin
+entity is a matter of writing a controller with a few properties, not
+copy-pasting 500 lines of boilerplate.
+\end{goodbox}
+
+\subsection{The Polymorphic Object Spine}
+
+\begin{goodbox}[Five-table polymorphic spine --- scalable and extensible]
+The five polymorphic tables (\texttt{object\_to\_store},
+\texttt{object\_to\_category}, \texttt{description},
+\texttt{property}, \texttt{url\_alias}) use the
+\texttt{(object\_id, object\_type)} pair as a composite soft foreign
+key. This means:
+
+\begin{itemize}[leftmargin=1.6em,itemsep=2pt]
+  \item Adding a new content type (e.g.\ ``survey'', ``auction'')
+        requires \emph{no schema changes} --- just populate
+        \texttt{object\_type} with the new string.
+  \item Localisation is built-in: every content type gets per-language
+        descriptions via the \texttt{description} table's
+        \texttt{(object\_id, object\_type, language\_id)} triple.
+  \item SEO URLs are built-in: every content type gets per-language
+        slugs via \texttt{url\_alias}.
+  \item Free-form metadata is built-in: every content type gets EAV
+        properties via the \texttt{property} table.
+  \item Multi-store scoping is built-in: every content type gets
+        store assignment via \texttt{object\_to\_store}.
+\end{itemize}
+
+This is a well-designed polymorphic architecture that anticipates
+future content types. It is more flexible than Laravel's polymorphic
+relations (which require a morph map) because the discriminator is a
+free-form string, not a class name.
+\end{goodbox}
+
+\subsection{The Dual Hooks/Events Extension System}
+
+\begin{goodbox}[Hooks + Events --- the right tool for each job]
+The dual extension system (v2, v3) provides:
+
+\begin{itemize}[leftmargin=1.6em,itemsep=2pt]
+  \item \textbf{Hooks} (WordPress-style): \texttt{addFilter},
+        \texttt{applyFilters}, \texttt{addAction}, \texttt{run}.
+        Filters chain values through callbacks; actions short-circuit
+        on truthy return. Used for \texttt{render}, \texttt{fetch},
+        \texttt{loadWidgets}, \texttt{csspath}, \texttt{module:settings}.
+  \item \textbf{Events} (Node-style): \texttt{on}, \texttt{emit},
+        \texttt{off}. No short-circuit; all listeners fire. Used for
+        \texttt{dispatch}, \texttt{beforeLoad}, \texttt{afterLoad},
+        \texttt{registry:update}, \texttt{php:error}.
+\end{itemize}
+
+The separation is architecturally sound: Hooks are for
+\emph{transforming} values and \emph{short-circuiting} flows (I want
+to change the rendered HTML); Events are for \emph{broadcasting}
+occurrences (I want to know when a dispatch happens). Many modern
+frameworks conflate these into a single event system, which leads to
+confusion about whether a listener can modify the flow.
+\end{goodbox}
+
+\subsection{The Widget Composition System}
+
+\begin{goodbox}[Three-mode widget composition --- flexible and powerful]
+The widget composition system (v3, v8) supports three modes:
+
+\begin{enumerate}[leftmargin=1.6em,itemsep=2pt]
+  \item \textbf{Dynamic}: admin configures widgets via the visual
+        editor; \texttt{widgets-rows.tpl} emits
+        \texttt{\{\%widget\_name\%\}} tokens; \texttt{fetch()}
+        substitutes them.
+  \item \textbf{Manual}: template author hardcodes
+        \texttt{\{\%widget\_name\%\}} tokens in a \texttt{.tpl} file.
+  \item \textbf{Hybrid}: combines dynamic sections with hardcoded
+        sections.
+\end{enumerate}
+
+Plus: per-entity widget overrides (product-specific widgets),
+per-item widget composition (banner slide overlays), the
+\texttt{only:} prefix for embedded pages, and the
+\texttt{widgets-common.tpl} universal layout. This is a page-builder
+experience that rivals WordPress's block editor or Drupal's Layout
+Builder, implemented in raw PHP.
+\end{goodbox}
+
+\subsection{The Per-Entity Template Override}
+
+\begin{goodbox}[Per-entity template override via EAV]
+Each individual post, page, product, or category can use a different
+template, set via the admin's visual editor and stored in the EAV
+\texttt{property('style', 'view')} key. The resolution is 3-level:
+EAV property $\to$ config default $\to$ hardcoded fallback. This
+allows a blog post to use a standard template, a landing page to use
+a custom template with SVG sections, and a product page to use a
+custom product-info template --- all without code changes.
+\end{goodbox}
+
+\subsection{The Banner jQuery Plugin Discriminator}
+
+\begin{goodbox}[jquery-plugin discriminator --- plugin-aware widget]
+The \texttt{banner.jquery\_plugin} column (v9) drives the entire
+rendering pipeline: template selection, JS enqueuing, CSS enqueuing,
+and the \texttt{ntPlugins} registry push. This is the only widget
+module that dynamically selects its template from a database column.
+The 33-template library (NivoSlider, Slick, Camera, Fancybox, etc.)
+with per-template JS/CSS assets is a rich visual content system.
+\end{goodbox}
+
+\subsection{The Multi-Store / Multi-Language Composition}
+
+\begin{goodbox}[Store x Language matrix --- data-level multi-tenancy]
+The multi-store architecture (v5) is a clean data-level multi-tenancy:
+\texttt{STORE\_ID} as a global constant, filtered at query time by
+every model. The 6-level language detection priority chain
+(GET $\to$ session $\to$ cookie $\to$ browser $\to$ config) is thorough.
+The $S \times L$ composition matrix (5 filtering dimensions at query
+time) produces a unique content surface per (store, language) pair
+without a dedicated schema construct.
+\end{goodbox}
+
+\subsection{The Campaign Marketing Pipeline}
+
+\begin{goodbox}[Self-hosted Mailchimp clone]
+The marketing subsystem (v4) is a complete email-marketing pipeline:
+newsletter composition with WYSIWYG, contact-list targeting,
+scheduled sending via cron, per-recipient personalisation (7 tokens +
+13 store-level tokens), open/click tracking with full HTTP context,
+and a 50-email-per-pass throttle with 15-minute defer. This is more
+than many commercial e-commerce platforms offered in 2009, and it is
+fully self-hosted.
+\end{goodbox}
+
+\subsection{The Visual Theme Editor}
+
+\begin{goodbox}[Visual theme editor with nt-editable hooks]
+The visual theme editor (v3) is built into the HTML itself via
+\texttt{nt-editable}, \texttt{data-widget}, \texttt{data-position},
+\texttt{data-necotienda\_module} attributes. The editor's JS scans
+the DOM and attaches drag/click handlers. The
+\texttt{/**key**/ ... /**/key**/} CSS markers allow per-widget CSS
+editing. The \texttt{theme\_style} table stores CSS-rule overrides
+at the selector/property/value granularity. This is a
+no-code customisation experience.
+\end{goodbox}
+
+\subsection{The \texttt{ntPlugins} JavaScript Registry}
+
+\begin{goodbox}[ntPlugins --- decoupled deferred initialisation]
+The \texttt{ntPlugins} registry (v9) is a decoupled, deferred-
+initialisation pattern for jQuery plugins. Each slider template
+pushes a \texttt{\{id, config, plugin\}} entry, and
+\texttt{loadNTPlugins()} applies the plugin on DOM ready. This allows
+multiple sliders on the same page without templates knowing about
+each other --- a clean observer pattern for the client side.
+\end{goodbox}
+
+% ============================================================
+\part{What Was Bad}\label{part:bad}
+% ============================================================
+
+\section{Technical Debt and Design Flaws}\label{sec:bad}
+
+\subsection{MyISAM Engine (No Transactions, No FKs)}
+
+\begin{badbox}[MyISAM --- the root cause of many issues]
+All 87 tables use MyISAM. This means: no transactions (multi-table
+writes like order creation are not atomic), no foreign keys (all
+\texttt{\_id} columns are soft references, referential integrity is
+the application's responsibility), table-level locking (concurrent
+writes to \texttt{stat}, \texttt{campaign\_stat}, \texttt{search}
+block each other), and no crash recovery. This is the single
+biggest technical debt in the codebase.
+\end{badbox}
+
+\subsection{Double-MD5 Password Hashing}
+
+\begin{badbox}[Double-MD5 with per-row salt --- insecure by modern standards]
+The password algorithm (v2) is double-MD5 with a per-row random salt:
+\texttt{md5(md5(plaintext) . suffix) . ':' . suffix}. While the
+salt prevents rainbow-table attacks, MD5 is computationally cheap
+(making brute-force feasible) and the double-MD5 offers no meaningful
+security improvement over single-MD5. Modern standards require
+bcrypt, argon2id, or scrypt --- slow hashes designed to make
+brute-force infeasible.
+\end{badbox}
+
+\subsection{The \texttt{LIKE '\%key=value\%'} Widget Query Pattern}
+
+\begin{badbox}[LIKE pattern --- full-table scans on every widget lookup]
+Every widget filter (v3, v5) is a \texttt{LIKE} query against the
+serialised settings blob: \texttt{WHERE p.value LIKE ...}. This forces a full-table scan on every
+widget lookup. On a page with 5 layout positions, each with 3 rows,
+each with 2 columns, each with 4 widgets, that is 165 full-table
+scans. The cache absorbs most of the cost, but the first request (or
+any request after a cache clear) is extremely slow.
+\end{badbox}
+
+\subsection{N+1 Query Patterns}
+
+\begin{badbox}[Recursive query explosion in widget and menu trees]
+The recursive \texttt{getLinks()} method (v7) and the per-object
+widget query (v5) both exhibit N+1 patterns: one query per parent,
+one query per child, one query per widget. A 3-level menu with 5/3/2
+items generates 63 queries on cache miss. The widget system's
+two-query merge (default tree + per-object tree) doubles the query
+count for every layout position.
+\end{badbox}
+
+\subsection{No API Authentication}
+
+\begin{badbox}[validateTokens() stub --- the API is fully open]
+The admin API's \texttt{validateTokens()} method (v2) is a stub that
+always returns \texttt{true}. The TODO comment acknowledges that
+public/private API keys, tokens, expiry, access level, licensing, and
+premium membership checks were planned but never implemented. The
+only protection is the admin session token pre-action. Any caller
+with an admin session can hit every API endpoint.
+\end{badbox}
+
+\subsection{Vestigial Bounce Processing}
+
+\begin{badbox}[Bounce processor is dead code]
+The bounce processor (v4) is commented out of the cron and references
+non-existent Interspire SendStudio classes. There is no working
+bounce detection. Bounced emails are not automatically unsubscribed;
+the contact stays active and will be emailed again on the next
+campaign.
+\end{badbox}
+
+\subsection{Inconsistent \texttt{object\_to\_store} Writes}
+
+\begin{badbox}[Legacy and polymorphic columns coexist in the same table]
+The admin store model (v5) writes products, categories, and
+manufacturers using legacy column names (\texttt{product\_id},
+\texttt{category\_id}, \texttt{manufacturer\_id}), but writes
+downloads, pages, and banners using the polymorphic pair
+(\texttt{object\_id}, \texttt{object\_type}). The storefront reads
+using the polymorphic pair. Posts and post-categories \texttt{INSERT}
+statements omit \texttt{store\_id} entirely. This inconsistency means
+some content types are not correctly store-scoped.
+\end{badbox}
+
+\subsection{Broken API PUT Branches}
+
+\begin{badbox}[All 5 marketing API PUT branches are broken]
+The PUT (update) branches of all 5 marketing API endpoints (v4) use
+the loaded DB row as the data source instead of the JSON body, or
+reference an undefined \texttt{\$query} variable (mailservers). The
+GET, POST, and DELETE branches work. Only PUT is broken.
+\end{badbox}
+
+\subsection{PHPMailer 5.0 from 2009}
+
+\begin{badbox}[PHPMailer 5.0 --- 14 years old and insecure]
+The campaign sender (v4) uses PHPMailer 5.0 (released 2009), renamed
+\texttt{Mailer}. It supports only \texttt{AUTH LOGIN} (no OAuth2, no
+CRAM-MD5). Multiple CVEs have been disclosed against PHPMailer 5.x
+over the years. The SMTP client is a from-scratch implementation,
+not a wrapper around PHP's \texttt{mail()}.
+\end{badbox}
+
+\subsection{No Unsubscribe Mechanism}
+
+\begin{badbox}[No unsubscribe --- CAN-SPAM/GDPR non-compliance]
+There is no \texttt{?unsubscribe=1} endpoint and no
+\texttt{List-Unsubscribe} email header (v4). Recipients cannot
+opt out of campaigns. This is non-compliant with CAN-SPAM (US),
+GDPR (EU), and most modern email regulations.
+\end{badbox}
+
+\subsection{Route-Level RBAC Only}
+
+\begin{badbox}[No object-level permissions]
+The admin RBAC (v6) checks whether the route (e.g.\ \texttt{store/product})
+is in the user group's \texttt{access}/\texttt{modify} arrays. It does
+not check whether the user has permission to edit a \emph{specific}
+product. Any admin with \texttt{modify} permission on
+\texttt{store/product} can edit any product in any store.
+\end{badbox}
+
+\subsection{Hard-Coded Venezuelan Locale}
+
+\begin{badbox}[Venezuelan locale hard-coded throughout]
+\texttt{America/Caracas} is hard-coded in the campaign form, the
+storefront \texttt{link2Campaign}, and the \texttt{Cron} constructor
+(v4). The subdomain regex is hard-coded to \texttt{necoyoad.com}
+(v5). The tracking pixel is hard-coded to
+\texttt{necoyoad.com/.../firma\_necoyoad.jpg} (v4). These make the
+platform difficult to deploy for non-Venezuelan markets.
+\end{badbox}
+
+\subsection{\texttt{var\_dump()} in Production Code}
+
+\begin{badbox}[var-dump left in the links widget]
+The \texttt{ControllerModuleLinks::getLinks()} method (v7, line 56)
+contains a \texttt{var\_dump(\$descriptions)} call that fires when
+\texttt{submenu\_type === 'html\_content'}. Every menu link with an
+HTML-content submenu dumps the descriptions array to the browser.
+\end{badbox}
+
+\subsection{No File Versioning in CSS/TPL Editor}
+
+\begin{badbox}[CSS/TPL editor has no backup or versioning]
+The \texttt{style/editor.php} controller (v6) lets the admin edit CSS
+and TPL files directly with \texttt{file\_put\_contents()}. There is
+no backup, no versioning, no diff. A typo in a CSS file can break the
+storefront with no recovery path short of a server backup.
+\end{badbox}
+
+\subsection{Double Link Rewriting in Campaigns}
+
+\begin{badbox}[Per-recipient link rewriting happens twice]
+The campaign commit phase (v4) rewrites links and inserts
+\texttt{campaign\_link} rows. The cron sender rewrites them
+\emph{again} and inserts fresh rows with new nonces. The commit-phase
+rows are dead data if the per-recipient cache hits. The
+\texttt{campaign\_link} lookup is not scoped by
+\texttt{campaign\_id}, so a nonce from one campaign can resolve to a
+redirect from another.
+\end{badbox}
+
+% ============================================================
+\part{What to Keep}\label{part:keep}
+% ============================================================
+
+\section{Patterns Worth Preserving in a Remastering}\label{sec:keep}
+
+\subsection{The Declarative Admin CRUD Pattern}
+
+\begin{reusebox}[AdminController declarative pattern $\to$ Laravel Form Requests + Resource Controllers]
+The AdminController's declarative approach (\texttt{\$form\_vars},
+\texttt{\$filters}, \texttt{\$public\_methods}) is worth preserving.
+In Laravel, this maps to:
+\begin{itemize}[leftmargin=1.6em,itemsep=2pt]
+  \item \texttt{\$form\_vars} $\to$ Form Request validation rules
+        (with type inference).
+  \item \texttt{\$filters} $\to$ Query scopes on the Eloquent model.
+  \item \texttt{\$public\_methods} $\to$ Middleware-based route
+        permission checks.
+  \item \texttt{\$model\_route} $\to$ Route model binding.
+  \item \texttt{\$object\_type} $\to$ Eloquent morph map.
+\end{itemize}
+A base \texttt{AdminController} class could still provide
+\texttt{index()}, \texttt{store()}, \texttt{update()},
+\texttt{destroy()}, \texttt{grid()} --- but leveraging Laravel's
+Form Requests, Resource Controllers, and Eloquent instead of raw
+SQL.
+\end{reusebox}
+
+\subsection{The Polymorphic Object Spine}
+
+\begin{reusebox}[Polymorphic spine $\to$ Laravel Polymorphic Relations]
+The five polymorphic tables map directly to Laravel's polymorphic
+relations:
+\begin{itemize}[leftmargin=1.6em,itemsep=2pt]
+  \item \texttt{description} $\to$ \texttt{MorphMany} on each model.
+  \item \texttt{property} $\to$ \texttt{MorphMany} with a
+        \texttt{group} + \texttt{key} composite.
+  \item \texttt{object\_to\_store} $\to$ \texttt{MorphToMany}
+        (Store model).
+  \item \texttt{object\_to\_category} $\to$ \texttt{MorphToMany}
+        (Category model).
+  \item \texttt{url\_alias} $\to$ \texttt{MorphMany} with a
+        \texttt{language\_id} scope.
+\end{itemize}
+The morph map would register each content type explicitly
+(\texttt{'product' => Product::class}, etc.), which is cleaner than
+the free-form string discriminator but loses some flexibility.
+\end{reusebox}
+
+\subsection{The Dual Hooks/Events System}
+
+\begin{reusebox}[Hooks + Events $\to$ Laravel Events + Filters]
+Laravel's event system maps to Necoyoad's Events (observer pattern).
+For the Hooks (filter/action with short-circuit), Laravel doesn't
+have a direct equivalent, but the pipeline pattern (middleware) or
+a custom \texttt{Filter} facade could replicate it. Alternatively,
+Laravel's \texttt{Event::dispatch()} with return values (Laravel 9+)
+can serve as both observer and filter.
+\end{reusebox}
+
+\subsection{The Widget Composition System}
+
+\begin{reusebox}[Widget composition $\to$ Laravel Blade Components + View Composers]
+The widget composition system maps to Laravel's Blade components:
+\begin{itemize}[leftmargin=1.6em,itemsep=2pt]
+  \item Each widget becomes a Blade component
+        (\texttt{<x-widgets.banner>} with settings prop).
+  \item The \texttt{\{\%widget\_name\%\}} placeholder becomes a
+        Blade slot or a dynamic component
+        (\texttt{@stack('widgets')} or a dynamic component).
+  \item The \texttt{loadWidgets()} method becomes a View Composer
+        that populates the view with widget data.
+  \item The per-entity widget override becomes a scoped View
+        Composer that checks the session's \texttt{object\_type}.
+  \item The visual editor's \texttt{nt-editable} attributes can be
+        preserved with a Blade directive
+        (\texttt{@editable('widget', \$name)}).
+\end{itemize}
+\end{reusebox}
+
+\subsection{The Per-Entity Template Override}
+
+\begin{reusebox}[Per-entity template override $\to$ Laravel dynamic view resolution]
+Laravel's \texttt{View::exists()} + \texttt{view()} can replicate
+the 3-level template resolution:
+\begin{lstlisting}[language=PHP,basicstyle=\ttfamily\small,numbers=none,frame=none]
+$template = $entity->properties['style']['view'] ?? null;
+$default = config("defaults.{$entity->type}", "content/{$entity->type}");
+$template = $template ?: $default;
+if (view()->exists("themes/{$theme}/{$template}")) {
+    return view("themes/{$theme}/{$template}", $data);
+} else {
+    return view("themes/choroni/{$template}", $data);
+}
+\end{lstlisting}
+\end{reusebox}
+
+\subsection{The Multi-Store/Multi-Language Architecture}
+
+\begin{reusebox}[Multi-store $\to$ Laravel multi-tenancy + localization]
+Laravel has mature multi-tenancy packages (e.g.\
+\texttt{tenancy/tenancy}, \texttt{stancl/tenancy}) that provide
+database-level or row-level multi-tenancy. The row-level approach
+(\texttt{store\_id} on every table) maps to a global scope that
+filters by the current tenant. Laravel's built-in localization
+(\texttt{App::setLocale()}, translatable packages like
+\texttt{spatie/laravel-translatable}) handles the language dimension.
+\end{reusebox}
+
+\subsection{The Campaign Marketing Pipeline}
+
+\begin{reusebox}[Campaign pipeline $\to$ Laravel Queues + Mail + Horizon]
+The campaign pipeline maps cleanly to Laravel's queue infrastructure:
+\begin{itemize}[leftmargin=1.6em,itemsep=2pt]
+  \item \texttt{task\_queue} $\to$ Laravel Queue (Redis/Database driver).
+  \item \texttt{CronSend::sendCampaign()} $\to$ a queued Job
+        (\texttt{SendCampaignEmail}).
+  \item \texttt{task\_exec} locking $\to$ Laravel's built-in job
+        locking (\texttt{ShouldBeUnique}).
+  \item PHPMailer 5.0 $\to$ Laravel Mail (Symfony Mailer under the
+        hood, with OAuth2 support).
+  \item 50-email throttle $\to$ Laravel's \texttt{RateLimited} middleware.
+  \item Tracking pixel + link redirect $\to$ controller routes
+        with \texttt{DB::insert()} on each hit.
+  \item Bounce processing $\to$ Laravel's
+        \texttt{Mail::failure()} callbacks + a bounce-handling job.
+\end{itemize}
+\end{reusebox}
+
+\subsection{The Banner jQuery Plugin Discriminator}
+
+\begin{reusebox}[jquery-plugin discriminator $\to$ Laravel dynamic Blade components]
+The \texttt{jquery\_plugin} discriminator maps to Laravel's dynamic
+Blade components:
+\texttt{<x-dynamic-component>} with a component prop. Each slider becomes a Blade component
+with a component prop. Each slider becomes a Blade component
+(\texttt{resources/views/components/sliders/nivo-slider.blade.php}).
+The \texttt{ntPlugins} registry can be replaced by Alpine.js or
+Livewire for client-side initialisation.
+\end{reusebox}
+
+% ============================================================
+\part{Feasibility of a Laravel Rebuild}\label{part:laravel}
+% ============================================================
+
+\section{Pattern-by-Pattern Mapping}\label{sec:mapping}
+
+\begin{table}[htbp]
+\centering
+\caption{Necoyoad $\to$ Laravel pattern mapping.}\label{tab:laravel-mapping}
+\footnotesize\sloppy
+\begin{tabularx}{\columnwidth}{>{\raggedright\arraybackslash}p{4.0cm}>{\raggedright\arraybackslash}p{4.5cm}X}
+\toprule
+\textbf{Necoyoad pattern} & \textbf{Laravel equivalent} & \textbf{Effort} \\
+\midrule
+Front Controller + Action & Laravel Routing + Controllers & Low --- Laravel's router is more capable. \\
+Registry (service locator) & Laravel Service Container & Low --- automatic DI. \\
+AdminController declarative CRUD & Form Requests + Resource Controllers & Medium --- needs a base controller. \\
+Polymorphic object spine & Eloquent Morph Relations & Medium --- morph map per type. \\
+Hooks (WordPress-style) & Custom Filter facade or Pipeline & Medium --- no built-in equivalent. \\
+Events (Node-style) & Laravel Events + Listeners & Low --- direct mapping. \\
+Widget composition & Blade Components + View Composers & High --- core feature, needs careful design. \\
+\texttt{\{\%widget\_name\%\}} substitution & Blade slots / dynamic components & Medium. \\
+Per-entity template override & \texttt{view()->exists()} + dynamic resolution & Low. \\
+Multi-store (data-level) & Multi-tenancy package + global scope & Medium --- tenant resolution middleware. \\
+Multi-language (6-level priority) & Laravel Localization + middleware & Low. \\
+Campaign pipeline & Laravel Queues + Mail + Horizon & Medium --- job design + tracking. \\
+Banner jquery\_plugin & Dynamic Blade components & Low. \\
+ntPlugins JS registry & Alpine.js / Livewire / JS modules & Medium --- front-end rewrite. \\
+SEO URL rewriter & Route Model Binding + slug column & Low. \\
+MyISAM tables & MySQL InnoDB + migrations & Medium --- schema migration. \\
+Double-MD5 passwords & bcrypt / argon2id & Low --- migration hash check. \\
+Cron CLI & Laravel Scheduler + Queue Worker & Low. \\
+Visual theme editor & Livewire / Inertia + contenteditable & High --- significant front-end work. \\
+deps.php asset manifest & Laravel Vite + manifest & Low. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Effort Estimate}\label{sec:effort}
+
+\begin{table}[htbp]
+\centering
+\caption{Estimated effort by subsystem (senior developer-months).}\label{tab:effort}
+\small
+\begin{tabularx}{\columnwidth}{lrX}
+\toprule
+\textbf{Subsystem} & \textbf{Effort} & \textbf{Notes} \\
+\midrule
+Core framework (routing, DI, auth) & 1 mo & Mostly leveraging Laravel builtins. \\
+Database migration (InnoDB + schema) & 2 mo & 87 tables, data migration, FK constraints. \\
+Admin CRUD framework & 2 mo & Base controller + Form Requests + 70+ entities. \\
+Widget composition system & 3 mo & The hardest part --- Blade components, view composers, visual editor. \\
+Storefront (catalog, checkout, account) & 3 mo & Product, category, cart, order, customer. \\
+CMS (posts, pages, categories) & 1 mo & Simpler than e-commerce. \\
+Marketing pipeline & 2 mo & Queue jobs, mail, tracking, bounce. \\
+Banner subsystem & 1 mo & Dynamic components, 33 slider templates. \\
+Multi-store / multi-language & 1 mo & Tenancy package + localization. \\
+Visual theme editor & 3 mo & Significant front-end (Livewire/Inertia + drag-and-drop). \\
+API (REST, with proper auth) & 1 mo & Laravel Sanctum + API Resources. \\
+Testing + deployment & 2 mo & PHPUnit, CI/CD, Docker. \\
+\midrule
+\textbf{Total} & \textbf{22 mo} & $\sim$2 developer-years (senior). \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Recommended Migration Strategy}\label{sec:strategy}
+
+\subsection{Option A: Full Rebuild with Laravel (Recommended)}
+
+\begin{enumerate}[leftmargin=1.6em,itemsep=2pt]
+  \item Start with a fresh Laravel 11 project.
+  \item Migrate the database to InnoDB with proper foreign keys.
+  \item Implement the polymorphic object spine as Eloquent traits.
+  \item Build the AdminController base + Form Request pattern.
+  \item Port the 70+ admin entities (mostly declarative, should be fast).
+  \item Build the widget composition system as Blade components + View
+        Composers (the hardest part).
+  \item Port the storefront (catalog, checkout, account).
+  \item Port the CMS (posts, pages).
+  \item Port the marketing pipeline as Queue jobs.
+  \item Port the banner subsystem as dynamic Blade components.
+  \item Build the visual theme editor with Livewire/Inertia.
+  \item Build the API with Sanctum + API Resources.
+  \item Deploy with Docker + CI/CD.
+\end{enumerate}
+
+\textbf{Pros}: clean codebase, modern framework, proper testing,
+security best practices, active community.
+\textbf{Cons}: 22 developer-months of effort, no incremental revenue
+during the rebuild.
+
+\subsection{Option B: Incremental Modernisation (Strangler Fig)}
+
+\begin{enumerate}[leftmargin=1.6em,itemsep=2pt]
+  \item Keep the existing codebase running.
+  \item Add Laravel alongside (via \texttt{require} in
+        \texttt{composer.json}).
+  \item Migrate one subsystem at a time (start with the API, then
+        admin, then storefront).
+  \item Use Laravel's database connection to access the existing
+        MyISAM tables (read-only initially, then read-write as each
+        subsystem is migrated).
+  \item Migrate the database to InnoDB table-by-table.
+  \item Eventually decommission the old codebase.
+\end{enumerate}
+
+\textbf{Pros}: incremental, no big-bang risk, revenue continues.
+\textbf{Cons}: longer total timeline ($\sim$30 months), complexity
+of running two codebases.
+
+\subsection{Option C: Remaster in Place (Modernise PHP, Keep Architecture)}
+
+\begin{enumerate}[leftmargin=1.6em,itemsep=2pt]
+  \item Migrate MyISAM $\to$ InnoDB.
+  \item Replace double-MD5 with bcrypt.
+  \item Fix the \texttt{object\_to\_store} inconsistencies.
+  \   Fix the broken API PUT branches.
+  \item Add unsubscribe mechanism.
+  \item Replace PHPMailer 5.0 with PHPMailer 6.x.
+  \item Fix the \texttt{var\_dump} and other bugs.
+  \item Add PHPUnit tests.
+\end{enumerate}
+
+\textbf{Pros}: lowest effort ($\sim$6 developer-months), keeps the
+working codebase.
+\textbf{Cons}: doesn't address the fundamental architecture issues
+(MyISAM, no DI container, raw SQL, no testing culture).
+
+\section{Recommendation}\label{sec:recommendation}
+
+\textbf{Option A (Full Rebuild with Laravel) is recommended} if the
+goal is a modern, maintainable platform that can be extended for the
+next 10 years. The 22-month effort is significant but the result is
+a clean codebase with proper testing, security, and community support.
+
+\textbf{Option B (Strangler Fig) is recommended} if there is a
+running business that cannot afford a big-bang rebuild. The
+incremental approach reduces risk and allows revenue to continue,
+at the cost of a longer timeline and the complexity of running two
+codebases.
+
+\textbf{Option C (Remaster in Place) is recommended} as a short-term
+stabilisation step before Option A or B. The 6-month effort fixes
+the most critical security and data-integrity issues without
+disrupting the business.
+
+\section{What Would \emph{Not} Survive a Rebuild}\label{sec:discard}
+
+\begin{itemize}[leftmargin=1.6em,itemsep=2pt]
+  \item The raw SQL query builder (\texttt{Model::buildSQLQuery()}) ---
+        replaced by Eloquent.
+  \item The \texttt{LIKE '\%key=value\%'} widget query pattern ---
+        replaced by proper JSON columns or a junction table.
+  \item The \texttt{\{\%widget\_name\%\}} string substitution ---
+        replaced by Blade slots.
+  \item The MyISAM tables --- replaced by InnoDB.
+  \item The double-MD5 password hash --- replaced by bcrypt.
+  \item The \texttt{validateTokens()} stub --- replaced by Sanctum.
+  \item The PHPMailer 5.0 wrapper --- replaced by Laravel Mail.
+  \item The \texttt{.htaccess}-based routing --- replaced by Laravel's
+        router.
+  \item The \texttt{map.php} 843-line switch statement --- replaced by
+        Laravel's autoloading + service provider pattern.
+  \item The hand-rolled session handler --- replaced by Laravel's
+        session driver.
+  \item The file-based cache --- replaced by Redis.
+\end{itemize}
+
+% ============================================================
+\section{Conclusion}\label{sec:conclusion}
+% ============================================================
+
+Necoyoad is a characterful, ambitious platform that was clearly built
+with care and a strong vision. The AdminController declarative CRUD
+framework, the polymorphic object spine, the dual Hooks/Events system,
+and the widget composition system are genuinely innovative --- they
+anticipate patterns that modern frameworks are only now adopting
+(Laravel's dynamic components, WordPress's block editor, Drupal's
+Layout Builder).
+
+The technical debt (MyISAM, double-MD5, raw SQL, no testing) is
+significant but not unusual for a platform of this vintage (2009--2023).
+The bugs (broken API PUTs, vestigial bounce, var\_dump in production,
+missing store\_id) are fixable but indicative of a codebase that grew
+faster than its testing infrastructure.
+
+A Laravel rebuild is feasible and recommended. The architecture maps
+well: the polymorphic spine maps to Eloquent morph relations, the
+widget system maps to Blade components, the AdminController maps to
+Form Requests, the marketing pipeline maps to Queue jobs. The 22-month
+effort estimate is for a senior developer; a team of 2--3 could
+complete it in 8--12 months.
+
+The result would be a modern, testable, secure e-commerce + CMS
+platform that preserves the best of Necoyoad's architecture while
+leaving behind its technical debt.
+
+\end{document}
