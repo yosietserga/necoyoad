@@ -10,7 +10,10 @@ services:
       - "8080:80"
     volumes:
       - .:/var/www/html
-      - ./storage:/var/www/html/storage
+      # Anonymous volumes prevent the bind mount from shadowing the
+      # image-built vendor/ and bootstrap/cache/ directories.
+      - /var/www/html/vendor
+      - /var/www/html/bootstrap/cache
     environment:
       DB_HOST: mysql
       DB_DATABASE: necoyoad_next
@@ -21,8 +24,17 @@ services:
       CACHE_STORE: redis
       SESSION_DRIVER: redis
     depends_on:
-      - mysql
-      - redis
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost/up || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    restart: unless-stopped
 
   mysql:
     image: mysql:8.0
@@ -35,6 +47,12 @@ services:
       MYSQL_ROOT_PASSWORD: root
     volumes:
       - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    restart: unless-stopped
 
   redis:
     image: redis:7-alpine

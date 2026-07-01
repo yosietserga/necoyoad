@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
 
 /**
@@ -27,6 +28,17 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        //
+        // Morph map: stores short aliases in the polymorphic type columns
+        // (aliasable_type, describable_type, propertiable_type, assignable_type,
+        // categorizable_type) instead of fully-qualified class names.
+        Relation::enforceMorphMap([
+            'product'      => \App\Models\Product::class,
+            'post'         => \App\Models\Post::class,
+            'category'     => \App\Models\Category::class,
+            'manufacturer' => \App\Models\Manufacturer::class,
+            'banner'       => \App\Models\Banner::class,
+            'banner_item'  => \App\Models\BannerItem::class,
+            'menu_link'    => \App\Models\MenuLink::class,
+        ]);
     }
 }
