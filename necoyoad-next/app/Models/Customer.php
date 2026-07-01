@@ -17,7 +17,7 @@ class Customer extends Authenticatable
 
     protected $fillable = [
         'store_id', 'customer_group_id', 'firstname', 'lastname',
-        'email', 'password', 'telephone', 'newsletter',
+        'email', 'password', 'telephone', 'birthday', 'newsletter',
         'status', 'approved', 'visits',
     ];
 

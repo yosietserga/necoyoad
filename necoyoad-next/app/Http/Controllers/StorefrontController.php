@@ -151,9 +151,20 @@ class StorefrontController extends Controller
         $q = $request->get('q', '');
         session(['landing_page' => 'store.search']);
 
-        $products = Product::search($q)->limit(20)->get();
+        // Basic LIKE search across product descriptions (replaces Scout::search()
+        // which would require the laravel/scout package + a search driver).
+        $products = Product::whereHas('descriptions', function ($query) use ($q) {
+            $query->where('name', 'like', "%{$q}%")
+                  ->orWhere('description', 'like', "%{$q}%");
+        })->limit(20)->get();
 
-        return response()->view('store.search', [
+        $template = $this->templateResolver->resolve(
+            entityTemplate: null,
+            type: 'search',
+            fallback: 'store.search',
+        );
+
+        return response()->view($template, [
             'products' => $products,
             'query' => $q,
             'title' => "Search: {$q}",
@@ -166,7 +177,13 @@ class StorefrontController extends Controller
         session()->forget(['object_type', 'object_id']);
         session(['landing_page' => 'store.product.all']);
 
-        return response()->view('store.products', [
+        $template = $this->templateResolver->resolve(
+            entityTemplate: null,
+            type: 'products',
+            fallback: 'store.products',
+        );
+
+        return response()->view($template, [
             'title' => 'All Products',
             'templateType' => 'products',
         ]);
@@ -177,7 +194,13 @@ class StorefrontController extends Controller
         session()->forget(['object_type', 'object_id']);
         session(['landing_page' => 'store.category.all']);
 
-        return response()->view('store.categories', [
+        $template = $this->templateResolver->resolve(
+            entityTemplate: null,
+            type: 'categories',
+            fallback: 'store.categories',
+        );
+
+        return response()->view($template, [
             'title' => 'All Categories',
             'templateType' => 'categories',
         ]);
@@ -188,7 +211,13 @@ class StorefrontController extends Controller
         session()->forget(['object_type', 'object_id']);
         session(['landing_page' => 'content.post.all']);
 
-        return response()->view('content.posts', [
+        $template = $this->templateResolver->resolve(
+            entityTemplate: null,
+            type: 'posts',
+            fallback: 'content.posts',
+        );
+
+        return response()->view($template, [
             'title' => 'Blog',
             'templateType' => 'posts',
         ]);

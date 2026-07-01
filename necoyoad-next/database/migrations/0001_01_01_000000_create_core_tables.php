@@ -399,10 +399,12 @@ return new class extends Migration
             $table->string('email', 96)->unique();
             $table->string('password');
             $table->string('telephone', 32)->nullable();
+            $table->date('birthday')->nullable();
             $table->boolean('newsletter')->default(false);
             $table->boolean('status')->default(true);
             $table->boolean('approved')->default(false);
             $table->integer('visits')->default(0);
+            $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -503,6 +505,7 @@ return new class extends Migration
             $table->string('email', 100);
             $table->string('telephone', 50)->nullable();
             $table->boolean('is_active')->default(true);
+            $table->string('unsubscribe_token', 64)->unique()->nullable();
             $table->timestamp('date_deleted')->nullable();
             $table->timestamps();
         });
@@ -620,6 +623,7 @@ return new class extends Migration
             $table->string('image', 255)->nullable();
             $table->boolean('status')->default(true);
             $table->string('ip', 45)->nullable();
+            $table->rememberToken();
             $table->timestamps();
         });
         }

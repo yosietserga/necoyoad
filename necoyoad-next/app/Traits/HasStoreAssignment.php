@@ -27,9 +27,15 @@ trait HasStoreAssignment
     {
         static::addGlobalScope('store', function ($query) {
             if (app()->bound('store.context') && app('store.context')->id()) {
-                $query->whereHas('stores', function ($q) {
-                    $q->where('stores.id', app('store.context')->id());
-                })->orWhereNull('stores.id'); // global content (no store assignment)
+                // Show entities assigned to the current store OR entities with
+                // no store assignment at all (global content). orDoesntHave is
+                // used instead of orWhereNull('stores.id') because the outer
+                // query has no stores column — only the whereHas subquery does.
+                $query->where(function ($q) {
+                    $q->whereHas('stores', function ($sq) {
+                        $sq->where('stores.id', app('store.context')->id());
+                    })->orDoesntHave('stores');
+                });
             }
         });
     }

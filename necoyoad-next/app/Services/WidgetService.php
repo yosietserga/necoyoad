@@ -134,12 +134,15 @@ class WidgetService
             ->where('status', true)
             ->orderBy('sort_order');
 
-        // Cache bypass for admins
-        if (!auth('admin')->check()) {
-            $rowsQuery->remember(300); // 5 min cache
+        // Cache bypass for admin users (Filament uses the 'web' guard)
+        $cacheKey = "widgets:{$storeId}:{$position}";
+        if (auth('web')->check()) {
+            $rows = $rowsQuery->get();
+        } else {
+            $rows = \Illuminate\Support\Facades\Cache::remember($cacheKey, 300, fn () => $rowsQuery->get());
         }
 
-        return $rowsQuery->get()->map(function ($row) {
+        return $rows->map(function ($row) {
             return [
                 'id' => $row->id,
                 'key' => $row->key,

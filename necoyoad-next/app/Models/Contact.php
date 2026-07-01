@@ -12,7 +12,7 @@ class Contact extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['customer_id', 'name', 'email', 'telephone', 'is_active', 'date_deleted'];
+    protected $fillable = ['customer_id', 'name', 'email', 'telephone', 'is_active', 'unsubscribe_token', 'date_deleted'];
 
     protected $casts = ['is_active' => 'boolean'];
 }

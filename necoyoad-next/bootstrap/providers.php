@@ -35,7 +35,6 @@ return [
     // Filament
     Filament\FilamentServiceProvider::class,
     Filament\Notifications\NotificationsServiceProvider::class,
-    Filament\Spatie\LaravelTranslatablePluginServiceProvider::class,
 
     // Livewire
     Livewire\LivewireServiceProvider::class,

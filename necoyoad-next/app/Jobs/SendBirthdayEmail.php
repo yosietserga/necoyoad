@@ -26,7 +26,8 @@ class SendBirthdayEmail implements ShouldQueue
     {
         $today = now()->format('m-d');
 
-        $customers = Customer::whereRaw("DATE_FORMAT(birthday, '%m-%d') = ?", [$today])
+        $customers = Customer::whereNotNull('birthday')
+            ->whereRaw("DATE_FORMAT(birthday, '%m-%d') = ?", [$today])
             ->where('status', true)
             ->get();
 
