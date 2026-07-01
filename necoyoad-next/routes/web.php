@@ -1,12 +1,16 @@
 <?php
 
 use App\Http\Controllers\StorefrontController;
+use App\Http\Controllers\CustomerAuthController;
+use App\Livewire\Storefront\CartDrawer;
+use App\Livewire\Storefront\ProductPage;
+use App\Livewire\Storefront\CheckoutForm;
 use Illuminate\Support\Facades\Route;
 
 /**
  * New Necoyoad — Web Routes
  *
- * The storefront uses Livewire + Blade. The admin panel uses Filament 3
+ * The storefront uses Livewire 3 + Blade. The admin panel uses Filament 3
  * (registered in a separate routes file by Filament's service provider).
  */
 
@@ -26,6 +30,16 @@ Route::get('/category/{category}', [StorefrontController::class, 'category'])->n
 Route::get('/posts', [StorefrontController::class, 'allPosts'])->name('content.post.all');
 Route::get('/post/{post}', [StorefrontController::class, 'post'])->name('content.post');
 Route::get('/page/{page}', [StorefrontController::class, 'page'])->name('content.page');
+
+// Checkout
+Route::get('/checkout', CheckoutForm::class)->name('checkout');
+
+// Customer auth
+Route::get('/login', [CustomerAuthController::class, 'showLogin'])->name('customer.login');
+Route::post('/login', [CustomerAuthController::class, 'login'])->name('customer.login.store');
+Route::get('/register', [CustomerAuthController::class, 'showRegister'])->name('customer.register');
+Route::post('/register', [CustomerAuthController::class, 'register'])->name('customer.register.store');
+Route::post('/logout', [CustomerAuthController::class, 'logout'])->name('customer.logout');
 
 // Marketing tracking endpoints
 Route::get('/track/open/{campaign}/{contact}', [StorefrontController::class, 'trackOpen'])->name('marketing.track.open');
