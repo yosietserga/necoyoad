@@ -16,15 +16,8 @@ class NecoyoadServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        // Core services
-        $this->app->singleton(StoreContext::class, function ($app) {
-            return new StoreContext($app['request']);
-        });
-
-        $this->app->singleton(LanguageContext::class, function ($app) {
-            return new LanguageContext($app['request'], $app[StoreContext::class]);
-        });
-
+        // WidgetService depends on StoreContext + LanguageContext
+        // (registered in AppServiceProvider)
         $this->app->singleton(WidgetService::class, function ($app) {
             return new WidgetService($app[StoreContext::class], $app[LanguageContext::class]);
         });
