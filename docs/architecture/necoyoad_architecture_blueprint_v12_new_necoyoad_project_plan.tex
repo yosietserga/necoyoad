@@ -1,0 +1,988 @@
+% Necoyoad Architecture Blueprint v12 — New Necoyoad: Project Plan for a Modern Rebuild
+% PRESCRIPTIVE: full design + implementation plan
+
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable,listings}
+\usepackage{colortbl}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{adjustbox}
+\usepackage{caption}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{pdflscape}
+\usepackage{listings}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc,shapes.geometric,fit,backgrounds,chains,decorations.pathreplacing,shapes.multipart}
+\usepackage[colorlinks=true,linkcolor=blue!50!black,citecolor=blue!40!black,urlcolor=blue!60!black,bookmarks=true,bookmarksnumbered=true,unicode=true,pdftitle={New Necoyoad - Project Plan for a Modern Rebuild (v12)},pdfauthor={Architecture Design Report},pdfsubject={Project Plan, Architecture Design, Laravel 11, Widget Engine, Digital Agency Platform},pdfkeywords={Necoyoad, Laravel 11, PHP 8.3, Widget Engine, Filament, Livewire, Inertia, Multi-Store, Digital Agency, Project Plan}]{hyperref}
+\geometry{a4paper, top=2.4cm, bottom=2.4cm, left=2.4cm, right=2.4cm}
+\setlength{\headheight}{14pt}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\itshape New Necoyoad --- Project Plan (v12)}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.3pt}
+\renewcommand{\footrulewidth}{0pt}
+\titleformat{\section}{\Large\bfseries\color{black!85}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries\color{black!80}}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{black!75}}{\thesubsubsection}{0.5em}{}
+\widowpenalty=10000
+\clubpenalty=10000
+\emergencystretch=4em
+\hbadness=10000
+\hfuzz=2pt
+\vfuzz=2pt
+\sloppy
+\definecolor{necoyoad-blue}{HTML}{1F4E79}
+\definecolor{necoyoad-orange}{HTML}{B85C00}
+\definecolor{necoyoad-green}{HTML}{2E6B33}
+\definecolor{nodefill}{HTML}{F4F7FB}
+\definecolor{nodefillalt}{HTML}{FBF4EE}
+\definecolor{nodefillgreen}{HTML}{F2F8F2}
+\definecolor{nodefillgray}{HTML}{F0F0F2}
+\definecolor{phpline}{HTML}{F8F8F0}
+\definecolor{phpcomment}{HTML}{8C8C8C}
+\definecolor{phpkeyword}{HTML}{1F4E79}
+\definecolor{phpstring}{HTML}{B85C00}
+\lstdefinelanguage{necophp}{
+  morekeywords={abstract,and,array,as,break,case,catch,class,clone,const,continue,declare,default,do,echo,else,elseif,empty,enddeclare,endfor,endforeach,endif,endswitch,endwhile,extends,final,finally,for,foreach,function,global,goto,if,implements,include,include_once,instanceof,insteadof,interface,namespace,new,or,print,private,protected,public,require,require_once,return,static,switch,throw,trait,try,use,var,while,xor,yield,true,false,null},
+  sensitive=true,
+  morecomment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  morecomment=[l]{\#},
+  morestring=[b]",
+  morestring=[b]',
+}
+\lstset{
+  language=necophp,
+  basicstyle=\ttfamily\footnotesize,
+  keywordstyle=\color{phpkeyword}\bfseries,
+  commentstyle=\color{phpcomment}\itshape,
+  stringstyle=\color{phpstring},
+  backgroundcolor=\color{phpline},
+  numbers=left,
+  numberstyle=\tiny\color{phpcomment},
+  numbersep=8pt,
+  frame=single,
+  rulecolor=\color{black!25},
+  framerule=0.3pt,
+  breaklines=true,
+  breakatwhitespace=true,
+  showstringspaces=false,
+  captionpos=b,
+  xleftmargin=14pt,
+  xrightmargin=4pt,
+  aboveskip=8pt,
+  belowskip=8pt,
+}
+\newtcolorbox{preservebox}[1][]{
+  enhanced, breakable,
+  colback=nodefillgreen, colframe=necoyoad-green!70,
+  boxrule=0.4pt, arc=2pt, left=8pt, right=8pt, top=6pt, bottom=6pt,
+  fonttitle=\bfseries\small, coltitle=white,
+  title=#1
+}
+\newtcolorbox{keybox}[1][]{
+  enhanced, breakable,
+  colback=nodefill, colframe=necoyoad-blue!60,
+  boxrule=0.4pt, arc=2pt, left=8pt, right=8pt, top=6pt, bottom=6pt,
+  fonttitle=\bfseries\small, coltitle=white,
+  title=#1
+}
+\newtcolorbox{guidebox}[1][]{
+  enhanced, breakable,
+  colback=nodefill, colframe=necoyoad-blue!60,
+  boxrule=0.4pt, arc=2pt, left=8pt, right=8pt, top=6pt, bottom=6pt,
+  fonttitle=\bfseries\small, coltitle=white,
+  title=#1
+}
+\captionsetup{justification=raggedright, singlelinecheck=false, font=small, labelfont=bf}
+
+\begin{document}
+\thispagestyle{empty}
+\begin{center}
+{\Large\bfseries New Necoyoad --- Project Plan for a Modern Rebuild (v12)}\\[0.4em]
+{\small\itshape A digital web agency platform built on Laravel 11,\\
+preserving the widget engine and key architectural patterns from the original}\\[1.2em]
+\end{center}
+\begin{abstract}
+\noindent
+This is the final volume of the Necoyoad architecture blueprint. It is a
+complete project plan for building a \emph{new} Necoyoad --- a modern
+digital web agency platform --- using the latest PHP/Laravel stack while
+preserving the most valuable architectural patterns from the original
+codebase (analysed across v1--v11, 248 pages).
+
+The plan defines: (1) the technology stack (Laravel 11, PHP 8.3,
+Filament 3 admin, Livewire 3 storefront, Alpine.js, MySQL 8 InnoDB,
+Redis, Vite); (2) the 10 architectural patterns preserved from the
+original (widget engine, declarative admin CRUD, polymorphic object
+spine, dual Hooks/Events, multi-store/multi-language, per-entity
+template override, banner plugin discriminator, campaign pipeline,
+visual theme editor, ntPlugins JS registry); (3) the database schema
+(50 tables, InnoDB, JSON columns, proper FKs); (4) the directory
+structure; (5) the 7-phase implementation plan with 80 tasks, effort
+estimates, and milestones; and (6) the widget engine API contract ---
+the formal specification that ensures the new platform has the same
+flexibility as the original.
+
+The target: a platform where a non-technical user can compose rich,
+interactive pages by dragging widgets into positions, a developer can
+create a new widget in minutes, and the system supports multi-store,
+multi-language, per-entity overrides, and a visual theme editor ---
+all on a modern, testable, secure foundation.
+\end{abstract}
+\vspace{0.6em}
+\noindent\textbf{Keywords:} Necoyoad, Laravel 11, PHP 8.3, Filament 3,
+Livewire 3, Alpine.js, widget engine, digital agency, multi-store,
+multi-language, project plan, architecture design.
+\newpage
+\tableofcontents
+\newpage
+
+% ============================================================
+\section{Introduction}\label{sec:intro}
+% ============================================================
+
+\subsection{From Analysis to Action}
+
+Volumes v1--v11 analysed the existing Necoyoad codebase exhaustively:
+248 pages of verified architecture documentation covering every
+subsystem, plus a technical assessment (v10) and a widget engine
+preservation strategy (v11). This volume turns that analysis into a
+build plan.
+
+\subsection{Goal}
+
+Build a \textbf{new} Necoyoad --- a digital web agency platform ---
+that:
+\begin{itemize}[leftmargin=1.6em,itemsep=2pt]
+  \item Uses the latest PHP/Laravel stack (Laravel 11, PHP 8.3).
+  \item Preserves the 10 most valuable architectural patterns from the
+        original.
+  \item Discards the 15 technical debts identified in v10.
+  \item Supports multi-store, multi-language, and multi-domain out of
+        the box.
+  \item Has the widget engine as its core feature --- the same
+        ``drag a widget into a position, configure it, see it on the
+        page'' experience.
+  \item Is testable, secure, and deployable via Docker.
+\end{itemize}
+
+\subsection{What This Document Is}
+
+This is not a tutorial or a code dump. It is an \emph{architecture
+design and project plan} --- the document a senior architect hands to
+a development team to say ``build this''. It defines the stack, the
+patterns, the schema, the directory structure, the implementation
+phases, and the acceptance criteria.
+
+% ============================================================
+\section{Technology Stack}\label{sec:stack}
+% ============================================================
+
+\begin{table}[htbp]
+\centering
+\caption{Technology stack for New Necoyoad.}\label{tab:stack}
+\footnotesize\sloppy
+\begin{tabularx}{\columnwidth}{>{\raggedright\arraybackslash}p{3.0cm}lX}
+\toprule
+\textbf{Layer} & \textbf{Technology} & \textbf{Rationale} \\
+\midrule
+Language & PHP 8.3 & Typed properties, readonly, enums, fibers. \\
+Framework & Laravel 11 & Mature, expressive, huge ecosystem. \\
+Admin panel & Filament 3 & Declarative resource CRUD (maps to AdminController). \\
+Storefront & Livewire 3 + Alpine.js & Reactive UI without SPA complexity. \\
+Templating & Blade & Native to Laravel, supports dynamic components + stacks. \\
+Database & MySQL 8 (InnoDB) & JSON columns, full-text search, transactions, FKs. \\
+Cache & Redis & Session, cache, queue, widget tree cache. \\
+Queue & Laravel Horizon & Campaign sending, bounce processing, async tasks. \\
+Search & Meilisearch (optional) & Full-text product/post search. \\
+Assets & Vite 5 + Tailwind CSS 4 & Modern bundling, JIT CSS, HMR. \\
+Auth & Laravel Sanctum + Fortify & API tokens, session auth, 2FA. \\
+Testing & Pest 2 + Dusk & Unit, integration, browser tests. \\
+CI/CD & GitHub Actions & Automated tests + deploy on push. \\
+Deployment & Docker + FrankenPHP & Modern PHP application server. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+% ============================================================
+\section{The 10 Preserved Patterns}\label{sec:preserved}
+% ============================================================
+
+\subsection{Pattern 1: The Widget Engine (Core Feature)}
+
+\begin{preservebox}[Widget Engine --- the crown jewel preserved]
+The widget engine is the platform's defining feature. It must provide:
+
+\begin{enumerate}[leftmargin=1.6em,itemsep=2pt]
+  \item \textbf{WidgetService}: queries the widget tree from the DB
+        (JSON columns, not LIKE). Filters by store, language, device,
+        route, landing page, object type, object id.
+  \item \textbf{Widget View Composer}: a Laravel View Composer that
+        runs before every page render, calls WidgetService, populates
+        \texttt{\$widgets[\$position]} with the tree.
+  \item \textbf{WidgetComponent base}: a Blade Component base class
+        that auto-loads assets (via AssetManifest) and provides the
+        \texttt{data()} method (the injection seam, replacing
+        \texttt{module:settings}).
+  \item \textbf{Dynamic composition}: the page template iterates
+        \texttt{\$widgets} and renders \texttt{<x-dynamic-component>}.
+  \item \textbf{Manual composition}: templates use \texttt{@stack} +
+        \texttt{@push} to hardcode widget positions.
+  \item \textbf{Hybrid composition}: both in the same template.
+  \item \textbf{Per-entity override}: WidgetService accepts
+        \texttt{objectType} + \texttt{objectId}, merges per-object
+        widgets into the default tree.
+  \item \textbf{Per-item composition}: same, with
+        \texttt{objectType = 'banner\_item'} (or any item type).
+  \item \textbf{Visual editor hooks}: every widget wrapper emits
+        \texttt{data-widget}, \texttt{data-position}, \texttt{data-row},
+        \texttt{data-column} attributes.
+  \item \textbf{Template override}: each entity can specify a template
+        path (JSON column), resolved as: entity template $\to$ config
+        default $\to$ hardcoded fallback.
+\end{enumerate}
+\end{preservebox}
+
+\subsection{Pattern 2: Declarative Admin CRUD}
+
+\begin{preservebox}[AdminController $\to$ Filament Resources]
+Filament 3 provides declarative resource CRUD out of the box. Each
+admin entity is a Filament Resource with:
+\begin{itemize}[leftmargin=1.6em,itemsep=2pt]
+  \item Form schema (replaces \texttt{\$form\_vars}).
+  \item Table columns + filters (replaces \texttt{\$filters}).
+  \item Pages (list, create, edit) --- all generated.
+  \item Relations (repeater for banner items, etc.).
+  \item Middleware for permission checks (replaces
+        \texttt{\$public\_methods}).
+\end{itemize}
+A base \texttt{NecoyoadResource} class can provide shared
+functionality (breadcrumbs, activity logging, SEO tab, store
+assignment tab).
+\end{preservebox}
+
+\subsection{Pattern 3: Polymorphic Object Spine}
+
+\begin{preservebox}[Polymorphic spine $\to$ Eloquent Morph Relations]
+The five polymorphic tables become Eloquent traits:
+\begin{itemize}[leftmargin=1.6em,itemsep=2pt]
+  \item \texttt{HasDescriptions} trait: \texttt{MorphMany} to
+        \texttt{Description} model, scoped by \texttt{language\_id}.
+  \item \texttt{HasProperties} trait: \texttt{MorphMany} to
+        \texttt{Property} model, with \texttt{group} + \texttt{key}
+        accessors.
+  \item \texttt{HasStoreAssignment} trait: \texttt{MorphToMany} to
+        \texttt{Store} model.
+  \item \texttt{HasSeoUrl} trait: \texttt{MorphMany} to
+        \texttt{UrlAlias} model, scoped by \texttt{language\_id}.
+  \item \texttt{HasCategories} trait: \texttt{MorphToMany} to
+        \texttt{Category} model.
+\end{itemize}
+Any model that uses these traits gets localisation, EAV properties,
+store scoping, SEO URLs, and category assignment --- automatically.
+\end{preservebox}
+
+\subsection{Pattern 4: Dual Hooks/Events System}
+
+\begin{preservebox}[Hooks + Events $\to$ Laravel Events + Pipeline]
+\begin{itemize}[leftmargin=1.6em,itemsep=2pt]
+  \item \textbf{Events} (observer): Laravel's native
+        \texttt{Event::dispatch()} + listeners. For notifications
+        (dispatch, beforeLoad, afterLoad, registry:update).
+  \item \textbf{Hooks} (filter/action with short-circuit): a custom
+        \texttt{Filter} facade using Laravel's Pipeline pattern.
+        \texttt{Filter::apply('render', \$html)} chains the HTML
+        through registered filters. \texttt{Filter::run('loadWidgets',
+        \$params)} can short-circuit by returning a value.
+\end{itemize}
+Both fire at the same points as the original: \texttt{render},
+\texttt{fetch}, \texttt{loadWidgets}, \texttt{module:settings},
+\texttt{csspath}, \texttt{redirect}, etc.
+\end{preservebox}
+
+\subsection{Patterns 5--10: Summary}
+
+\begin{table}[htbp]
+\centering
+\caption{Patterns 5--10 preserved.}\label{tab:patterns-5-10}
+\footnotesize\sloppy
+\begin{tabularx}{\columnwidth}{>{\raggedright\arraybackslash}p{1.0cm}lX}
+\toprule
+\# & \textbf{Pattern} & \textbf{Implementation} \\
+\midrule
+5 & Multi-store & Tenancy scope on all models; \texttt{StoreContext} middleware resolves tenant from domain/path/subdomain. \\
+6 & Multi-language & 6-level detection middleware; \texttt{HasDescriptions} trait provides per-language content. \\
+7 & Per-entity template override & JSON column \texttt{template} on each entity; resolved in the controller: entity $\to$ config $\to$ default. \\
+8 & Banner plugin discriminator & \texttt{jquery\_plugin} column on \texttt{banners} table; dynamic Blade component: \texttt{<x-sliders.{\$plugin}>}. \\
+9 & Campaign pipeline & Laravel Queue jobs: \texttt{SendCampaignEmail}, \texttt{ProcessBounce}; Laravel Mail with SMTP/OAuth2; tracking via controller routes. \\
+10 & ntPlugins JS registry & Alpine.js \texttt{\$dispatch} or Livewire events; each slider template pushes config to an Alpine store. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+% ============================================================
+\section{Database Schema}\label{sec:schema}
+% ============================================================
+
+\subsection{Design Principles}
+
+\begin{itemize}[leftmargin=1.6em,itemsep=2pt]
+  \item All tables InnoDB with proper foreign keys.
+  \item Widget settings stored as JSON columns (not serialised PHP).
+  \item Per-store settings as JSON column on \texttt{stores} table.
+  \item No \texttt{LIKE} substring queries --- use JSON path
+        expressions on JSON columns.
+  \item UUIDs for public-facing IDs (products, posts, orders); ints
+        for internal.
+  \item Soft deletes on all content tables.
+  \item \texttt{created\_at}, \texttt{updated\_at},
+        \texttt{deleted\_at} on all tables.
+\end{itemize}
+
+\subsection{Core Tables (35 tables, down from 87)}
+
+\begin{longtable}{>{\raggedright\arraybackslash}p{4.0cm}l}
+\caption{Core database tables for New Necoyoad.}\label{tab:core-tables}\\
+\toprule
+\textbf{Table} & \textbf{Purpose} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Table} & \textbf{Purpose} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+\multicolumn{2}{l}{\textbf{Multi-tenancy \& localisation}} \\
+\texttt{stores} & Store definitions (domain, folder, settings JSON). \\
+\texttt{languages} & Active languages. \\
+\texttt{currencies} & Currencies + exchange rates. \\
+\texttt{countries} & ISO countries. \\
+\texttt{zones} & States/provinces. \\
+\texttt{geo\_zones} & Tax rule groupings. \\
+\midrule
+\multicolumn{2}{l}{\textbf{Polymorphic spine}} \\
+\texttt{descriptions} & Localised content (morph: object\_id + object\_type + language\_id). \\
+\texttt{properties} & EAV metadata (morph: object\_id + object\_type + group + key). \\
+\texttt{url\_aliases} & SEO slugs (morph: object\_id + object\_type + language\_id). \\
+\texttt{categorizables} & Polymorphic category assignment (morph: categorizable\_id + categorizable\_type + category\_id). \\
+\texttt{store\_assignments} & Polymorphic store scoping (morph: assignable\_id + assignable\_type + store\_id). \\
+\midrule
+\multicolumn{2}{l}{\textbf{Catalog}} \\
+\texttt{products} & Product master (SKU, price, stock, weight, dimensions). \\
+\texttt{product\_options} & Orderable variants (colour, size). \\
+\texttt{product\_option\_values} & Variant values with price deltas. \\
+\texttt{product\_images} & Additional images. \\
+\texttt{product\_discounts} & Quantity-break pricing per customer group. \\
+\texttt{product\_specials} & Promotional pricing per customer group. \\
+\texttt{categories} & Category tree (nested set or adjacency list). \\
+\texttt{manufacturers} & Brand directory. \\
+\texttt{reviews} & Polymorphic reviews with ratings + likes. \\
+\midrule
+\multicolumn{2}{l}{\textbf{CMS}} \\
+\texttt{posts} & Blog posts + static pages (discriminated by \texttt{type}). \\
+\texttt{menus} & Named menus per store/position. \\
+\texttt{menu\_links} & Menu link tree (parent\_id, link, sort\_order). \\
+\texttt{banners} & Banner definitions (jquery\_plugin, settings JSON). \\
+\texttt{banner\_items} & Slides (image, link, sort\_order). \\
+\midrule
+\multicolumn{2}{l}{\textbf{Widget engine}} \\
+\texttt{widget\_rows} & Layout rows (store\_id, position, sort\_order, settings JSON). \\
+\texttt{widget\_columns} & Columns within rows (row\_id, grid config, settings JSON). \\
+\texttt{widgets} & Widget instances (column\_id, module, name, settings JSON, sort\_order). \\
+\texttt{widget\_landing\_pages} & Widget-to-route bindings (widget\_id, landing\_page, object\_type). \\
+\midrule
+\multicolumn{2}{l}{\textbf{Commerce}} \\
+\texttt{customers} & Customer accounts. \\
+\texttt{customer\_groups} & Pricing/permission tiers. \\
+\texttt{addresses} & Customer address book. \\
+\texttt{orders} & Order header (snapshot of customer + totals). \\
+\texttt{order\_items} & Order line items (snapshot of product + options). \\
+\texttt{order\_totals} & Computed total lines (sub-total, tax, shipping, etc.). \\
+\texttt{order\_history} & Status change log. \\
+\texttt{coupons} & Discount codes. \\
+\midrule
+\multicolumn{2}{l}{\textbf{Marketing}} \\
+\texttt{contacts} & CRM contacts. \\
+\texttt{contact\_lists} & Named contact lists. \\
+\texttt{contact\_list\_subscriptions} & Many-to-many: contact $\leftrightarrow$ list. \\
+\texttt{newsletters} & Reusable email bodies. \\
+\texttt{campaigns} & Campaign sendings. \\
+\texttt{campaign\_links} & Trackable links (campaign\_id, nonce, original\_url). \\
+\texttt{campaign\_stats} & Open events. \\
+\texttt{campaign\_link\_stats} & Click events. \\
+\midrule
+\multicolumn{2}{l}{\textbf{Admin}} \\
+\texttt{users} & Admin users. \\
+\texttt{user\_activity} & Audit log. \\
+\texttt{settings} & Platform-wide settings (key-value, JSON value). \\
+\end{longtable}
+
+% ============================================================
+\section{Directory Structure}\label{sec:directory}
+% ============================================================
+
+\begin{lstlisting}[caption={New Necoyoad directory structure (abridged).},label={lst:dir}]
+necoyoad/
+|-- app/
+|   |-- Models/                     # Eloquent models with morph traits
+|   |   |-- Product.php
+|   |   |-- Post.php                # (also Page: same table, type discriminator)
+|   |   |-- Category.php
+|   |   |-- Banner.php
+|   |   |-- Widget.php              # Widget instance model
+|   |   |-- WidgetRow.php
+|   |   |-- WidgetColumn.php
+|   |   |-- Store.php
+|   |   |-- Description.php         # Polymorphic description
+|   |   |-- Property.php            # Polymorphic EAV
+|   |   |-- UrlAlias.php            # Polymorphic SEO slug
+|   |   |-- ...
+|   |
+|   |-- Filament/                   # Admin panel (Filament 3)
+|   |   |-- Resources/
+|   |   |   |-- ProductResource.php # Declarative CRUD (form + table + pages)
+|   |   |   |-- CategoryResource.php
+|   |   |   |-- BannerResource.php
+|   |   |   |-- PostResource.php
+|   |   |   |-- MenuResource.php
+|   |   |   |-- CampaignResource.php
+|   |   |   |-- ...
+|   |   |-- Pages/
+|   |   |   |-- Dashboard.php
+|   |   |-- Widgets/                # Dashboard widgets (Filament)
+|   |
+|   |-- Livewire/                   # Storefront reactive components
+|   |   |-- Storefront/
+|   |   |   |-- ProductPage.php
+|   |   |   |-- CartDrawer.php
+|   |   |   |-- CheckoutForm.php
+|   |   |   |-- SearchBar.php
+|   |   |-- WidgetEditor/           # Visual theme editor
+|   |   |   |-- WidgetTree.php
+|   |   |   |-- WidgetSettings.php
+|   |   |   |-- DragDrop.php
+|   |
+|   |-- View/                       # Blade components
+|   |   |-- Components/
+|   |   |   |-- Widgets/            # Widget module components
+|   |   |   |   |-- Banner.php      # extends WidgetComponent
+|   |   |   |   |-- ProductList.php
+|   |   |   |   |-- CategoryList.php
+|   |   |   |   |-- ContactForm.php
+|   |   |   |   |-- RichText.php
+|   |   |   |   |-- Search.php
+|   |   |   |   |-- ...
+|   |   |   |-- Sliders/            # Banner slider variants
+|   |   |   |   |-- NivoSlider.php
+|   |   |   |   |-- Slick.php
+|   |   |   |   |-- Camera.php
+|   |   |   |   |-- ...
+|   |   |   |-- Layouts/
+|   |   |   |   |-- Storefront.blade.php
+|   |   |   |   |-- WidgetRow.blade.php
+|   |   |   |   |-- WidgetColumn.blade.php
+|   |   |   |-- WidgetComponent.php  # Base class for all widgets
+|   |   |-- Composers/
+|   |   |   |-- WidgetComposer.php   # The loadWidgets() equivalent
+|   |
+|   |-- Services/                   # Business logic
+|   |   |-- WidgetService.php        # The NecoWidget equivalent
+|   |   |-- AssetManifest.php        # The deps.php equivalent
+|   |   |-- StoreContext.php         # Multi-store resolver
+|   |   |-- LanguageContext.php      # Multi-language resolver
+|   |   |-- CampaignSender.php       # Campaign send logic
+|   |   |-- TemplateResolver.php     # Per-entity template override
+|   |
+|   |-- Filters/                    # The Hooks system (pipeline-based)
+|   |   |-- Filter.php               # Facade
+|   |   |-- FilterPipeline.php
+|   |
+|   |-- Traits/                     # Reusable morph traits
+|   |   |-- HasDescriptions.php
+|   |   |-- HasProperties.php
+|   |   |-- HasStoreAssignment.php
+|   |   |-- HasSeoUrl.php
+|   |   |-- HasCategories.php
+|   |
+|   |-- Jobs/                       # Queue jobs
+|   |   |-- SendCampaignEmail.php
+|   |   |-- ProcessBounce.php
+|   |   |-- SendBirthdayEmail.php
+|   |
+|   |-- Events/                     # Laravel events
+|   |-- Listeners/
+|   |-- Mail/
+|   |-- Notifications/
+|   |-- Http/
+|   |   |-- Controllers/
+|   |   |-- Middleware/
+|   |   |-- Requests/               # Form validation (replaces $form_vars)
+|   |
+|   |-- Providers/
+|   |   |-- AppServiceProvider.php
+|   |   |-- WidgetServiceProvider.php  # Registers all widgets + assets
+|   |   |-- HookServiceProvider.php    # Registers filter hooks
+|
+|-- database/
+|   |-- migrations/                  # 50+ migration files
+|   |-- seeders/
+|   |-- factories/
+|
+|-- resources/
+|   |-- views/
+|   |   |-- components/
+|   |   |   |-- widgets/             # Widget Blade templates
+|   |   |   |-- sliders/             # Slider Blade templates
+|   |   |   |-- layouts/
+|   |   |-- themes/                  # Per-theme templates
+|   |   |   |-- choroni/
+|   |   |   |   |-- content/
+|   |   |   |   |-- store/
+|   |   |   |   |-- shared/
+|   |   |   |   |-- banner/
+|   |   |-- emails/                  # Campaign + transactional emails
+|   |
+|   |-- css/                        # Tailwind CSS 4
+|   |-- js/                         # Alpine.js + Vite entry
+|   |-- vite-manifest.json          # The deps.php equivalent
+|
+|-- tests/                          # Pest 2 + Dusk
+|-- docker/                         # Dockerfiles + compose
+|-- .github/workflows/              # CI/CD
+\end{lstlisting}
+
+% ============================================================
+\section{Implementation Plan}\label{sec:plan}
+% ============================================================
+
+\subsection{Overview: 7 Phases, 80 Tasks, 8 Months}
+
+\begin{table}[htbp]
+\centering
+\caption{Implementation phases.}\label{tab:phases}
+\footnotesize\sloppy
+\begin{tabularx}{\columnwidth}{>{\raggedright\arraybackslash}p{1.0cm}lrrX}
+\toprule
+\# & \textbf{Phase} & \textbf{Tasks} & \textbf{Weeks} & \textbf{Deliverable} \\
+\midrule
+1 & Foundation & 12 & 3 & Laravel project + DB schema + auth + multi-store/multi-language. \\
+2 & Widget Engine & 15 & 4 & WidgetService + WidgetComposer + WidgetComponent + 5 core widgets + visual editor. \\
+3 & Admin Panel & 10 & 3 & Filament resources for all entities + declarative CRUD. \\
+4 & Storefront & 12 & 4 & Catalog (product, category, search) + CMS (post, page) + checkout. \\
+5 & CMS + Banners & 8 & 2 & Posts/pages + menus + banner system with 5 slider templates. \\
+6 & Marketing & 10 & 3 & Campaign pipeline + tracking + bounce + birthday emails. \\
+7 & Polish + Deploy & 13 & 3 & Testing + Docker + CI/CD + documentation + launch. \\
+\midrule
+ & \textbf{Total} & 80 & 22 & $\sim$5.5 months (1 senior dev); 3 months (2 devs). \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Phase 1: Foundation (Weeks 1--3)}
+
+\begin{enumerate}[leftmargin=1.6em,itemsep=2pt]
+  \item Initialise Laravel 11 project with PHP 8.3.
+  \item Install Filament 3, Livewire 3, Alpine.js, Tailwind CSS 4.
+  \item Create database migrations (35 core tables, InnoDB, FKs).
+  \item Implement \texttt{Store} model + \texttt{StoreContext} middleware
+        (domain/path/subdomain detection $\to$ \texttt{StoreContext::id()}).
+  \item Implement \texttt{Language} model + \texttt{LanguageContext}
+        middleware (6-level detection).
+  \item Implement \texttt{Currency} model + switching.
+  \item Implement morph traits: \texttt{HasDescriptions},
+        \texttt{HasProperties}, \texttt{HasStoreAssignment},
+        \texttt{HasSeoUrl}, \texttt{HasCategories}.
+  \item Implement \texttt{Filter} facade (pipeline-based hooks).
+  \item Implement Laravel Events for observer notifications.
+  \item Set up Sanctum + Fortify (admin auth + API tokens).
+  \item Create base \texttt{NecoyoadResource} Filament class (breadcrumbs,
+        activity logging, SEO tab, store tab).
+  \item Set up Docker + FrankenPHP development environment.
+\end{enumerate}
+
+\subsection{Phase 2: Widget Engine (Weeks 4--7) --- The Critical Phase}
+
+\begin{enumerate}[leftmargin=1.6em,itemsep=2pt]
+  \item Create \texttt{WidgetRow}, \texttt{WidgetColumn},
+        \texttt{Widget} models with JSON settings columns.
+  \item Implement \texttt{WidgetService::getTree()} --- queries the
+        widget tree with JSON path expressions (not LIKE).
+  \item Implement \texttt{WidgetService::getTree()} per-entity override
+        (merges per-object widgets into default tree).
+  \item Implement \texttt{WidgetService::getTree()} with
+        \texttt{only:} mode (skip default tree for embedded pages).
+  \item Implement \texttt{WidgetComposer} View Composer --- calls
+        \texttt{WidgetService}, populates \texttt{\$widgets[\$position]}.
+  \item Implement \texttt{WidgetComponent} base Blade component ---
+        auto-loads assets via \texttt{AssetManifest}, provides
+        \texttt{data()} method.
+  \item Implement \texttt{AssetManifest} service --- reads
+        \texttt{vite-manifest.json}, loads matching CSS/JS for the
+        current route + widget module.
+  \item Implement dynamic composition: page template iterates
+        \texttt{\$widgets} and renders \texttt{<x-dynamic-component>}.
+  \item Implement manual composition: \texttt{@stack} + \texttt{@push}
+        for hardcoded widget positions.
+  \item Implement hybrid composition: both in the same template.
+  \item Create \texttt{WidgetServiceProvider} --- registers all widget
+        components + their asset mappings.
+  \item Create 5 core widget modules: RichText, ProductList,
+        CategoryList, ContactForm, Search.
+  \item Implement \texttt{TemplateResolver} --- 3-level resolution
+        (entity template $\to$ config default $\to$ hardcoded fallback).
+  \item Implement visual editor hooks: \texttt{data-widget},
+        \texttt{data-position}, \texttt{data-row}, \texttt{data-column}
+        attributes on every widget wrapper.
+  \item Implement \texttt{WidgetEditor} Livewire component (drag-and-drop
+        widget tree, settings form, live preview).
+\end{enumerate}
+
+\subsection{Phase 3: Admin Panel (Weeks 8--10)}
+
+\begin{enumerate}[leftmargin=1.6em,itemsep=2pt]
+  \item Create Filament Resources for: Product, Category,
+        Manufacturer, Post, Page, Menu, Banner, Campaign, Contact,
+        ContactList, Newsletter, Store, Language, Currency, User.
+  \item Each resource includes: form schema (with SEO tab, store
+        assignment tab, descriptions tab per language), table columns,
+        filters, actions.
+  \item Implement activity logging (Filament plugin).
+  \item Implement permission system (Filament shield + roles).
+  \item Implement file manager (Filament file upload + media library).
+  \item Implement theme/style editor (CSS rule overrides $\to$
+        \texttt{theme\_styles} table $\to$ generated CSS file).
+  \item Implement widget layout manager (Filament page with Livewire
+        drag-and-drop for widget tree editing).
+  \item Implement dashboard with charts (Filament widgets).
+  \item Implement settings page (per-store config).
+  \item Implement extension/module installer (register widget
+        components dynamically).
+\end{enumerate}
+
+\subsection{Phase 4: Storefront (Weeks 11--14)}
+
+\begin{enumerate}[leftmargin=1.6em,itemsep=2pt]
+  \item Implement product listing + detail (with per-entity widget
+        composition + template override).
+  \item Implement category listing (tree, filters, pagination).
+  \item Implement search (Meilisearch or MySQL full-text).
+  \item Implement cart (Livewire reactive + session/Redis persistence).
+  \item Implement checkout (single-page Livewire: shipping $\to$
+        payment $\to$ confirm $\to$ success).
+  \item Implement customer auth (login, register, password reset,
+        email verification).
+  \item Implement customer account (orders, addresses, profile,
+        reviews, wallet balance).
+  \item Implement SEO URL rewriter (route model binding + slug
+        column + \texttt{url\_aliases} table).
+  \item Implement multi-store URL routing (domain $\to$ store
+        detection $\to$ scoped queries).
+  \item Implement mobile theme switching (device detection $\to$
+        template swap, like original).
+  \item Implement asset loading (Vite + per-route CSS/JS + per-widget
+        assets).
+  \item Implement page cache (Redis, per-store + per-language +
+        per-device + per-customer-group).
+\end{enumerate}
+
+\subsection{Phase 5: CMS + Banners (Weeks 15--16)}
+
+\begin{enumerate}[leftmargin=1.6em,itemsep=2pt]
+  \item Implement post/page controller (same table, \texttt{type}
+        discriminator, per-entity widgets + template override).
+  \item Implement post category listing.
+  \item Implement menu system (menu + menu\_link tree + polymorphic
+        descriptions + EAV properties for per-link CSS/icon/submenu).
+  \item Implement links widget (recursive tree rendering, 3 submenu
+        types: children, page\_embed, html\_content).
+  \item Implement banner system (\texttt{jquery\_plugin} discriminator
+        $\to$ dynamic Blade component).
+  \item Create 5 slider templates: NivoSlider, Slick, Camera, Fancybox
+        gallery, CSS grid.
+  \item Implement per-item widget composition (widgets on individual
+        banner slides, positioned with offsetX/offsetY).
+  \item Implement \texttt{ntPlugins} equivalent (Alpine.js store for
+        slider config, \texttt{\$dispatch} for initialisation).
+\end{enumerate}
+
+\subsection{Phase 6: Marketing (Weeks 17--19)}
+
+\begin{enumerate}[leftmargin=1.6em,itemsep=2pt]
+  \item Implement newsletter CRUD (HTML body editor).
+  \item Implement campaign CRUD (target contact lists, schedule,
+        mailserver config).
+  \item Implement \texttt{SendCampaignEmail} queue job (per-recipient
+        personalisation, link rewriting, tracking pixel append).
+  \item Implement tracking endpoints: \texttt{/track/open/{campaign}/{contact}}
+        (writes \texttt{campaign\_stats}), \texttt{/track/click/{nonce}}
+        (writes \texttt{campaign\_link\_stats}, 302 redirect).
+  \item Implement bounce processing (\texttt{ProcessBounce} job, IMAP
+        or webhook-based).
+  \item Implement unsubscribe mechanism (\texttt{/unsubscribe/{token}}
+        route + \texttt{List-Unsubscribe} email header).
+  \item Implement birthday email job.
+  \item Implement promoter/recommended-products email job.
+  \item Implement campaign stats dashboard (opens, clicks, bounce
+        rate, per-recipient detail).
+  \item Implement mailserver config (SMTP credentials, OAuth2 for
+        Gmail, per-campaign mailserver selection).
+\end{enumerate}
+
+\subsection{Phase 7: Polish + Deploy (Weeks 20--22)}
+
+\begin{enumerate}[leftmargin=1.6em,itemsep=2pt]
+  \item Write Pest 2 tests: unit (models, services), feature (HTTP
+        endpoints, widget composition), integration (checkout,
+        campaign send).
+  \item Write Dusk browser tests: visual editor drag-and-drop, checkout
+        flow, search, multi-store switching.
+  \item Set up GitHub Actions CI: lint $\to$ test $\to$ build $\to$
+        deploy.
+  \item Create production Docker image (FrankenPHP + PHP 8.3 + Nginx).
+  \item Create \texttt{docker-compose.yml} for local dev (app + MySQL
+        8 + Redis + Meilisearch + Mailhog).
+  \item Write API documentation (Scribe or Laravel OpenAPI).
+  \item Write developer documentation: ``Creating a New Widget Module''
+        guide.
+  \item Write admin documentation: ``Composing Pages with Widgets''
+        guide.
+  \   Security audit: CSRF, XSS, SQL injection, file upload, path
+        traversal.
+  \item Performance audit: N+1 queries, cache hit rate, page load
+        time.
+  \   Seed demo data (products, posts, banners, menus, widgets).
+  \   Deploy to staging.
+  \   Launch.
+\end{enumerate}
+
+% ============================================================
+\section{The Widget Engine API Contract}\label{sec:widget-contract}
+% ============================================================
+
+\begin{keybox}[The widget engine API contract --- non-negotiable]
+Any implementation of the New Necoyoad widget engine MUST satisfy
+this contract:
+
+\begin{tabularx}{\columnwidth}{>{\raggedright\arraybackslash}p{4.0cm}X}
+\toprule
+\textbf{Capability} & \textbf{Contract} \\
+\midrule
+Query widgets & \texttt{WidgetService::getTree(position, objectType?, objectId?)} returns nested rows $\to$ columns $\to$ widgets. \\
+Register widget & A class extending \texttt{WidgetComponent} + a Blade template + a Filament settings form. \\
+Inject data & \texttt{WidgetComponent::data()} method receives settings, returns data + template path. \\
+Render & \texttt{<x-dynamic-component>} or \texttt{@stack}/\texttt{@push}. \\
+Dynamic compose & View Composer populates \texttt{\$widgets[\$position]} before render. \\
+Manual compose & Templates use \texttt{@stack} + \texttt{@push} to hardcode positions. \\
+Hybrid compose & Both in the same template. \\
+Per-entity override & \texttt{getTree()} accepts \texttt{objectType} + \texttt{objectId}; merges per-object widgets. \\
+Per-item composition & Same, with \texttt{objectType = 'banner\_item'}. \\
+only: mode & Skip default tree; load only per-object widgets (for embedded pages). \\
+Asset loading & \texttt{AssetManifest} loads CSS/JS for current route + widget modules. \\
+Visual editor hooks & \texttt{data-widget}, \texttt{data-position}, \texttt{data-row}, \texttt{data-column} on every wrapper. \\
+Template override & Entity \texttt{template} column $\to$ config default $\to$ hardcoded fallback. \\
+Device filtering & \texttt{show\_in\_mobile}, \texttt{show\_in\_tablet}, \texttt{show\_in\_desktop} in JSON settings. \\
+Auth filtering & \texttt{customer\_session\_mode}: any, logged\_in, logged\_out. \\
+Route filtering & \texttt{conditional\_logic}: show/hide on specific routes. \\
+\bottomrule
+\end{tabularx}
+\end{keybox}
+
+% ============================================================
+\section{Creating a New Widget Module}\label{sec:new-widget}
+% ============================================================
+
+\begin{guidebox}[Developer guide: creating a new widget in New Necoyoad]
+
+\textbf{Step 1: Create the component class}
+\begin{lstlisting}[language=PHP]
+// app/View/Components/Widgets/FeaturedProducts.php
+
+class FeaturedProducts extends WidgetComponent
+{
+    public function data(): array
+    {
+        $products = Product::with('descriptions')
+            ->where('featured', true)
+            ->forStore(StoreContext::id())
+            ->forLanguage(LanguageContext::id())
+            ->limit($this->settings['limit'] ?? 5)
+            ->get();
+
+        return [
+            'products' => $products,
+            'settings' => $this->settings,
+        ];
+    }
+}
+\end{lstlisting}
+
+\textbf{Step 2: Create the Blade template}
+\begin{lstlisting}[language=PHP]
+{{-- resources/views/components/widgets/featured-products.blade.php --}}
+@php $tpl = theme_path('shared') ?? 'choroni'; @endphp
+<li id="{{ $widgetName }}" class="widget featured-products nt-editable"
+    data-widget="{{ $widgetName }}" data-position="{{ $position }}">
+    @if ($headingTitle ?? '')
+        <h3>{{ $headingTitle }}</h3>
+    @endif
+    <div class="product-grid">
+        @foreach ($products as $product)
+            <div class="product-card">
+                <img src="{{ $product->image_url }}" alt="{{ $product->title }}" />
+                <a href="{{ route('store.product', $product) }}">{{ $product->title }}</a>
+                <span class="price">{{ format_currency($product->price) }}</span>
+            </div>
+        @endforeach
+    </div>
+</li>
+\end{lstlisting}
+
+\textbf{Step 3: Register the widget + assets}
+\begin{lstlisting}[language=PHP]
+// app/Providers/WidgetServiceProvider.php
+
+public function boot(): void
+{
+    AssetManifest::registerWidget('featured-products', [
+        'css' => ['resources/css/widgets/featured-products.css'],
+        'js'  => ['resources/js/widgets/featured-products.js'],
+        'routes' => ['*', 'store/product', 'common/home'],
+    ]);
+}
+\end{lstlisting}
+
+\textbf{Step 4: Create the Filament settings form} (for the admin)
+\begin{lstlisting}[language=PHP]
+// In the widget layout manager
+Forms\Components\Section::make('Featured Products')
+    ->schema([
+        Forms\Components\TextInput::make('limit')
+            ->label('Number of products')
+            ->default(5),
+        Forms\Components\TextInput::make('heading_title')
+            ->label('Heading title'),
+    ]);
+\end{lstlisting}
+
+\textbf{Done.} The admin can now drag the ``Featured Products''
+widget into any position on any page. The widget renders the
+products, loads its CSS/JS, and emits the \texttt{nt-editable}
+attributes for the visual editor.
+\end{guidebox}
+
+% ============================================================
+\section{What is Discarded}\label{sec:discarded}
+% ============================================================
+
+\begin{table}[htbp]
+\centering
+\caption{What is discarded from the original.}\label{tab:discarded}
+\footnotesize\sloppy
+\begin{tabularx}{\columnwidth}{>{\raggedright\arraybackslash}p{4.5cm}X}
+\toprule
+\textbf{Discarded} & \textbf{Replaced by} \\
+\midrule
+MyISAM tables & InnoDB with FKs + transactions. \\
+Double-MD5 passwords & bcrypt / argon2id. \\
+LIKE '\%key=value\%' queries & JSON column path expressions. \\
+Raw SQL (Model::buildSQLQuery) & Eloquent + query builder. \\
+PHPMailer 5.0 & Laravel Mail (Symfony Mailer). \\
+validateTokens() stub & Laravel Sanctum. \\
+.htaccess rewrite rules & Laravel routing + middleware. \\
+map.php 843-line switch & Laravel autoloading + service providers. \\
+Hand-rolled session handler & Laravel session (Redis driver). \\
+File-based cache & Redis. \\
+\{\%widget\_name\%\} string substitution & Blade dynamic components / @stack. \\
+Serialised PHP settings blobs & JSON columns. \\
+No testing & Pest 2 + Dusk. \\
+No unsubscribe & Built-in unsubscribe + List-Unsubscribe header. \\
+Vestigial bounce processor & Working bounce processing via IMAP/webhook. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+% ============================================================
+\section{Milestones}\label{sec:milestones}
+% ============================================================
+
+\begin{table}[htbp]
+\centering
+\caption{Project milestones.}\label{tab:milestones}
+\footnotesize\sloppy
+\begin{tabularx}{\columnwidth}{>{\raggedright\arraybackslash}p{1.0cm}lrX}
+\toprule
+\# & \textbf{Week} & \textbf{Milestone} & \textbf{Acceptance criteria} \\
+\midrule
+M1 & 3 & Foundation & Multi-store + multi-language working; auth; DB schema; Docker dev env. \\
+M2 & 7 & Widget Engine & 5 core widgets; visual editor; dynamic + manual + hybrid composition; per-entity overrides. \\
+M3 & 10 & Admin Panel & All Filament resources; widget layout manager; theme editor; file manager. \\
+M4 & 14 & Storefront & Product listing + detail; cart; checkout; search; SEO URLs; multi-store routing. \\
+M5 & 16 & CMS + Banners & Posts/pages; menus; banner system with 5 slider templates; per-item widgets. \\
+M6 & 19 & Marketing & Campaign send; tracking; bounce; unsubscribe; birthday emails. \\
+M7 & 22 & Launch & Tests pass; CI/CD; Docker; documentation; demo data; staging deployed. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+% ============================================================
+\section{Conclusion}\label{sec:conclusion}
+% ============================================================
+
+\subsection{The Vision}
+
+New Necoyoad is a digital web agency platform that preserves the
+original's most valuable asset --- the widget engine --- while
+discarding its technical debt. It is built on Laravel 11, PHP 8.3,
+Filament 3, Livewire 3, and MySQL 8 InnoDB. It supports multi-store,
+multi-language, per-entity widget overrides, per-entity template
+overrides, a visual theme editor, a self-hosted marketing pipeline,
+and a plugin-aware banner system --- all on a modern, testable,
+secure foundation.
+
+\subsection{The Widget Engine Survives}
+
+The widget engine --- the platform's soul --- survives the rebuild.
+The seven core abstractions are preserved, each with a concrete
+Laravel equivalent. The developer experience (``create a component +
+template + settings form + register assets'') is the same. The admin
+experience (``drag a widget into a position, configure it, see it on
+the page'') is the same. The three composition modes (dynamic,
+manual, hybrid) are the same.
+
+\subsection{The Timeline is Achievable}
+
+22 weeks (5.5 months) for a single senior developer; 3 months for a
+team of two. The widget engine phase (Phase 2) is the critical path
+--- it must be right before anything else can be built on top of it.
+
+\subsection{Final Word}
+
+The original Necoyoad was a characterful, ambitious platform built
+with care and a strong vision. The New Necoyoad preserves that
+vision --- the widget-driven page builder, the polymorphic object
+spine, the multi-store architecture, the marketing pipeline ---
+while leaving behind the technical debt of a 2009-era codebase. The
+result is a platform that is both familiar (same concepts, same
+developer experience) and modern (Laravel 11, PHP 8.3, testing,
+security, Docker).
+
+The blueprint is complete. The build can begin.
+
+\end{document}
