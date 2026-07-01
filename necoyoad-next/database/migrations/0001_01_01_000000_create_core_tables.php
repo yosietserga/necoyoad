@@ -8,6 +8,15 @@ return new class extends Migration
 {
     public function up(): void
     {
+        // Disable FK checks for the duration of this monolithic migration.
+        // MySQL 8 validates foreign key references at ALTER TABLE time, so
+        // tables that reference entities created later in this same migration
+        // (e.g. categorizables -> categories, reviews -> customers) would fail
+        // with error 1824 "Failed to open the referenced table". Disabling
+        // checks here lets all 43 tables + their constraints be created in a
+        // single pass regardless of declaration order.
+        Schema::disableForeignKeyConstraints();
+
         // ============================================
         // MULTI-TENANCY & LOCALISATION
         // ============================================
@@ -640,10 +649,17 @@ return new class extends Migration
             $table->unique(['store_id', 'group', 'key']);
         });
         }
+
+        // Re-enable FK checks now that all tables + constraints exist.
+        Schema::enableForeignKeyConstraints();
     }
 
     public function down(): void
     {
+        // Disable FK checks during teardown so DROP TABLE doesn't fail on
+        // dependent tables regardless of drop order.
+        Schema::disableForeignKeyConstraints();
+
         Schema::dropIfExists('settings');
         Schema::dropIfExists('user_activity');
         Schema::dropIfExists('users');
@@ -687,5 +703,7 @@ return new class extends Migration
         Schema::dropIfExists('store_languages');
         Schema::dropIfExists('languages');
         Schema::dropIfExists('stores');
+
+        Schema::enableForeignKeyConstraints();
     }
 };
