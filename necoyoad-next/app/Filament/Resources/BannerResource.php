@@ -81,6 +81,12 @@ class BannerResource extends NecoyoadResource
             Tables\Columns\TextColumn::make('jquery_plugin')->badge(),
             Tables\Columns\IconColumn::make('status')->boolean(),
         ])->actions([
+            Tables\Actions\Action::make('composer')
+                ->label('Visual Composer')
+                ->icon('heroicon-o-paint-brush')
+                ->color('success')
+                ->url(fn (Banner $record): string => route('admin.banner.composer', ['bannerId' => $record->id]))
+                ->openUrlInNewTab(),
             Tables\Actions\EditAction::make(),
             Tables\Actions\DeleteAction::make(),
         ]);

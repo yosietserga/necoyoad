@@ -84,5 +84,10 @@ Route::middleware('throttle:120,1')->prefix('api/banner/event')->group(function 
     Route::post('interaction', [\App\Http\Controllers\BannerEventController::class, 'interaction']);
 });
 
+// Banner Visual Composer (Livewire full-page component — auth-protected)
+Route::get('/admin/banner-composer/{bannerId}', \App\Livewire\Admin\BannerComposer::class)
+    ->middleware(['auth', 'can:file-manager'])
+    ->name('admin.banner.composer');
+
 // Healthcheck: bootstrap/app.php registers '/up' via withRouting(health: '/up')
 // which serves Laravel's built-in health route. No explicit route needed here.
