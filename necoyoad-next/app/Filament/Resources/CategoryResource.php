@@ -8,11 +8,16 @@ use App\Filament\Resources\CategoryResource\Pages;
 use App\Models\Category;
 use Filament\Forms;
 use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 
-class CategoryResource extends Resource
+/**
+ * CategoryResource — Filament 3 declarative admin CRUD for Categories.
+ *
+ * Extends NecoyoadResource to inherit: store-scope bypass, audit hooks,
+ * and the shared Descriptions/Stores/SEO tabs.
+ */
+class CategoryResource extends NecoyoadResource
 {
     protected static ?string $model = Category::class;
     protected static ?string $navigationIcon = 'heroicon-o-folder';
@@ -23,33 +28,21 @@ class CategoryResource extends Resource
     {
         return $form->schema([
             Forms\Components\Tabs::make('Category')
-                ->tabs([
-                    Forms\Components\Tabs\Tab::make('General')->schema([
-                        Forms\Components\Select::make('parent_id')
-                            ->relationship('parent', 'id')
-                            ->label('Parent Category')
-                            ->nullable(),
-                        Forms\Components\TextInput::make('image'),
-                        Forms\Components\Toggle::make('status')->default(true),
-                        Forms\Components\TextInput::make('sort_order')->numeric()->default(0),
-                    ])->columns(2),
-                    Forms\Components\Tabs\Tab::make('Descriptions')->schema([
-                        Forms\Components\Repeater::make('descriptions')
-                            ->relationship('descriptions')
-                            ->schema([
-                                Forms\Components\Select::make('language_id')
-                                    ->relationship('language', 'name')->required(),
-                                Forms\Components\TextInput::make('title')->required(),
-                                Forms\Components\Textarea::make('description')->rows(5),
-                                Forms\Components\TextInput::make('seo_title'),
-                                Forms\Components\Textarea::make('meta_description'),
-                            ])->columns(2),
-                    ]),
-                    Forms\Components\Tabs\Tab::make('Stores')->schema([
-                        Forms\Components\Select::make('stores')
-                            ->relationship('stores', 'name')->multiple(),
-                    ]),
-                ])->columnSpanFull(),
+                ->tabs(array_merge(
+                    [
+                        Forms\Components\Tabs\Tab::make('General')->schema([
+                            Forms\Components\Select::make('parent_id')
+                                ->relationship('parent', 'id')
+                                ->label('Parent Category')
+                                ->nullable(),
+                            Forms\Components\TextInput::make('image'),
+                            Forms\Components\Toggle::make('status')->default(true),
+                            Forms\Components\TextInput::make('sort_order')->numeric()->default(0),
+                        ])->columns(2),
+                    ],
+                    static::sharedTabs(),
+                ))
+                ->columnSpanFull(),
         ]);
     }
 

@@ -8,15 +8,22 @@ use App\Filament\Resources\StoreResource\Pages;
 use App\Models\Store;
 use Filament\Forms;
 use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 
 /**
  * StoreResource — admin CRUD for stores (multi-store management).
- * The settings JSON column stores per-store configuration (template, language, currency, etc.).
+ *
+ * Extends NecoyoadResource to inherit: audit hooks (store-scope bypass
+ * is a no-op here since Store itself is the scope root).
+ *
+ * The settings JSON column stores per-store configuration (template,
+ * language, currency, etc.).
+ *
+ * Note: sharedTabs() is NOT used because a Store is itself the scope
+ * root — it does not have a descriptions/stores/SEO polymorphic relation.
  */
-class StoreResource extends Resource
+class StoreResource extends NecoyoadResource
 {
     protected static ?string $model = Store::class;
     protected static ?string $navigationIcon = 'heroicon-o-building-storefront';

@@ -8,12 +8,14 @@ use App\Filament\Resources\WidgetRowResource\Pages;
 use App\Models\WidgetRow;
 use Filament\Forms;
 use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 
 /**
  * WidgetRowResource — the widget layout manager.
+ *
+ * Extends NecoyoadResource to inherit: audit hooks (store-scope bypass
+ * is a no-op here since WidgetRow uses a direct store_id BelongsTo).
  *
  * This is the admin interface for the visual widget tree editor.
  * It manages widget_rows -> widget_columns -> widgets (the layout tree).
@@ -22,11 +24,15 @@ use Filament\Tables\Table;
  * (see Livewire\WidgetEditor\WidgetTree). This Filament resource provides
  * the CRUD fallback for direct row/column/widget management.
  *
+ * Note: sharedTabs() is NOT used because WidgetRow does not have the
+ * polymorphic descriptions/stores/SEO relations — it uses a direct
+ * store_id foreign key.
+ *
  * @see v3 (style/widget.php — widget layout manager)
  * @see v6 (visual editors — style/ folder)
  * @see v11 (widget engine preservation — visual editor hooks)
  */
-class WidgetRowResource extends Resource
+class WidgetRowResource extends NecoyoadResource
 {
     protected static ?string $model = WidgetRow::class;
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';

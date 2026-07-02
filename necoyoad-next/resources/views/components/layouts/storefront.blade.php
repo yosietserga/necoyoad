@@ -127,6 +127,44 @@
     });
 </script>
 
+{{-- Async widget auto-loader (v3 §8) — finds all [data-async="1"] placeholders
+     and fetches their content from /widget/async/{name} --}}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var asyncWidgets = document.querySelectorAll('[data-async="1"]');
+        asyncWidgets.forEach(function(el) {
+            var widgetName = el.dataset.widget;
+            var position = el.dataset.position || 'main';
+            var settings = el.dataset.settings || '{}';
+
+            fetch('/widget/async/' + encodeURIComponent(widgetName) +
+                  '?position=' + encodeURIComponent(position) +
+                  '&settings=' + encodeURIComponent(settings), {
+                headers: { 'X-Requested-With': 'XMLHttpRequest' }
+            })
+            .then(function(r) {
+                if (!r.ok) throw new Error('HTTP ' + r.status);
+                return r.text();
+            })
+            .then(function(html) {
+                el.innerHTML = html;
+                el.removeAttribute('data-async');
+            })
+            .catch(function(err) {
+                el.innerHTML = '<div class="async-error" style="padding:1rem;color:#c53030;">Failed to load widget: ' + widgetName + '</div>';
+                if (window.__necoyoadAudit) {
+                    window.__necoyoadAudit.queue({
+                        type: 'async_widget_error',
+                        message: 'Failed to load async widget ' + widgetName + ': ' + err.message,
+                        method: 'GET',
+                        url: '/widget/async/' + widgetName,
+                    });
+                }
+            });
+        });
+    });
+</script>
+
 {{-- Page body content from child views (home, product, etc.) --}}
 {{ $slot ?? '' }}
 

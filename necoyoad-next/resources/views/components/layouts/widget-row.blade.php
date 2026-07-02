@@ -33,12 +33,27 @@
                  nt-editable>
                 <ul class="widgets">
                     @foreach ($column['widgets'] ?? [] as $widget)
-                        <x-dynamic-component
-                            :component="$widget['component']"
-                            :settings="$widget['settings']"
-                            :widgetName="$widget['name']"
-                            :position="$position"
-                        />
+                        @php $isAsync = !empty($widget['settings']['transition_async']); @endphp
+                        @if ($isAsync)
+                            {{-- Async widget: render a placeholder, JS will fetch the content --}}
+                            <li id="{{ $widget['name'] }}"
+                                class="widget async-widget nt-editable"
+                                data-widget="{{ $widget['name'] }}"
+                                data-position="{{ $position }}"
+                                data-async="1"
+                                data-settings='{{ json_encode($widget['settings'] ?? []) }}'>
+                                <div class="async-loading" style="padding:2rem;text-align:center;color:var(--necoyoad-text-muted,#718096);">
+                                    Loading...
+                                </div>
+                            </li>
+                        @else
+                            <x-dynamic-component
+                                :component="$widget['component']"
+                                :settings="$widget['settings']"
+                                :widgetName="$widget['name']"
+                                :position="$position"
+                            />
+                        @endif
                     @endforeach
                 </ul>
             </div>

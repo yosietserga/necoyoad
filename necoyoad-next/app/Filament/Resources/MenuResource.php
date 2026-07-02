@@ -8,15 +8,21 @@ use App\Filament\Resources\MenuResource\Pages;
 use App\Models\Menu;
 use Filament\Forms;
 use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 
 /**
  * MenuResource — admin CRUD for menus.
+ *
+ * Extends NecoyoadResource to inherit: audit hooks + store-scope bypass.
  * Menu links are managed via a Repeater (tree via parent_id).
+ *
+ * Note: sharedTabs() is NOT used because the Menu model does not use
+ * HasDescriptions / HasStoreAssignment / HasSeoUrl traits — menus are
+ * scoped via a direct store_id BelongsTo, not the polymorphic store
+ * assignment, and have no per-language descriptions.
  */
-class MenuResource extends Resource
+class MenuResource extends NecoyoadResource
 {
     protected static ?string $model = Menu::class;
     protected static ?string $navigationIcon = 'heroicon-o-bars-3';

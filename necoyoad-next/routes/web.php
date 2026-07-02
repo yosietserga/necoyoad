@@ -51,5 +51,8 @@ Route::get('/unsubscribe/{token}', [StorefrontController::class, 'unsubscribe'])
 // Contact form submission (used by the contact-form widget)
 Route::post('/contact/submit', [StorefrontController::class, 'contactSubmit'])->name('contact.submit');
 
+// Async widget rendering (v3 §8 — allows widgets to load via AJAX)
+Route::get('/widget/async/{name}', [\App\Http\Controllers\WidgetController::class, 'async'])->name('widget.async');
+
 // Healthcheck: bootstrap/app.php registers '/up' via withRouting(health: '/up')
 // which serves Laravel's built-in health route. No explicit route needed here.
