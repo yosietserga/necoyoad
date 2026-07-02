@@ -66,6 +66,9 @@ class SendCampaignEmail implements ShouldQueue
             $htmlbody .= "<img src=\"{$pixelUrl}\" width=\"1\" height=\"1\" alt=\"\" style=\"display:none;\">";
         }
 
+        // Build the unsubscribe URL (passed to Mailable for List-Unsubscribe header)
+        $unsubscribeUrl = route('marketing.unsubscribe', ['token' => $contact->unsubscribe_token ?? $contact->id]);
+
         // Send via Laravel Mail (Symfony Mailer under the hood)
         Mail::to($contact->email, $contact->name)
             ->send(new CampaignEmail(
@@ -74,11 +77,8 @@ class SendCampaignEmail implements ShouldQueue
                 fromName: $campaign->from_name,
                 fromEmail: $campaign->from_email,
                 replyTo: $campaign->replyto_email,
+                unsubscribeUrl: $unsubscribeUrl,
             ));
-
-        // Add List-Unsubscribe header for CAN-SPAM/GDPR compliance (v10 fix)
-        $unsubscribeUrl = route('marketing.unsubscribe', ['token' => $contact->unsubscribe_token ?? $contact->id]);
-        // The header is set in the Mailable's build() method
     }
 
     private function personalise(string $body, Campaign $campaign, Contact $contact): string

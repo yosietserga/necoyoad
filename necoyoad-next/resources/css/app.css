@@ -1,27 +1,300 @@
-/* New Necoyoad — Application CSS (Tailwind CSS 4 entry) */
+/* New Necoyoad — Corporate-Grade Storefront CSS (Tailwind CSS 4 entry) */
 @import "tailwindcss";
 
-/* nt-editable visual editor hooks */
-[nt-editable] {
-    position: relative;
+/* ============================================
+   CSS Variables — Corporate Color Palette
+   ============================================ */
+:root {
+    --necoyoad-primary: #1a365d;
+    --necoyoad-primary-light: #2c5282;
+    --necoyoad-accent: #c05621;
+    --necoyoad-accent-light: #dd6b20;
+    --necoyoad-bg: #f7fafc;
+    --necoyoad-surface: #ffffff;
+    --necoyoad-text: #2d3748;
+    --necoyoad-text-muted: #718096;
+    --necoyoad-border: #e2e8f0;
+    --necoyoad-success: #2f855a;
+    --necoyoad-error: #c53030;
+    --necoyoad-radius: 8px;
+    --necoyoad-shadow-sm: 0 1px 2px 0 rgba(0,0,0,0.05);
+    --necoyoad-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+    --necoyoad-shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
 }
 
+/* ============================================
+   Base Typography
+   ============================================ */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background-color: var(--necoyoad-bg);
+    color: var(--necoyoad-text);
+    line-height: 1.6;
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: var(--necoyoad-primary);
+    font-weight: 700;
+    line-height: 1.25;
+    margin: 0 0 0.5rem;
+}
+
+h1 { font-size: 2rem; }
+h2 { font-size: 1.5rem; }
+h3 { font-size: 1.25rem; }
+
+a {
+    color: var(--necoyoad-primary-light);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+a:hover { color: var(--necoyoad-accent); }
+
+/* ============================================
+   Storefront Layout
+   ============================================ */
+#contentContainer {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1.5rem 1rem;
+}
+
+.tpl-home, .tpl-products, .tpl-categories, .tpl-posts, .tpl-search,
+.tpl-product, .tpl-category, .tpl-post, .tpl-page, .tpl-unsubscribe, .tpl-contact-sent {
+    min-height: 60vh;
+}
+
+/* ============================================
+   Widget System
+   ============================================ */
+[nt-editable] { position: relative; }
+
 [nt-editable]:hover {
-    outline: 2px dashed rgba(59, 130, 246, 0.5);
+    outline: 2px dashed rgba(26, 54, 93, 0.4);
     outline-offset: 2px;
 }
 
-/* Cart drawer */
+.widget {
+    margin-bottom: 1.5rem;
+    background: var(--necoyoad-surface);
+    border-radius: var(--necoyoad-radius);
+    padding: 1.25rem;
+    box-shadow: var(--necoyoad-shadow-sm);
+    list-style: none;
+}
+
+.widget .header h3 {
+    font-size: 1.125rem;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--necoyoad-border);
+}
+
+/* ============================================
+   Product Grid & Cards
+   ============================================ */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1.25rem;
+    margin: 1.5rem 0;
+}
+
+.product-card {
+    background: var(--necoyoad-surface);
+    border: 1px solid var(--necoyoad-border);
+    border-radius: var(--necoyoad-radius);
+    padding: 1rem;
+    transition: box-shadow 0.2s, transform 0.2s;
+    box-shadow: var(--necoyoad-shadow-sm);
+}
+
+.product-card:hover {
+    box-shadow: var(--necoyoad-shadow-lg);
+    transform: translateY(-2px);
+}
+
+.product-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: var(--necoyoad-radius);
+    margin-bottom: 0.75rem;
+}
+
+.product-card .price {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--necoyoad-accent);
+}
+
+/* ============================================
+   Breadcrumbs
+   ============================================ */
+.breadcrumbs {
+    padding: 0.75rem 0;
+    font-size: 0.875rem;
+    color: var(--necoyoad-text-muted);
+}
+.breadcrumbs a { color: var(--necoyoad-primary-light); text-decoration: none; }
+.breadcrumbs a:hover { text-decoration: underline; color: var(--necoyoad-accent); }
+.breadcrumbs .separator { margin: 0 0.5rem; color: var(--necoyoad-text-muted); }
+
+/* ============================================
+   Buttons (corporate-grade)
+   ============================================ */
+.button, .btn {
+    display: inline-block;
+    padding: 0.625rem 1.5rem;
+    background: var(--necoyoad-primary);
+    color: white;
+    border: none;
+    border-radius: var(--necoyoad-radius);
+    font-weight: 600;
+    font-size: 0.9375rem;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.1s;
+    text-align: center;
+}
+.button:hover, .btn:hover {
+    background: var(--necoyoad-primary-light);
+    color: white;
+    text-decoration: none;
+}
+.button:active, .btn:active { transform: translateY(1px); }
+
+.button-accent {
+    background: var(--necoyoad-accent);
+}
+.button-accent:hover { background: var(--necoyoad-accent-light); }
+
+/* ============================================
+   Forms
+   ============================================ */
+input[type="text"], input[type="email"], input[type="password"],
+input[type="tel"], input[type="search"], textarea, select {
+    width: 100%;
+    padding: 0.625rem 0.875rem;
+    border: 1px solid var(--necoyoad-border);
+    border-radius: var(--necoyoad-radius);
+    font-size: 0.9375rem;
+    background: white;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    box-sizing: border-box;
+}
+
+input:focus, textarea:focus, select:focus {
+    outline: none;
+    border-color: var(--necoyoad-primary-light);
+    box-shadow: 0 0 0 3px rgba(44, 82, 130, 0.15);
+}
+
+/* ============================================
+   Cart Drawer (Livewire)
+   ============================================ */
 [x-cloak] { display: none !important; }
 
-/* Breadcrumbs */
-.breadcrumbs a { color: #2563eb; text-decoration: none; }
-.breadcrumbs a:hover { text-decoration: underline; }
+.cart-drawer {
+    position: fixed;
+    top: 0;
+    right: -400px;
+    width: 380px;
+    max-width: 90vw;
+    height: 100vh;
+    background: var(--necoyoad-surface);
+    box-shadow: var(--necoyoad-shadow-lg);
+    z-index: 1000;
+    transition: right 0.3s ease;
+    overflow-y: auto;
+}
+.cart-drawer.open { right: 0; }
+.cart-drawer-header {
+    padding: 1.25rem;
+    background: var(--necoyoad-primary);
+    color: white;
+    font-weight: 700;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.cart-drawer-body { padding: 1.25rem; }
 
-/* Product grid */
-.product-card { transition: box-shadow 0.2s, transform 0.2s; }
-.product-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+/* ============================================
+   Banner Slider
+   ============================================ */
+.banner-slider {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--necoyoad-radius);
+    margin-bottom: 1.5rem;
+}
+.banner-slider img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+}
 
-/* Widget positions */
-.widget { margin-bottom: 1rem; }
-.widget .header h3 { font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem; }
+/* ============================================
+   Responsive Grid (preserves original Necoyoad large/medium/small)
+   ============================================ */
+.row { display: flex; flex-wrap: wrap; gap: 1rem; }
+.large-3 { flex: 0 0 25%; max-width: 25%; }
+.large-6 { flex: 0 0 50%; max-width: 50%; }
+.large-9 { flex: 0 0 75%; max-width: 75%; }
+.large-12 { flex: 0 0 100%; max-width: 100%; }
+
+@media (max-width: 768px) {
+    .large-3, .large-6, .large-9, .large-12 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    .product-grid {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .medium-3 { flex: 0 0 25%; max-width: 25%; }
+    .medium-12 { flex: 0 0 100%; max-width: 100%; }
+}
+
+/* ============================================
+   Error Pages
+   ============================================ */
+.error-page {
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+.error-page .error-code {
+    font-size: 4rem;
+    font-weight: 800;
+    color: var(--necoyoad-error);
+}
+
+/* ============================================
+   Utility Classes
+   ============================================ */
+.text-center { text-align: center; }
+.text-muted { color: var(--necoyoad-text-muted); }
+.mt-4 { margin-top: 1rem; }
+.mt-8 { margin-top: 2rem; }
+.mb-4 { margin-bottom: 1rem; }
+.mb-8 { margin-bottom: 2rem; }
+.p-4 { padding: 1rem; }
+.p-8 { padding: 2rem; }
+.hidden { display: none; }
+
+/* ============================================
+   Print styles
+   ============================================ */
+@media print {
+    .cart-drawer, .banner-slider, nav, footer { display: none !important; }
+    body { background: white; color: black; }
+}

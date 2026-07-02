@@ -1,8 +1,9 @@
 // New Necoyoad — Front-end JavaScript entry
-// Alpine.js + Livewire 3 + ntPlugins equivalent
+// Alpine.js + Livewire 3 + ntPlugins equivalent + Browser Audit Logger
 
 import Alpine from 'alpinejs';
 import focus from '@alpinejs/focus';
+import './audit-logger.js';
 
 // ntPlugins equivalent: Alpine store for slider/component configs
 Alpine.store('ntPlugins', []);

@@ -1,10 +1,10 @@
 <?php
 
-use App\Http\Controllers\StorefrontController;
 use App\Http\Controllers\CustomerAuthController;
+use App\Http\Controllers\StorefrontController;
 use App\Livewire\Storefront\CartDrawer;
-use App\Livewire\Storefront\ProductPage;
 use App\Livewire\Storefront\CheckoutForm;
+use App\Livewire\Storefront\ProductPage;
 use Illuminate\Support\Facades\Route;
 
 /**

@@ -7,6 +7,7 @@ namespace App\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Symfony\Component\Mime\Email;
 
 /**
  * CampaignEmail — the Mailable for campaign emails.
@@ -24,6 +25,7 @@ class CampaignEmail extends Mailable
         public string $fromName,
         public string $fromEmail,
         public ?string $replyTo = null,
+        public ?string $unsubscribeUrl = null,
     ) {}
 
     public function build(): self
@@ -37,7 +39,14 @@ class CampaignEmail extends Mailable
         }
 
         // List-Unsubscribe header (CAN-SPAM/GDPR compliance — v10 fix)
-        // The unsubscribe URL is built in the job and appended to the body
+        // Actually attach the header to the outgoing mail so email clients
+        // can offer a native "Unsubscribe" button.
+        if ($this->unsubscribeUrl) {
+            $email->withSymfonyMessage(function (Email $message) {
+                $message->getHeaders()->addTextHeader('List-Unsubscribe', "<{$this->unsubscribeUrl}>");
+                $message->getHeaders()->addTextHeader('List-Unsubscribe-Post', 'List-Unsubscribe=One-Click');
+            });
+        }
 
         return $email;
     }

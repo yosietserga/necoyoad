@@ -1,16 +1,17 @@
 <?php
 
+use App\Http\Controllers\AuditController;
 use Illuminate\Support\Facades\Route;
 
 /**
- * API routes — for the REST API (Sanctum-protected).
- * Controllers not yet implemented; uncomment when app/Http/Controllers/Api/
- * is created in a future phase.
+ * API routes.
+ *
+ * The browser audit endpoint is CSRF-exempt (api routes don't run CSRF
+ * middleware) because navigator.sendBeacon() can't reliably attach the
+ * CSRF token. Rate-limited to prevent abuse.
  */
 
-// Route::middleware('auth:sanctum')->group(function () {
-//     Route::apiResource('products', App\Http\Controllers\Api\ProductController::class);
-//     Route::apiResource('categories', App\Http\Controllers\Api\CategoryController::class);
-//     Route::apiResource('posts', App\Http\Controllers\Api\PostController::class);
-//     Route::apiResource('banners', App\Http\Controllers\Api\BannerController::class);
-// });
+// Browser audit endpoint (receives console errors + failed network requests)
+Route::post('/audit/browser', [AuditController::class, 'browser'])
+    ->middleware('throttle:60,1')
+    ->name('audit.browser');

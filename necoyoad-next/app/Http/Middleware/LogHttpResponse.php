@@ -26,6 +26,11 @@ class LogHttpResponse
     {
         $response = $next($request);
 
+        // Skip auditing the audit endpoint itself (prevents recursive logging)
+        if ($request->is('api/audit/*')) {
+            return $response;
+        }
+
         // Log non-success responses (outside 200-399)
         if ($response->status() < 200 || $response->status() >= 400) {
             $this->auditService->logRequest(
