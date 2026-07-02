@@ -76,9 +76,10 @@ class LanguageContext
 
         $this->language = $languages->get($code) ?? $languages->first() ?? new Language(['id' => 1, 'code' => 'en']);
 
-        // Persist to session and cookie
+        // Persist to session and queue cookie (cookie() alone doesn't send —
+        // must use Cookie::queue() to attach it to the response)
         session(['language' => $code]);
-        cookie('language', $code, 60 * 24 * 30); // 30 days
+        \Illuminate\Support\Facades\Cookie::queue('language', $code, 60 * 24 * 30); // 30 days
 
         return $this->language;
     }

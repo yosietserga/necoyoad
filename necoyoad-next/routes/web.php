@@ -48,5 +48,8 @@ Route::get('/track/click/{nonce}', [StorefrontController::class, 'trackClick'])-
 // Unsubscribe
 Route::get('/unsubscribe/{token}', [StorefrontController::class, 'unsubscribe'])->name('marketing.unsubscribe');
 
+// Contact form submission (used by the contact-form widget)
+Route::post('/contact/submit', [StorefrontController::class, 'contactSubmit'])->name('contact.submit');
+
 // Healthcheck: bootstrap/app.php registers '/up' via withRouting(health: '/up')
 // which serves Laravel's built-in health route. No explicit route needed here.

@@ -7,6 +7,7 @@ namespace App\Livewire\Storefront;
 use App\Models\Customer;
 use App\Services\StoreContext;
 use Illuminate\Support\Facades\Hash;
+use Livewire\Attributes\Layout;
 use Livewire\Component;
 
 /**
@@ -17,6 +18,7 @@ use Livewire\Component;
  *
  * Creates the order with snapshot of cart + customer + address.
  */
+#[Layout('components.layouts.storefront')]
 class CheckoutForm extends Component
 {
     public int $step = 1;

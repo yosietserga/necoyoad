@@ -153,8 +153,9 @@ class StorefrontController extends Controller
 
         // Basic LIKE search across product descriptions (replaces Scout::search()
         // which would require the laravel/scout package + a search driver).
+        // Uses 'title' column (the descriptions table has 'title', NOT 'name').
         $products = Product::whereHas('descriptions', function ($query) use ($q) {
-            $query->where('name', 'like', "%{$q}%")
+            $query->where('title', 'like', "%{$q}%")
                   ->orWhere('description', 'like', "%{$q}%");
         })->limit(20)->get();
 
@@ -285,5 +286,32 @@ class StorefrontController extends Controller
         }
 
         abort(404);
+    }
+
+    /**
+     * Contact form submission (used by the contact-form widget).
+     */
+    public function contactSubmit(Request $request): Response
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:250',
+            'email' => 'required|email|max:100',
+            'message' => 'required|string|max:5000',
+        ]);
+
+        // Store as a Contact (newsletter subscriber + message log)
+        \App\Models\Contact::firstOrCreate(
+            ['email' => $validated['email']],
+            [
+                'name' => $validated['name'],
+                'is_active' => true,
+                'unsubscribe_token' => \Illuminate\Support\Str::random(64),
+            ]
+        );
+
+        return response()->view('marketing.contact-sent', [
+            'title' => 'Message Sent',
+            'templateType' => 'contact-sent',
+        ])->setStatusCode(200);
     }
 }

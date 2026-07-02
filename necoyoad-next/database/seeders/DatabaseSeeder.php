@@ -14,15 +14,32 @@ use App\Models\MenuLink;
 use App\Models\Post;
 use App\Models\Product;
 use App\Models\Store;
+use App\Models\User;
 use App\Models\Widget;
 use App\Models\WidgetColumn;
 use App\Models\WidgetRow;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
+        // ============================================
+        // ADMIN USER (Filament login)
+        // ============================================
+        User::firstOrCreate(
+            ['username' => 'admin'],
+            [
+                'firstname' => 'Admin',
+                'lastname' => 'User',
+                'email' => 'admin@necoyoad.com',
+                'password' => Hash::make('password'),
+                'status' => true,
+                'ip' => '127.0.0.1',
+            ]
+        );
+
         // ============================================
         // STORES
         // ============================================

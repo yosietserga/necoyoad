@@ -53,9 +53,12 @@ for i in $(seq 1 30); do
     sleep 2
 done
 
-# 7. Migrate
+# 7. Migrate + seed
 echo "[entrypoint] running migrations..."
 php artisan migrate --force || echo "[entrypoint] migration skipped (DB not ready)"
+
+echo "[entrypoint] seeding database..."
+php artisan db:seed --force || echo "[entrypoint] seeding skipped (already seeded)"
 
 # 8. Hand off to FrankenPHP / Caddy
 exec "$@"

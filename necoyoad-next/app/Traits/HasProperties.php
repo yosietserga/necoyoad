@@ -32,63 +32,50 @@ trait HasProperties
         return $this->morphMany(Property::class, 'propertiable');
     }
 
+    /**
+     * Get a single EAV property value via EavService.
+     * The trait is a thin facade — all logic lives in App\Services\EavService.
+     */
     public function getProperty(string $group, string $key, ?int $storeId = null): mixed
     {
-        $storeId ??= app('store.context')->id();
-
-        $property = $this->properties()
-            ->where('group', $group)
-            ->where('key', $key)
-            ->where(function ($query) use ($storeId) {
-                $query->where('store_id', $storeId)
-                    ->orWhereNull('store_id');
-            })
-            ->orderByRaw('store_id IS NULL') // store-specific first, then global
-            ->first();
-
-        return $property?->getDecodedValue();
+        return app(\App\Services\EavService::class)->get($this, $group, $key, $storeId);
     }
 
+    /**
+     * Get all properties in a group via EavService.
+     */
     public function getAllProperties(?string $group = null, ?int $storeId = null): Collection
     {
-        $storeId ??= app('store.context')->id();
-
-        $query = $this->properties();
-
         if ($group) {
-            $query->where('group', $group);
+            return collect(app(\App\Services\EavService::class)->getGroup($this, $group, $storeId))
+                ->mapWithKeys(fn ($value, $key) => ["{$group}.{$key}" => $value]);
         }
 
-        return $query->where(function ($q) use ($storeId) {
-            $q->where('store_id', $storeId)
-                ->orWhereNull('store_id');
-        })->get()->keyBy(fn ($item) => "{$item->group}.{$item->key}");
+        // No group specified — return all properties for this model
+        return $this->properties()->get()->keyBy(fn ($item) => "{$item->group}.{$item->key}");
     }
 
+    /**
+     * Set a single EAV property via EavService.
+     */
     public function setProperty(string $group, string $key, mixed $value, ?int $storeId = null): void
     {
-        $storeId ??= app('store.context')->id();
-
-        $this->properties()->updateOrCreate(
-            [
-                'group' => $group,
-                'key' => $key,
-                'store_id' => $storeId,
-            ],
-            [
-                'value' => is_array($value) ? json_encode($value) : $value,
-            ]
-        );
+        app(\App\Services\EavService::class)->set($this, $group, $key, $value, $storeId);
     }
 
+    /**
+     * Set multiple EAV properties at once via EavService.
+     */
+    public function setManyProperties(array $properties, ?int $storeId = null): void
+    {
+        app(\App\Services\EavService::class)->setMany($this, $properties, $storeId);
+    }
+
+    /**
+     * Delete a single EAV property via EavService.
+     */
     public function deleteProperty(string $group, string $key, ?int $storeId = null): void
     {
-        $storeId ??= app('store.context')->id();
-
-        $this->properties()
-            ->where('group', $group)
-            ->where('key', $key)
-            ->where('store_id', $storeId)
-            ->delete();
+        app(\App\Services\EavService::class)->delete($this, $group, $key, $storeId);
     }
 }

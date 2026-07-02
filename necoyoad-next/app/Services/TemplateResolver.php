@@ -27,9 +27,9 @@ class TemplateResolver
         // 1. Per-entity override
         $template = $entityTemplate;
 
-        // 2. Config default
+        // 2. Config default (key is 'necoyoad.defaults.{$type}', not 'defaults.{$type}')
         if (!$template) {
-            $template = config("defaults.{$type}");
+            $template = config("necoyoad.defaults.{$type}");
         }
 
         // 3. Hardcoded fallback

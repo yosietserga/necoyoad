@@ -115,11 +115,18 @@
         // ntPlugins equivalent (Alpine.js store for slider configs)
         Alpine.store('ntPlugins', []);
         Alpine.store('ntContext', {
-            sid: {{ app('store.context')->id() }},
+            sid: {{ app('store.context')?->id() ?? 0 }},
             httpHome: '{{ config('app.url') }}',
             isMobile: {{ request()->userAgent() && preg_match('/(android|iphone|ipod|ipad|mobile)/i', request()->userAgent()) ? 'true' : 'false' }},
         });
     });
 </script>
+
+{{-- Page body content from child views (home, product, etc.) --}}
+{{ $slot ?? '' }}
+
+{{-- Cart drawer (Livewire) — embedded in layout so it's available on every page --}}
+@livewire('cart-drawer')
+
 </body>
 </html>

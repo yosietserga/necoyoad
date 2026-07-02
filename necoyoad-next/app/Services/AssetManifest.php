@@ -100,6 +100,21 @@ class AssetManifest
         }
     }
 
+    /**
+     * Enqueue an asset by file extension (public API for widgets that
+     * don't know whether the asset is CSS or JS).
+     * Called by Banner widget for slider plugin assets.
+     */
+    public function enqueueAsset(string $path): void
+    {
+        $extension = pathinfo($path, PATHINFO_EXTENSION);
+        match ($extension) {
+            'css' => $this->enqueueCss($path),
+            'js' => $this->enqueueJs($path),
+            default => null,
+        };
+    }
+
     private function extractWidgetName(string $class): string
     {
         $basename = class_basename($class);
