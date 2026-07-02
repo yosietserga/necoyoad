@@ -26,4 +26,7 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         'Filter' => \App\Filters\Filter::class,
     ])->toArray(),
+
+    // Audit logging configuration
+    'audit_all_queries' => env('AUDIT_ALL_QUERIES', false),
 ];

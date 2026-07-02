@@ -53,7 +53,7 @@ class SendDueCampaigns extends Command
             }
 
             foreach ($contacts as $contact) {
-                SendCampaignEmail::dispatch($campaign, $contact);
+                SendCampaignEmail::dispatch($campaign->id, $contact->id);
                 $totalDispatched++;
             }
 

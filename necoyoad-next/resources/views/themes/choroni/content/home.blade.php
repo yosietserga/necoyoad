@@ -1,39 +1,16 @@
 {{--
     New Necoyoad — Home Page Template (choroni theme)
-    Uses the storefront layout (which includes the widget row renderer).
-    The WidgetComposer has already populated $widgets[$position].
+
+    The storefront layout handles all widget positions (featuredContent,
+    column_left, main, column_right, featuredFooter). The WidgetComposer
+    has already populated $widgets[$position] and the layout renders them.
+
+    This template only needs to set the template type. Entity-specific
+    content (if any) can be pushed via @push('main-content').
 --}}
 <x-layouts.storefront>
     @php $templateType = 'home'; @endphp
-    @php $position = 'featuredContent'; @endphp
-    <x-layouts.widget-row :position="$position" />
-    <div id="mainContentContainer" nt-editable>
-        <div class="row">
-            @php $position = 'column_left'; @endphp
-            @if (!empty($widgets['column_left']))
-                <div class="large-3 medium-3 small-12">
-                    <div id="columnLeft" nt-editable>
-                        <x-layouts.widget-row :position="$position" />
-                    </div>
-                </div>
-            @endif
-            <div class="large-{{ !empty($widgets['column_left']) && !empty($widgets['column_right']) ? '6' : (!empty($widgets['column_left']) || !empty($widgets['column_right']) ? '9' : '12') }} medium-12 small-12">
-                <div id="columnCenter" nt-editable>
-                    @php $position = 'main'; @endphp
-                    <x-layouts.widget-row :position="$position" />
-                    @stack('main-content')
-                </div>
-            </div>
-            @php $position = 'column_right'; @endphp
-            @if (!empty($widgets['column_right']))
-                <div class="large-3 medium-3 small-12">
-                    <div id="columnRight" nt-editable>
-                        <x-layouts.widget-row :position="$position" />
-                    </div>
-                </div>
-            @endif
-        </div>
-    </div>
-    @php $position = 'featuredFooter'; @endphp
-    <x-layouts.widget-row :position="$position" />
+
+    {{-- Home page has no entity-specific content outside the widget system.
+         All content is widget-driven (hero_banner, featured_products, welcome_text). --}}
 </x-layouts.storefront>

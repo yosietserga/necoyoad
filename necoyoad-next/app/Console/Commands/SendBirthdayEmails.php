@@ -34,7 +34,7 @@ class SendBirthdayEmails extends Command
         }
 
         foreach ($customers as $customer) {
-            SendBirthdayEmail::dispatch($customer);
+            SendBirthdayEmail::dispatch($customer->id);
         }
 
         $this->info("Dispatched {$customers->count()} birthday emails.");

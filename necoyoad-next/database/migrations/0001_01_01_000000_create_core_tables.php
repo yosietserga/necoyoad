@@ -654,6 +654,96 @@ return new class extends Migration
         });
         }
 
+        // ============================================
+        // CAMPAIGN ↔ CONTACT LIST PIVOT
+        // ============================================
+        if (!Schema::hasTable('campaign_contact_list')) {
+            Schema::create('campaign_contact_list', function (Blueprint $table) {
+                $table->foreignId('campaign_id')->constrained()->cascadeOnDelete();
+                $table->foreignId('contact_list_id')->constrained()->cascadeOnDelete();
+                $table->primary(['campaign_id', 'contact_list_id']);
+            });
+        }
+
+        // ============================================
+        // STANDARD LARAVEL TABLES (sessions, cache, jobs, password resets)
+        // Required by config/session.php, config/cache.php, config/queue.php, config/auth.php
+        // ============================================
+        if (!Schema::hasTable('sessions')) {
+            Schema::create('sessions', function (Blueprint $table) {
+                $table->string('id')->primary();
+                $table->foreignId('user_id')->nullable()->index();
+                $table->string('ip_address', 45)->nullable();
+                $table->text('user_agent')->nullable();
+                $table->longText('payload');
+                $table->integer('last_activity')->index();
+            });
+        }
+
+        if (!Schema::hasTable('cache')) {
+            Schema::create('cache', function (Blueprint $table) {
+                $table->string('key')->primary();
+                $table->mediumText('value');
+                $table->integer('expiration')->index();
+            });
+        }
+
+        if (!Schema::hasTable('cache_locks')) {
+            Schema::create('cache_locks', function (Blueprint $table) {
+                $table->string('key')->primary();
+                $table->string('owner');
+                $table->integer('expiration');
+                $table->timestamps();
+            });
+        }
+
+        if (!Schema::hasTable('jobs')) {
+            Schema::create('jobs', function (Blueprint $table) {
+                $table->bigIncrements('id');
+                $table->string('queue')->index();
+                $table->longText('payload');
+                $table->unsignedTinyInteger('attempts');
+                $table->unsignedInteger('reserved_at')->nullable();
+                $table->unsignedInteger('available_at');
+                $table->unsignedInteger('created_at');
+            });
+        }
+
+        if (!Schema::hasTable('job_batches')) {
+            Schema::create('job_batches', function (Blueprint $table) {
+                $table->string('id')->primary();
+                $table->string('name');
+                $table->integer('total_jobs');
+                $table->integer('pending_jobs');
+                $table->integer('failed_jobs');
+                $table->longText('failed_job_ids');
+                $table->mediumText('options')->nullable();
+                $table->integer('cancelled_at')->nullable();
+                $table->integer('created_at');
+                $table->integer('finished_at')->nullable();
+            });
+        }
+
+        if (!Schema::hasTable('failed_jobs')) {
+            Schema::create('failed_jobs', function (Blueprint $table) {
+                $table->id();
+                $table->string('uuid')->unique();
+                $table->text('connection');
+                $table->text('queue');
+                $table->longText('payload');
+                $table->longText('exception');
+                $table->timestamp('failed_at')->useCurrent();
+            });
+        }
+
+        if (!Schema::hasTable('password_reset_tokens')) {
+            Schema::create('password_reset_tokens', function (Blueprint $table) {
+                $table->string('email')->primary();
+                $table->string('token');
+                $table->timestamp('created_at')->nullable();
+            });
+        }
+
         // Re-enable FK checks now that all tables + constraints exist.
         Schema::enableForeignKeyConstraints();
     }
@@ -707,6 +797,18 @@ return new class extends Migration
         Schema::dropIfExists('store_languages');
         Schema::dropIfExists('languages');
         Schema::dropIfExists('stores');
+
+        // Standard Laravel tables
+        Schema::dropIfExists('password_reset_tokens');
+        Schema::dropIfExists('failed_jobs');
+        Schema::dropIfExists('job_batches');
+        Schema::dropIfExists('jobs');
+        Schema::dropIfExists('cache_locks');
+        Schema::dropIfExists('cache');
+        Schema::dropIfExists('sessions');
+
+        // Campaign ↔ Contact list pivot
+        Schema::dropIfExists('campaign_contact_list');
 
         Schema::enableForeignKeyConstraints();
     }

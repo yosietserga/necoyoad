@@ -1,6 +1,5 @@
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
-import alpine from 'alpinejs';
 
 export default defineConfig({
     plugins: [

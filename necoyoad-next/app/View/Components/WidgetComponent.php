@@ -70,9 +70,9 @@ abstract class WidgetComponent extends Component
         // 1. Per-entity override
         $template = $this->settings['template'] ?? null;
 
-        // 2. Config default
+        // 2. Config default (key is 'necoyoad.defaults.{$moduleName}')
         if (!$template) {
-            $template = config("defaults.{$moduleName}");
+            $template = config("necoyoad.defaults.{$moduleName}");
         }
 
         // 3. Check if the template exists in the active theme

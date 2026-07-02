@@ -165,8 +165,13 @@
     });
 </script>
 
-{{-- Page body content from child views (home, product, etc.) --}}
-{{ $slot ?? '' }}
+{{-- Page body content from child views — child templates use @push('main-content')
+     for entity-specific content. The layout handles all widget positions
+     (featuredContent, column_left, main, column_right, featuredFooter) directly,
+     so the $slot is only for content outside the widget system. --}}
+@if (!empty($slot))
+    {{ $slot }}
+@endif
 
 {{-- Cart drawer (Livewire) — embedded in layout so it's available on every page --}}
 @livewire('cart-drawer')

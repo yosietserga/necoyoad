@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
 namespace App\Models;
+
+use App\Traits\Auditable;
 use App\Traits\HasDescriptions;
 use App\Traits\HasStoreAssignment;
 use Illuminate\Database\Eloquent\Model;

@@ -4,14 +4,9 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources;
 
-use App\Services\AuditService;
 use Filament\Forms;
-use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables;
-use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
 
 /**
  * NecoyoadResource — abstract base class for all Filament resources.
@@ -96,61 +91,8 @@ abstract class NecoyoadResource extends Resource
         return parent::getEloquentQuery()->withoutGlobalScope('store');
     }
 
-    /**
-     * Audit model creation.
-     */
-    public static function mutateFormDataBeforeCreate(array $data): array
-    {
-        return $data;
-    }
-
-    /**
-     * Hook: called after a record is created. Logs to audit.
-     */
-    protected static function afterCreate(Model $record): void
-    {
-        try {
-            app(AuditService::class)->logModel(
-                event: 'created',
-                modelClass: get_class($record),
-                modelId: $record->getKey(),
-                changes: $record->getAttributes(),
-            );
-        } catch (\Throwable) {
-            // Don't let audit failure break the create
-        }
-    }
-
-    /**
-     * Hook: called after a record is updated. Logs to audit.
-     */
-    protected static function afterSave(Model $record): void
-    {
-        try {
-            app(AuditService::class)->logModel(
-                event: 'updated',
-                modelClass: get_class($record),
-                modelId: $record->getKey(),
-                changes: $record->getChanges(),
-            );
-        } catch (\Throwable) {
-            // Don't let audit failure break the save
-        }
-    }
-
-    /**
-     * Hook: called after a record is deleted. Logs to audit.
-     */
-    protected static function afterDelete(Model $record): void
-    {
-        try {
-            app(AuditService::class)->logModel(
-                event: 'deleted',
-                modelClass: get_class($record),
-                modelId: $record->getKey(),
-            );
-        } catch (\Throwable) {
-            // Don't let audit failure break the delete
-        }
-    }
+    // Note: Audit logging is handled by the Auditable trait on each model
+    // (via model boot events), NOT by Filament Resource hooks. This ensures
+    // audit logging works for ALL write paths: Filament admin, API, tinker, seeders.
+    // See app/Traits/Auditable.php
 }
