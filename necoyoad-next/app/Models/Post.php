@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Traits\Auditable;
-
 use App\Traits\HasDescriptions;
 use App\Traits\HasProperties;
 use App\Traits\HasSeoUrl;
@@ -17,7 +16,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Post extends Model
 {
-    use HasFactory, HasDescriptions, HasProperties, HasStoreAssignment, HasSeoUrl;
+    use HasFactory, Auditable, HasDescriptions, HasProperties, HasStoreAssignment, HasSeoUrl;
 
     protected $fillable = [
         'type', 'parent_id', 'author_id', 'image', 'template',

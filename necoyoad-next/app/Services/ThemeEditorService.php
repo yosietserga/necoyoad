@@ -223,11 +223,31 @@ class ThemeEditorService
             $base = resource_path("themes/{$theme}");
         }
 
-        $fullPath = realpath($base . '/' . dirname($relativePath)) . '/' . basename($relativePath);
-
-        // Verify the resolved path is within the base directory
+        // Resolve the real base path, then construct the full path WITHOUT
+        // calling realpath() on the parent directory (which returns false for
+        // non-existent dirs, breaking new file creation).
         $realBase = realpath($base);
-        if ($realBase === false || !str_starts_with($fullPath, $realBase)) {
+        if ($realBase === false) {
+            throw new UnsafeFileException("Theme base directory does not exist: {$base}");
+        }
+
+        // Construct full path from realBase + relativePath (no realpath on the target)
+        $fullPath = $realBase . '/' . ltrim($relativePath, '/');
+
+        // Security: verify the constructed path starts with the real base
+        // (prevents traversal even though we already checked for '..' above)
+        $realDir = realpath(dirname($fullPath));
+        if ($realDir === false) {
+            // Directory doesn't exist yet — verify the parent chain is within base
+            $parentDir = dirname($fullPath);
+            $checkPath = $parentDir;
+            while (!is_dir($checkPath) && $checkPath !== $realBase) {
+                $checkPath = dirname($checkPath);
+            }
+            if ($checkPath !== $realBase && !str_starts_with($checkPath, $realBase)) {
+                throw new UnsafeFileException("Path resolves outside the theme directory: {$relativePath}");
+            }
+        } elseif (!str_starts_with($realDir, $realBase)) {
             throw new UnsafeFileException("Path resolves outside the theme directory: {$relativePath}");
         }
 

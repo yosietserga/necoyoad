@@ -30,8 +30,12 @@ class NecoyoadServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        // Register the WidgetComposer for all storefront views
-        view()->composer('themes.*', WidgetComposer::class);
+        // Register the WidgetComposer for all storefront views + layout components.
+        // Must fire on 'components.layouts.*' too because anonymous Blade components
+        // (storefront, widget-row) have isolated scope and don't inherit $widgets
+        // from the parent view. Using view()->share() in the composer ensures the
+        // variable propagates to all child component scopes.
+        view()->composer(['themes.*', 'components.layouts.*'], WidgetComposer::class);
 
         // Register widget assets (the deps.php equivalent)
         $this->registerWidgetAssets();

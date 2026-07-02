@@ -33,7 +33,7 @@ class FileManager extends Page
     public function getViewData(): array
     {
         return [
-            'uploadUrl' => route('admin.api.filemanager.upload') ?? '/admin/api/filemanager/upload',
+            'uploadUrl' => '/admin/api/filemanager/upload',
             'maxFileSize' => config('necoyoad.filemanager.max_file_size', 10485760),
             'allowedExtensions' => config('necoyoad.filemanager.allowed_extensions', []),
         ];

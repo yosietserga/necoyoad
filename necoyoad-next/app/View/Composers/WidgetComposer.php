@@ -50,6 +50,15 @@ class WidgetComposer
             );
         }
 
+        // Use view()->share() so $widgets propagates to anonymous Blade components
+        // (storefront layout, widget-row) which have isolated scope and don't
+        // inherit variables from $view->with(). Share once per request.
+        if (!app()->bound('widgets.shared')) {
+            app()->instance('widgets.shared', true);
+            view()->share('widgets', $widgets);
+        }
+
+        // Also pass to the current view (for direct @foreach usage)
         $view->with('widgets', $widgets);
     }
 }

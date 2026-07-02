@@ -124,6 +124,29 @@ class DatabaseSeeder extends Seeder
         $page->stores()->syncWithoutDetaching($store->id);
 
         // ============================================
+        // CMS BLOG POSTS
+        // ============================================
+        $post1 = Post::firstOrCreate(
+            ['type' => 'post', 'sort_order' => 1],
+            ['publish' => true, 'status' => true, 'date_publish_start' => now()]
+        );
+        $this->syncDescriptions($post1, [
+            $en->id => ['title' => 'Welcome to Our Store', 'description' => '<p>Discover our latest products and offers.</p>'],
+            $es->id => ['title' => 'Bienvenido a Nuestra Tienda', 'description' => '<p>Descubre nuestros últimos productos y ofertas.</p>'],
+        ]);
+        $post1->stores()->syncWithoutDetaching($store->id);
+
+        $post2 = Post::firstOrCreate(
+            ['type' => 'post', 'sort_order' => 2],
+            ['publish' => true, 'status' => true, 'date_publish_start' => now()->subDays(3)]
+        );
+        $this->syncDescriptions($post2, [
+            $en->id => ['title' => 'New Arrivals This Week', 'description' => '<p>Check out our newest arrivals across all categories.</p>'],
+            $es->id => ['title' => 'Novedades de Esta Semana', 'description' => '<p>Echa un vistazo a nuestras novedades en todas las categorías.</p>'],
+        ]);
+        $post2->stores()->syncWithoutDetaching($store->id);
+
+        // ============================================
         // BANNER
         // ============================================
         $banner = Banner::firstOrCreate(

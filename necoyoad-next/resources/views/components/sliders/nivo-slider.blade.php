@@ -11,7 +11,7 @@
     @endif
     <div class="content">
         <div class="slider-wrapper theme-default">
-            <div x-data="{ init() { $($refs.slider).nivoSlider({$pluginConfig}) } }"
+            <div x-data="{ init() { $($refs.slider).nivoSlider({{ json_encode($pluginConfig ?? []) }}) } }"
                  x-init="init()"
                  x-ref="slider"
                  class="nivoSlider">

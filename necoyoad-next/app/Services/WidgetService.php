@@ -134,8 +134,10 @@ class WidgetService
             ->where('status', true)
             ->orderBy('sort_order');
 
-        // Cache bypass for admin users (Filament uses the 'web' guard)
-        $cacheKey = "widgets:{$storeId}:{$position}";
+        // Cache bypass for admin users (Filament uses the 'web' guard).
+        // Cache key includes all filtering dimensions to prevent cache poisoning.
+        $languageId = $this->languageContext->id();
+        $cacheKey = "widgets:{$storeId}:{$position}:{$languageId}:{$route}:{$objectType}:{$objectId}";
         if (auth('web')->check()) {
             $rows = $rowsQuery->get();
         } else {

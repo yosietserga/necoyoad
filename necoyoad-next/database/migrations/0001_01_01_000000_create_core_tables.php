@@ -295,6 +295,7 @@ return new class extends Migration
             $table->foreignId('parent_id')->nullable();
             $table->string('link', 250);
             $table->string('tag', 250);
+            $table->boolean('status')->default(true);
             $table->integer('sort_order')->default(0);
             $table->timestamps();
             $table->index('parent_id');

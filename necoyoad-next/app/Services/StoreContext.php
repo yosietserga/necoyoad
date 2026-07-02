@@ -35,17 +35,26 @@ class StoreContext
             return $this->store;
         }
 
-        // Strategy 1: ?store_id GET parameter
-        if ($this->request->has('store_id')) {
-            $this->store = Store::find($this->request->query('store_id'));
+        $host = $this->request->getHost();
+
+        // Strategy 1: Domain match (exact host → Store::domain)
+        // Highest priority — a store with domain='shop.example.com' matches
+        // regardless of path or query params.
+        $this->store = Store::where('domain', $host)->first();
+        if ($this->store) {
             return $this->store;
         }
 
-        // Strategy 2: Subdomain detection
-        $host = $this->request->getHost();
-        $parts = explode('.', $host);
+        // Strategy 2: ?store_id GET parameter
+        if ($this->request->has('store_id')) {
+            $this->store = Store::find($this->request->query('store_id'));
+            if ($this->store) {
+                return $this->store;
+            }
+        }
 
-        // If we have a subdomain (more than 2 parts, not 'www')
+        // Strategy 3: Subdomain detection (more than 2 label parts, not 'www')
+        $parts = explode('.', $host);
         if (count($parts) > 2 && $parts[0] !== 'www') {
             $subdomain = $parts[0];
             $this->store = Store::where('folder', $subdomain)->first();
@@ -54,7 +63,10 @@ class StoreContext
             }
         }
 
-        // Strategy 3: URL path folder match
+        // Strategy 4: URL path folder match (first path segment matches a store folder)
+        // NOTE: This identifies the store but does NOT consume the segment — routes
+        // must be wrapped in Route::prefix('{store?}')->group(...) for path-based
+        // multi-store to work without 404ing. See config/necoyoad.php.
         $path = $this->request->path();
         $segments = explode('/', $path);
         foreach ($segments as $segment) {
@@ -66,9 +78,9 @@ class StoreContext
             }
         }
 
-        // Fallback: default store (id=0 or the first active store)
+        // Fallback: default store (is_default=true → config default_store_id → first store)
         $this->store = Store::where('is_default', true)->first()
-            ?? Store::find(0)
+            ?? Store::find(config('necoyoad.default_store_id', 0))
             ?? Store::first();
 
         return $this->store;

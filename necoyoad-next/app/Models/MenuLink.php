@@ -15,15 +15,20 @@ class MenuLink extends Model
 {
     use HasFactory, HasDescriptions, HasProperties;
 
-    protected $fillable = ['menu_id', 'parent_id', 'link', 'tag', 'sort_order'];
+    protected $fillable = ['menu_id', 'parent_id', 'link', 'tag', 'status', 'sort_order'];
 
     public function menu(): BelongsTo
     {
         return $this->belongsTo(Menu::class);
     }
 
+    public function parent(): BelongsTo
+    {
+        return $this->belongsTo(MenuLink::class, 'parent_id');
+    }
+
     public function children(): HasMany
     {
-        return $this->hasMany(MenuLink::class, 'parent_id')->orderBy('sort_order');
+        return $this->hasMany(MenuLink::class, 'parent_id')->where('status', true)->orderBy('sort_order');
     }
 }

@@ -83,6 +83,7 @@ class Banner extends WidgetComponent
             'banner' => $banner,
             'items' => $items,
             'plugin' => $plugin,
+            'pluginConfig' => $banner->params ?? [],
         ];
     }
 

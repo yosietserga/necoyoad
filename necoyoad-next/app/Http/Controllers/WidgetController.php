@@ -115,12 +115,27 @@ class WidgetController extends Controller
     }
 
     /**
-     * Resolve a widget name (kebab-case) to its Blade component class.
+     * Resolve a widget name to its Blade component class.
+     * Looks up the Widget record by name to get its 'module' column,
+     * then maps the module to the component class (e.g., 'banner' → Banner,
+     * 'product-list' → ProductList, 'rich-text' → RichText).
      */
     private function resolveWidgetComponent(string $name): ?string
     {
-    // Widget names: 'hero_banner', 'featured_products', 'welcome_text', etc.
-        // Component classes: App\View\Components\Widgets\HeroBanner, etc.
+        // First try: look up the Widget record by name → use module column
+        $widget = \App\Models\Widget::where('name', $name)->first();
+        if ($widget) {
+            $module = $widget->module;
+            // Convert module slug to StudlyCase class name: 'product-list' → 'ProductList'
+            $studly = str_replace(' ', '', ucwords(str_replace(['_', '-'], ' ', $module)));
+            $class = "App\\View\\Components\\Widgets\\{$studly}";
+            if (class_exists($class)) {
+                return $class;
+            }
+        }
+
+        // Fallback: try direct name → class conversion (for widget names that
+        // happen to match the class basename, e.g., 'search' → Search)
         $studly = str_replace(' ', '', ucwords(str_replace(['_', '-'], ' ', $name)));
         $class = "App\\View\\Components\\Widgets\\{$studly}";
 

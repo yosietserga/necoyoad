@@ -96,8 +96,8 @@ class StorefrontController extends Controller
 
     public function post(Post $post): Response
     {
-        // Only show published posts
-        if (!$post->publish || !$post->status) {
+        // Only show published posts of type 'post' (not 'page')
+        if ($post->type !== 'post' || !$post->publish || !$post->status) {
             abort(404);
         }
 
