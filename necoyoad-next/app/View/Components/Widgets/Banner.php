@@ -84,16 +84,41 @@ class Banner extends WidgetComponent
             'items' => $items,
             'plugin' => $plugin,
             'pluginConfig' => $banner->params ?? [],
+            // New engine system: if the banner has EAV engine set, the renderer
+            // provides config + slides. The engine Blade template reads these.
+            'config' => app(\App\Services\BannerRendererService::class)->getConfig($banner),
+            'slides' => app(\App\Services\BannerRendererService::class)->getSlides($banner),
+            'engine' => app(\App\Services\BannerRendererService::class)->getEngine($banner),
         ];
     }
 
     /**
-     * Override resolveTemplate to use the jquery_plugin as the template name.
+     * Resolve the template — uses the new BannerRendererService if the banner
+     * has an 'engine' EAV property set, otherwise falls back to legacy
+     * jquery_plugin templates (nivo-slider, slick, fancybox-gallery).
      */
     public function resolveTemplate(): string
     {
         $data = $this->data();
+        $banner = $data['banner'] ?? null;
 
+        // NEW: If the banner has a modern engine set via EAV, use the new engine view
+        if ($banner) {
+            $renderer = app(\App\Services\BannerRendererService::class);
+            $engine = $renderer->getEngine($banner);
+
+            // If engine is set (not the default 'swiper' fallback) OR the banner
+            // explicitly has the 'engine' EAV property, use the new system
+            $hasEngineEav = app(\App\Services\EavService::class)->get($banner, 'banner', 'engine');
+            if ($hasEngineEav) {
+                $engineView = "components.banners.engines.{$engine}";
+                if (view()->exists($engineView)) {
+                    return $engineView;
+                }
+            }
+        }
+
+        // LEGACY FALLBACK: Use the jquery_plugin column for backward compatibility
         if (!empty($data['plugin'])) {
             $plugin = $data['plugin'];
             $theme = app(StoreContext::class)->setting('config_template', 'choroni');
@@ -114,7 +139,12 @@ class Banner extends WidgetComponent
             }
         }
 
-        // Fallback to nivo-slider
+        // Fallback to nivo-slider (legacy) — but if the new swiper engine exists,
+        // prefer it
+        if (view()->exists('components.banners.engines.swiper')) {
+            return 'components.banners.engines.swiper';
+        }
+
         return 'components.sliders.nivo-slider';
     }
 }

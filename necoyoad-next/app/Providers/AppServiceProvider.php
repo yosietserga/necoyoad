@@ -47,6 +47,12 @@ class AppServiceProvider extends ServiceProvider
 
         // ThemeEditorService — theme file editing with version history
         $this->app->singleton(\App\Services\ThemeEditorService::class);
+
+        // BannerRendererService — event-driven banner engine resolution + rendering
+        $this->app->singleton(\App\Services\BannerRendererService::class);
+
+        // BannerEventService — dispatches frontend banner events to backend listeners
+        $this->app->singleton(\App\Services\BannerEventService::class);
     }
 
     public function boot(): void

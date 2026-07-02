@@ -77,5 +77,12 @@ Route::middleware(['auth', 'can:theme-edit'])->prefix('admin/api/theme')->group(
     Route::post('restore', [\App\Http\Controllers\Admin\ThemeEditorController::class, 'restore']);
 });
 
+// Banner event API (receives frontend banner events — slide changes, interactions)
+// Rate-limited to prevent abuse; no auth required (events fire for all visitors)
+Route::middleware('throttle:120,1')->prefix('api/banner/event')->group(function () {
+    Route::post('slide-changed', [\App\Http\Controllers\BannerEventController::class, 'slideChanged']);
+    Route::post('interaction', [\App\Http\Controllers\BannerEventController::class, 'interaction']);
+});
+
 // Healthcheck: bootstrap/app.php registers '/up' via withRouting(health: '/up')
 // which serves Laravel's built-in health route. No explicit route needed here.

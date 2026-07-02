@@ -12,6 +12,10 @@
         "vite": "^5.0"
     },
     "dependencies": {
-        "alpinejs": "^3.13"
+        "alpinejs": "^3.13",
+        "swiper": "^11.0",
+        "gsap": "^3.12",
+        "three": "^0.160",
+        "flubber": "^0.4"
     }
 }
