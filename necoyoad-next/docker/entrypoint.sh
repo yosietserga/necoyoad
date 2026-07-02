@@ -38,9 +38,10 @@ if ! grep -q "^APP_KEY=.\+" .env; then
     php artisan key:generate --force
 fi
 
-# 5. Writable dirs
+# 5. Writable dirs + storage symlink (for media disk public URLs)
 chown -R www-data:www-data storage bootstrap/cache 2>/dev/null || true
 chmod -R 775 storage bootstrap/cache 2>/dev/null || true
+php artisan storage:link --force 2>/dev/null || true
 
 # 6. Wait for MySQL to accept connections before migrating
 echo "[entrypoint] waiting for MySQL..."

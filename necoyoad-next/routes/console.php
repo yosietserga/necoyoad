@@ -11,3 +11,6 @@ Artisan::command('inspire', function () {
 Schedule::command('campaigns:send-due')->everyFifteenMinutes()->description('Send due email campaigns');
 Schedule::command('campaigns:process-bounces')->hourly()->description('Process email bounces');
 Schedule::command('campaigns:send-birthdays')->dailyAt('09:00')->description('Send birthday greeting emails');
+
+// Image cache cleanup (daily — removes orphaned thumbnails)
+Schedule::command('images:clean-cache')->dailyAt('03:00')->description('Clean orphaned image thumbnails');

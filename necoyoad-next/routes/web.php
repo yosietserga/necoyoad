@@ -54,5 +54,28 @@ Route::post('/contact/submit', [StorefrontController::class, 'contactSubmit'])->
 // Async widget rendering (v3 §8 — allows widgets to load via AJAX)
 Route::get('/widget/async/{name}', [\App\Http\Controllers\WidgetController::class, 'async'])->name('widget.async');
 
+// Admin FileManager API (auth-protected, audit-logged)
+Route::middleware(['auth', 'can:file-manager'])->prefix('admin/api/filemanager')->group(function () {
+    Route::get('directories', [\App\Http\Controllers\Admin\FileManagerController::class, 'directories']);
+    Route::get('files', [\App\Http\Controllers\Admin\FileManagerController::class, 'files']);
+    Route::post('directory', [\App\Http\Controllers\Admin\FileManagerController::class, 'createDirectory']);
+    Route::delete('file', [\App\Http\Controllers\Admin\FileManagerController::class, 'deleteFile']);
+    Route::delete('directory', [\App\Http\Controllers\Admin\FileManagerController::class, 'deleteDirectory']);
+    Route::post('move', [\App\Http\Controllers\Admin\FileManagerController::class, 'move']);
+    Route::post('copy', [\App\Http\Controllers\Admin\FileManagerController::class, 'copy']);
+    Route::post('rename', [\App\Http\Controllers\Admin\FileManagerController::class, 'rename']);
+    Route::post('upload', [\App\Http\Controllers\Admin\FileManagerController::class, 'upload']);
+    Route::get('thumbnail', [\App\Http\Controllers\Admin\FileManagerController::class, 'thumbnail']);
+});
+
+// Admin ThemeEditor API (auth-protected, audit-logged)
+Route::middleware(['auth', 'can:theme-edit'])->prefix('admin/api/theme')->group(function () {
+    Route::get('files', [\App\Http\Controllers\Admin\ThemeEditorController::class, 'files']);
+    Route::get('file', [\App\Http\Controllers\Admin\ThemeEditorController::class, 'read']);
+    Route::post('file', [\App\Http\Controllers\Admin\ThemeEditorController::class, 'save']);
+    Route::get('versions', [\App\Http\Controllers\Admin\ThemeEditorController::class, 'versions']);
+    Route::post('restore', [\App\Http\Controllers\Admin\ThemeEditorController::class, 'restore']);
+});
+
 // Healthcheck: bootstrap/app.php registers '/up' via withRouting(health: '/up')
 // which serves Laravel's built-in health route. No explicit route needed here.
