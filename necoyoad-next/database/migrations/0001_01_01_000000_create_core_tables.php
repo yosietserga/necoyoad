@@ -744,6 +744,22 @@ return new class extends Migration
             });
         }
 
+        // ============================================
+        // THEME FILE VERSIONS (code editor version history)
+        // ============================================
+        if (!Schema::hasTable('theme_file_versions')) {
+            Schema::create('theme_file_versions', function (Blueprint $table) {
+                $table->id();
+                $table->string('theme', 50)->index();
+                $table->string('file_path', 255);
+                $table->longText('content');
+                $table->foreignId('user_id')->nullable();
+                $table->string('checksum', 64)->index();
+                $table->timestamps();
+                $table->index(['theme', 'file_path', 'created_at']);
+            });
+        }
+
         // Re-enable FK checks now that all tables + constraints exist.
         Schema::enableForeignKeyConstraints();
     }
@@ -809,6 +825,9 @@ return new class extends Migration
 
         // Campaign ↔ Contact list pivot
         Schema::dropIfExists('campaign_contact_list');
+
+        // Theme editor version history
+        Schema::dropIfExists('theme_file_versions');
 
         Schema::enableForeignKeyConstraints();
     }

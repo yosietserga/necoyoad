@@ -38,6 +38,15 @@ class AppServiceProvider extends ServiceProvider
         // API requests with response != 200-399 and exec process in backend with
         // errors must be listened and logged for audit")
         $this->app->singleton(AuditService::class);
+
+        // ImageService — modern image manipulation (Intervention Image 3)
+        $this->app->singleton(\App\Services\ImageService::class);
+
+        // FileManagerService — disk-agnostic file management with audit logging
+        $this->app->singleton(\App\Services\FileManagerService::class);
+
+        // ThemeEditorService — theme file editing with version history
+        $this->app->singleton(\App\Services\ThemeEditorService::class);
     }
 
     public function boot(): void

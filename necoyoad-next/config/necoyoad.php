@@ -58,4 +58,26 @@ return [
         'header' => 'Header',
         'footer' => 'Footer',
     ],
+
+    // Image service configuration (replaces legacy system/library/image.php)
+    'image' => [
+        'driver' => env('IMAGE_DRIVER', 'gd'), // 'gd' or 'imagick'
+        'quality' => 85,
+        'webp_quality' => 80,
+        'thumbnail_format' => 'webp',
+    ],
+
+    // File manager configuration (replaces legacy ControllerCommonFileManager)
+    'filemanager' => [
+        'allowed_mimes' => [
+            'image/jpeg',
+            'image/png',
+            'image/gif',
+            'image/webp',
+            'image/svg+xml',
+            'application/pdf',
+        ],
+        'allowed_extensions' => ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'pdf'],
+        'max_file_size' => 10_485_760, // 10MB
+    ],
 ];

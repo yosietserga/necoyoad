@@ -12,6 +12,8 @@
         "filament/filament": "^3.2",
         "filament/forms": "^3.2",
         "filament/tables": "^3.2",
+        "intervention/image": "^3.0",
+        "enshrined/svg-sanitize": "^0.16",
         "pestphp/pest": "^2.0"
     },
     "require-dev": {
