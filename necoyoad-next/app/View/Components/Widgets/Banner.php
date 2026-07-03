@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\View\Components\Widgets;
 
-use App\Models\Banner;
+use App\Models\Banner as BannerModel;
 use App\Services\StoreContext;
 use App\Services\AssetManifest;
 use App\View\Components\WidgetComponent;
@@ -12,11 +12,8 @@ use App\View\Components\WidgetComponent;
 /**
  * Banner widget — displays a slider/gallery banner.
  *
- * The most complex widget: reads the jquery_plugin column from the banner
- * and dynamically selects the slider template, JS, and CSS.
- *
- * Also supports per-item widget composition (widgets on individual slides),
- * matching the original Necoyoad's unique feature (v9).
+ * Uses 'BannerModel' alias for App\Models\Banner to avoid class name collision
+ * with this widget component class (also named 'Banner').
  *
  * @see v3 (banner module — module:settings filter)
  * @see v9 (banner subsystem — jquery_plugin discriminator)
@@ -27,7 +24,7 @@ class Banner extends WidgetComponent
     {
         $storeId = app(StoreContext::class)->id();
 
-        $banner = Banner::with(['items.descriptions'])
+        $banner = BannerModel::with(['items.descriptions'])
             ->where('id', $this->settings['banner_id'] ?? 0)
             ->where('status', true)
             ->where('publish_date_start', '<=', now())
@@ -63,7 +60,6 @@ class Banner extends WidgetComponent
             ];
 
             // Load per-item widgets (object_type = 'banner_item')
-            // This is the per-item widget composition from v9
             $widgetService = app(\App\Services\WidgetService::class);
             $itemWidgets = $widgetService->getTree(
                 position: 'main',
@@ -84,31 +80,20 @@ class Banner extends WidgetComponent
             'items' => $items,
             'plugin' => $plugin,
             'pluginConfig' => $banner->params ?? [],
-            // New engine system: if the banner has EAV engine set, the renderer
-            // provides config + slides. The engine Blade template reads these.
             'config' => app(\App\Services\BannerRendererService::class)->getConfig($banner),
             'slides' => app(\App\Services\BannerRendererService::class)->getSlides($banner),
             'engine' => app(\App\Services\BannerRendererService::class)->getEngine($banner),
         ];
     }
 
-    /**
-     * Resolve the template — uses the new BannerRendererService if the banner
-     * has an 'engine' EAV property set, otherwise falls back to legacy
-     * jquery_plugin templates (nivo-slider, slick, fancybox-gallery).
-     */
     public function resolveTemplate(): string
     {
         $data = $this->data();
         $banner = $data['banner'] ?? null;
 
-        // NEW: If the banner has a modern engine set via EAV, use the new engine view
         if ($banner) {
             $renderer = app(\App\Services\BannerRendererService::class);
             $engine = $renderer->getEngine($banner);
-
-            // If engine is set (not the default 'swiper' fallback) OR the banner
-            // explicitly has the 'engine' EAV property, use the new system
             $hasEngineEav = app(\App\Services\EavService::class)->get($banner, 'banner', 'engine');
             if ($hasEngineEav) {
                 $engineView = "components.banners.engines.{$engine}";
@@ -118,29 +103,21 @@ class Banner extends WidgetComponent
             }
         }
 
-        // LEGACY FALLBACK: Use the jquery_plugin column for backward compatibility
         if (!empty($data['plugin'])) {
             $plugin = $data['plugin'];
             $theme = app(StoreContext::class)->setting('config_template', 'choroni');
 
-            // Check active theme
             if (view()->exists("themes.{$theme}.banner.{$plugin}")) {
                 return "themes.{$theme}.banner.{$plugin}";
             }
-
-            // Check choroni theme
             if (view()->exists("themes.choroni.banner.{$plugin}")) {
                 return "themes.choroni.banner.{$plugin}";
             }
-
-            // Check component default
             if (view()->exists("components.sliders.{$plugin}")) {
                 return "components.sliders.{$plugin}";
             }
         }
 
-        // Fallback to nivo-slider (legacy) — but if the new swiper engine exists,
-        // prefer it
         if (view()->exists('components.banners.engines.swiper')) {
             return 'components.banners.engines.swiper';
         }
