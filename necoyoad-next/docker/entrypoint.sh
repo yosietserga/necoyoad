@@ -46,17 +46,23 @@ mkdir -p storage/framework/sessions storage/framework/views storage/framework/ca
          storage/app/public/media
 chmod -R 775 storage bootstrap/cache 2>/dev/null || true
 
-# 3. ALWAYS install/sync composer deps — even if vendor/autoload.php exists,
-# new packages may have been added to composer.json since the last boot.
+# 3. ALWAYS install/sync composer deps.
 # The anonymous volume persists vendor/ across restarts, so without this,
 # new packages (like predis/predis) are never installed.
+# If composer.lock doesn't match composer.json, run composer update to regenerate.
 echo "[entrypoint] syncing composer dependencies..."
-composer install --no-dev --no-interaction --no-progress --optimize-autoloader 2>&1 || {
-    echo "[entrypoint] composer install failed (stale lock file?) — running composer update..."
+composer install --no-dev --no-interaction --no-progress --optimize-autoloader 2>&1
+if [ $? -ne 0 ]; then
+    echo "[entrypoint] composer install failed — running composer update to regenerate lock..."
     composer update --no-dev --no-interaction --no-progress --optimize-autoloader 2>&1 || {
         echo "[entrypoint] WARNING: composer update also failed — app may not work correctly"
     }
-}
+fi
+# Verify predis is actually installed (it's required for Redis config even with file sessions)
+if [ ! -f vendor/predis/predis/src/Client.php ]; then
+    echo "[entrypoint] predis not found — running composer require..."
+    composer require predis/predis --no-interaction --no-progress 2>&1 || true
+fi
 
 # 4. App key — ensure APP_KEY is set and non-empty
 # Always check and regenerate if missing (handles stale .env from before the fix)
