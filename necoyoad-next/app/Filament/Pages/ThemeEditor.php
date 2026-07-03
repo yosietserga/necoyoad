@@ -24,7 +24,7 @@ class ThemeEditor extends Page
 
     protected static string $view = 'filament.pages.theme-editor';
 
-    protected static function shouldRegisterNavigation(): bool
+    public static function shouldRegisterNavigation(): bool
     {
         return auth()->user()?->can('theme-edit') ?? true;
     }

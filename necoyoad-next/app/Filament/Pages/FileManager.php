@@ -25,7 +25,7 @@ class FileManager extends Page
 
     protected static string $view = 'filament.pages.file-manager';
 
-    protected static function shouldRegisterNavigation(): bool
+    public static function shouldRegisterNavigation(): bool
     {
         return auth()->user()?->can('file-manager') ?? true;
     }
