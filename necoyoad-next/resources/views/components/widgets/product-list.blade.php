@@ -19,7 +19,7 @@
                     <a href="{{ route('store.product', $product) }}" class="product-name">
                         {{ $product->getTitle() ?? $product->sku }}
                     </a>
-                    <span class="price">{{ config('app.currency') }} {{ number_format($product->price, 2) }}</span>
+                    <span class="price">{{ config('necoyoad.default_currency', 'USD') }} {{ number_format($product->price, 2) }}</span>
                 </div>
             @endforeach
         </div>

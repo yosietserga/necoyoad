@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Manufacturer extends Model
 {
-    use HasFactory, HasDescriptions, HasStoreAssignment;
+    use HasFactory, Auditable, HasDescriptions, HasStoreAssignment;
     protected $fillable = ['name', 'image', 'sort_order'];
     public function products(): HasMany { return $this->hasMany(Product::class); }
 }

@@ -18,7 +18,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Category extends Model
 {
-    use HasFactory, HasDescriptions, HasProperties, HasStoreAssignment, HasSeoUrl;
+    use HasFactory, Auditable, HasDescriptions, HasProperties, HasStoreAssignment, HasSeoUrl;
 
     protected $fillable = ['parent_id', 'object_type', 'image', 'sort_order', 'status'];
 

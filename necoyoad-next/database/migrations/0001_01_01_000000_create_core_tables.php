@@ -745,6 +745,14 @@ return new class extends Migration
             });
         }
 
+        if (!Schema::hasTable('customer_password_resets')) {
+            Schema::create('customer_password_resets', function (Blueprint $table) {
+                $table->string('email')->primary();
+                $table->string('token');
+                $table->timestamp('created_at')->nullable();
+            });
+        }
+
         // ============================================
         // THEME FILE VERSIONS (code editor version history)
         // ============================================

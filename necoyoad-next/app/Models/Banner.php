@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Banner extends Model
 {
-    use HasFactory, HasDescriptions, HasProperties, HasStoreAssignment;
+    use HasFactory, Auditable, HasDescriptions, HasProperties, HasStoreAssignment;
 
     protected $fillable = [
         'name', 'jquery_plugin', 'params',

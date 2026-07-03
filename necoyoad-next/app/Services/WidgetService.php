@@ -117,13 +117,20 @@ class WidgetService
                 ->whereIn('landing_page', $landingPage)
                 ->when($objectType, fn ($q) => $q->where('object_type', $objectType)->where('object_id', $objectId))
                 ->when(!$objectType, fn ($q) => $q->whereNull('object_type'))
-                // Device filtering (JSON path expressions, not LIKE)
-                ->when($isMobile, fn ($q) => $q->where('settings->show_in_mobile', true))
-                ->when($isTablet, fn ($q) => $q->where('settings->show_in_tablet', true))
-                ->when($isDesktop, fn ($q) => $q->where('settings->show_in_desktop', true))
-                // Auth filtering
+                // Device filtering — treat NULL settings as "show on all devices"
+                ->when($isMobile, fn ($q) => $q->where(function ($q) {
+                    $q->where('settings->show_in_mobile', true)->orWhereNull('settings->show_in_mobile');
+                }))
+                ->when($isTablet, fn ($q) => $q->where(function ($q) {
+                    $q->where('settings->show_in_tablet', true)->orWhereNull('settings->show_in_tablet');
+                }))
+                ->when($isDesktop, fn ($q) => $q->where(function ($q) {
+                    $q->where('settings->show_in_desktop', true)->orWhereNull('settings->show_in_desktop');
+                }))
+                // Auth filtering — treat NULL as 'any'
                 ->where(function ($q) use ($isLoggedIn) {
                     $q->where('settings->customer_session_mode', 'any')
+                        ->orWhereNull('settings->customer_session_mode')
                         ->when($isLoggedIn, fn ($q) => $q->orWhere('settings->customer_session_mode', 'logged_in'))
                         ->when(!$isLoggedIn, fn ($q) => $q->orWhere('settings->customer_session_mode', 'logged_out'));
                 })

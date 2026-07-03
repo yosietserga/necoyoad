@@ -13,7 +13,7 @@ use Illuminate\Notifications\Notifiable;
 
 class Customer extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Auditable, Notifiable;
 
     protected $guard = 'customer';
 

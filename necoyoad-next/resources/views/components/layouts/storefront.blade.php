@@ -23,7 +23,16 @@
     <meta name="author" content="Necoyoad">
 
     {{-- Vite assets (Tailwind CSS + Alpine.js + Audit Logger) --}}
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    {{-- Gracefully handle missing manifest (npm run build not run yet) --}}
+    @php
+        try {
+            echo app(\Illuminate\Foundation\Vite::class)('resources/css/app.css');
+            echo app(\Illuminate\Foundation\Vite::class)('resources/js/app.js');
+        } catch (\Throwable $e) {
+            // Vite manifest not built yet — skip assets gracefully
+            // (the app still works without compiled CSS/JS in dev mode)
+        }
+    @endphp
 
     {{-- Styles (populated by AssetManifest) --}}
     @foreach (($styles ?? []) as $style)

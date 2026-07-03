@@ -18,7 +18,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Product extends Model
 {
-    use HasFactory, HasDescriptions, HasProperties, HasStoreAssignment, HasSeoUrl, HasCategories;
+    use HasFactory, Auditable, HasDescriptions, HasProperties, HasStoreAssignment, HasSeoUrl, HasCategories;
 
     protected $fillable = [
         'sku', 'model', 'price', 'cost', 'quantity', 'subtract',
