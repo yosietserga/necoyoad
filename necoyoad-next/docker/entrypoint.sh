@@ -104,12 +104,20 @@ php artisan migrate --force 2>&1 || echo "[entrypoint] WARNING: migration failed
 echo "[entrypoint] seeding database..."
 php artisan db:seed --force 2>&1 || echo "[entrypoint] WARNING: seeding failed — may already be seeded"
 
-# 8. Clear any cached config that might be stale after code changes
+# 8. Clear ALL caches (config, route, view, opcache) + delete cached files directly
+# This is CRITICAL: if bootstrap/cache/config.php exists from a previous boot,
+# Laravel uses the CACHED config (which may have SESSION_DRIVER=redis) instead
+# of re-reading .env. php artisan config:clear may fail if composer just
+# installed new packages, so we also delete the files directly.
+rm -f bootstrap/cache/config.php bootstrap/cache/routes-v7.php bootstrap/cache/events.php bootstrap/cache/views.php 2>/dev/null || true
 php artisan config:clear 2>&1 || true
 php artisan route:clear 2>&1 || true
 php artisan view:clear 2>&1 || true
 # Clear opcache so PHP reads the latest files from the bind mount
 php -r "if (function_exists('opcache_reset')) opcache_reset();" 2>/dev/null || true
+
+# 8b. Verify the session driver is actually 'file' (debug output)
+echo "[entrypoint] SESSION_DRIVER=$(grep '^SESSION_DRIVER=' .env | cut -d'=' -f2-)"
 
 # 9. Hand off to FrankenPHP / Caddy (MUST always reach here)
 echo "[entrypoint] starting FrankenPHP..."
