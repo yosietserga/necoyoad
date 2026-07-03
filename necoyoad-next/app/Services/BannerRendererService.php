@@ -87,6 +87,13 @@ class BannerRendererService
             ->get()
             ->map(function ($item) {
                 $slideEav = $this->eav->getGroup($item, 'slide');
+
+                $layers = $slideEav['layers'] ?? [];
+                if (is_string($layers)) {
+                    $decoded = json_decode($layers, true);
+                    $layers = is_array($decoded) ? $decoded : [];
+                }
+
                 return [
                     'id' => $item->id,
                     'title' => $item->getTitle(),
@@ -99,9 +106,7 @@ class BannerRendererService
                     'transition_in' => $slideEav['transition_in'] ?? 'fade',
                     'transition_out' => $slideEav['transition_out'] ?? 'fade',
                     'ken_burns' => $slideEav['ken_burns'] ?? 'none',
-                    'layers' => is_string($slideEav['layers'] ?? null)
-                        ? json_decode($slideEav['layers'], true) ?? []
-                        : ($slideEav['layers'] ?? []),
+                    'layers' => $layers,
                 ];
             })->toArray();
     }
