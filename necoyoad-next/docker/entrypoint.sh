@@ -95,6 +95,8 @@ php artisan db:seed --force 2>&1 || echo "[entrypoint] WARNING: seeding failed â
 php artisan config:clear 2>&1 || true
 php artisan route:clear 2>&1 || true
 php artisan view:clear 2>&1 || true
+# Clear opcache so PHP reads the latest files from the bind mount
+php -r "if (function_exists('opcache_reset')) opcache_reset();" 2>/dev/null || true
 
 # 9. Hand off to FrankenPHP / Caddy (MUST always reach here)
 echo "[entrypoint] starting FrankenPHP..."
