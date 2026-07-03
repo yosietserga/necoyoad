@@ -12,18 +12,33 @@ if [ ! -f .env ]; then
     cp .env.example .env
 fi
 
-# 2. Force DB/Redis to the compose service names (overrides any localhost in .env)
-sed -i 's/^DB_HOST=.*/DB_HOST=mysql/'            .env 2>/dev/null || true
-sed -i 's/^DB_PORT=.*/DB_PORT=3306/'              .env 2>/dev/null || true
-sed -i 's/^DB_USERNAME=.*/DB_USERNAME=necoyoad/'  .env 2>/dev/null || true
-sed -i 's/^DB_PASSWORD=.*/DB_PASSWORD=secret/'    .env 2>/dev/null || true
-sed -i 's/^REDIS_HOST=.*/REDIS_HOST=redis/'       .env 2>/dev/null || true
-# Force predis (pure PHP) instead of phpredis (requires C extension not in FrankenPHP image)
-sed -i 's/^REDIS_CLIENT=.*/REDIS_CLIENT=predis/'  .env 2>/dev/null || true
-grep -q "^REDIS_CLIENT=" .env 2>/dev/null || echo "REDIS_CLIENT=predis" >> .env
-sed -i 's/^SESSION_DRIVER=.*/SESSION_DRIVER=file/' .env 2>/dev/null || true
-sed -i 's/^CACHE_STORE=.*/CACHE_STORE=file/'       .env 2>/dev/null || true
-sed -i 's/^QUEUE_CONNECTION=.*/QUEUE_CONNECTION=sync/' .env 2>/dev/null || true
+# 2. Force DB/Redis/session/cache/queue settings (bulletproof: replace OR add)
+# Use a helper function that replaces the line if it exists, or appends if it doesn't
+set_env() {
+    local key="$1" val="$2"
+    if grep -q "^${key}=" .env 2>/dev/null; then
+        sed -i "s|^${key}=.*|${key}=${val}|" .env
+    else
+        echo "${key}=${val}" >> .env
+    fi
+}
+
+set_env DB_HOST "mysql"
+set_env DB_PORT "3306"
+set_env DB_USERNAME "necoyoad"
+set_env DB_PASSWORD "secret"
+set_env REDIS_HOST "redis"
+set_env REDIS_CLIENT "predis"
+# CRITICAL: Use file-based session/cache to avoid Redis dependency in dev.
+# Redis (predis) may not be installed yet — file driver always works.
+set_env SESSION_DRIVER "file"
+set_env SESSION_LIFETIME "120"
+set_env SESSION_CONNECTION ""
+set_env SESSION_STORE ""
+set_env CACHE_STORE "file"
+set_env QUEUE_CONNECTION "sync"
+# Remove SESSION_CONNECTION if it was set to 'redis'
+sed -i '/^SESSION_CONNECTION=$/d' .env 2>/dev/null || true
 
 # 2b. Ensure storage directory structure exists and is writable
 mkdir -p storage/framework/sessions storage/framework/views storage/framework/cache \
