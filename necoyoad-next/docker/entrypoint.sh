@@ -31,8 +31,14 @@ chmod -R 775 storage bootstrap/cache 2>/dev/null || true
 # 3. Install composer deps if the bind mount hid them
 if [ ! -f vendor/autoload.php ]; then
     echo "[entrypoint] installing composer dependencies..."
+    # Try composer install first (uses lock file). If the lock file is stale
+    # (doesn't match composer.json), fall back to composer update which
+    # regenerates the lock file with the packages from composer.json.
     composer install --no-dev --no-interaction --no-progress --optimize-autoloader 2>&1 || {
-        echo "[entrypoint] WARNING: composer install failed — app may not work correctly"
+        echo "[entrypoint] composer install failed (stale lock file?) — running composer update..."
+        composer update --no-dev --no-interaction --no-progress --optimize-autoloader 2>&1 || {
+            echo "[entrypoint] WARNING: composer update also failed — app may not work correctly"
+        }
     }
 fi
 

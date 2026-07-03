@@ -6,8 +6,8 @@
 }
 
 # Necoyoad — Laravel 11 on FrankenPHP
-# Standard Laravel-on-Caddy pattern: serve static files first, then route
-# everything else through public/index.php (Laravel's front controller).
+# php_server executes .php files through FrankenPHP's PHP runtime.
+# Without it, file_server serves index.php as a static text file (blank page).
 
 :80 {
 	root * /var/www/html/public
@@ -15,16 +15,16 @@
 	# Enable compression
 	encode zstd gzip
 
-	# Serve static files (css, js, images) directly, fall back to index.php
-	file_server {
-		index index.php
-	}
-	try_files {path} /index.php?{query}
+	# Serve static files (css, js, images) directly
+	file_server
 
-	# Security: block access to dotfiles (e.g., .env, .git, .htaccess)
-	# Uses Caddy's path matcher with glob patterns (no regex needed).
-	# .well-known is served by Laravel's built-in routes if needed.
-	@hidden path /.*.env* /.git* /.htaccess* /.DS_Store
+	# Execute PHP for all other requests (Laravel's front controller)
+	# try_files falls back to index.php, php_server executes it
+	try_files {path} /index.php?{query}
+	php_server
+
+	# Security: block access to sensitive dotfiles
+	@hidden path /.env /.git /.htaccess /.DS_Store
 	respond @hidden 404
 
 	# Access logs to stdout (docker logs)
