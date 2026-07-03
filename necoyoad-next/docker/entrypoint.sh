@@ -43,18 +43,26 @@ if [ ! -f vendor/autoload.php ]; then
 fi
 
 # 4. App key — ensure APP_KEY is set and non-empty
-APP_KEY_VAL=$(grep "^APP_KEY=" .env | cut -d'=' -f2- | tr -d '[:space:]')
+# Always check and regenerate if missing (handles stale .env from before the fix)
+APP_KEY_VAL=$(grep "^APP_KEY=" .env 2>/dev/null | cut -d'=' -f2- | tr -d '[:space:]')
 if [ -z "$APP_KEY_VAL" ] || [ "$APP_KEY_VAL" = "base64:" ]; then
-    echo "[entrypoint] generating APP_KEY (current value is empty or invalid)..."
+    echo "[entrypoint] APP_KEY is empty or invalid — generating..."
     # Try artisan first (writes to .env)
-    php artisan key:generate --force 2>&1 || {
-        # Fallback: generate manually if artisan fails
-        echo "[entrypoint] artisan key:generate failed, generating manually..."
+    php artisan key:generate --force 2>&1 || true
+
+    # Verify artisan actually set it
+    APP_KEY_VAL=$(grep "^APP_KEY=" .env 2>/dev/null | cut -d'=' -f2- | tr -d '[:space:]')
+    if [ -z "$APP_KEY_VAL" ] || [ "$APP_KEY_VAL" = "base64:" ]; then
+        echo "[entrypoint] artisan key:generate failed — generating manually..."
         RAW_KEY=$(php -r "echo base64_encode(random_bytes(32));")
-        sed -i "s/^APP_KEY=.*/APP_KEY=base64:${RAW_KEY}/" .env 2>/dev/null || \
+        # Replace the APP_KEY line, or append if not found
+        if grep -q "^APP_KEY=" .env 2>/dev/null; then
+            sed -i "s|^APP_KEY=.*|APP_KEY=base64:${RAW_KEY}|" .env
+        else
             echo "APP_KEY=base64:${RAW_KEY}" >> .env
-    }
-    echo "[entrypoint] APP_KEY generated."
+        fi
+    fi
+    echo "[entrypoint] APP_KEY generated successfully."
 fi
 
 # 5. Writable dirs + storage symlink (for media disk public URLs)
