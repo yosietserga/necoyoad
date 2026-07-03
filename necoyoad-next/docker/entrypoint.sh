@@ -18,6 +18,9 @@ sed -i 's/^DB_PORT=.*/DB_PORT=3306/'              .env 2>/dev/null || true
 sed -i 's/^DB_USERNAME=.*/DB_USERNAME=necoyoad/'  .env 2>/dev/null || true
 sed -i 's/^DB_PASSWORD=.*/DB_PASSWORD=secret/'    .env 2>/dev/null || true
 sed -i 's/^REDIS_HOST=.*/REDIS_HOST=redis/'       .env 2>/dev/null || true
+# Force predis (pure PHP) instead of phpredis (requires C extension not in FrankenPHP image)
+sed -i 's/^REDIS_CLIENT=.*/REDIS_CLIENT=predis/'  .env 2>/dev/null || true
+grep -q "^REDIS_CLIENT=" .env 2>/dev/null || echo "REDIS_CLIENT=predis" >> .env
 sed -i 's/^SESSION_DRIVER=.*/SESSION_DRIVER=file/' .env 2>/dev/null || true
 sed -i 's/^CACHE_STORE=.*/CACHE_STORE=file/'       .env 2>/dev/null || true
 sed -i 's/^QUEUE_CONNECTION=.*/QUEUE_CONNECTION=sync/' .env 2>/dev/null || true
