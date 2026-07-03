@@ -1,0 +1,15 @@
+# Exclude symlinks + dev files from Docker build context
+# The public/storage symlink causes "invalid file request" build errors
+public/storage
+storage/app/public
+node_modules
+.git
+.gitignore
+.env
+.env.local
+.phpunit.result.cache
+docker-compose.yml
+README.md
+*.md
+docs/
+tests/
