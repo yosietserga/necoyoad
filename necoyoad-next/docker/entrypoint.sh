@@ -42,10 +42,19 @@ if [ ! -f vendor/autoload.php ]; then
     }
 fi
 
-# 4. App key
-if ! grep -q "^APP_KEY=.\+" .env; then
-    echo "[entrypoint] generating APP_KEY..."
-    php artisan key:generate --force 2>&1 || true
+# 4. App key — ensure APP_KEY is set and non-empty
+APP_KEY_VAL=$(grep "^APP_KEY=" .env | cut -d'=' -f2- | tr -d '[:space:]')
+if [ -z "$APP_KEY_VAL" ] || [ "$APP_KEY_VAL" = "base64:" ]; then
+    echo "[entrypoint] generating APP_KEY (current value is empty or invalid)..."
+    # Try artisan first (writes to .env)
+    php artisan key:generate --force 2>&1 || {
+        # Fallback: generate manually if artisan fails
+        echo "[entrypoint] artisan key:generate failed, generating manually..."
+        RAW_KEY=$(php -r "echo base64_encode(random_bytes(32));")
+        sed -i "s/^APP_KEY=.*/APP_KEY=base64:${RAW_KEY}/" .env 2>/dev/null || \
+            echo "APP_KEY=base64:${RAW_KEY}" >> .env
+    }
+    echo "[entrypoint] APP_KEY generated."
 fi
 
 # 5. Writable dirs + storage symlink (for media disk public URLs)
