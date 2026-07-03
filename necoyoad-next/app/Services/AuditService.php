@@ -69,8 +69,24 @@ class AuditService
             return;
         }
 
-        $userId ??= Auth::id();
-        $guard ??= $this->detectGuard();
+        // Auth facade may not be available during early middleware pipeline
+        // (before the auth service provider is fully bootstrapped). Wrap in
+        // try/catch so audit logging never crashes the request.
+        if ($userId === null) {
+            try {
+                $userId = Auth::id();
+            } catch (\Throwable) {
+                $userId = null;
+            }
+        }
+
+        if ($guard === null) {
+            try {
+                $guard = $this->detectGuard();
+            } catch (\Throwable) {
+                $guard = null;
+            }
+        }
 
         Log::channel('audit')->warning('HTTP non-success response', [
             'method' => $method,
