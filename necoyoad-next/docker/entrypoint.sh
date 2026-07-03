@@ -31,19 +31,17 @@ mkdir -p storage/framework/sessions storage/framework/views storage/framework/ca
          storage/app/public/media
 chmod -R 775 storage bootstrap/cache 2>/dev/null || true
 
-# 3. Install composer deps if the bind mount hid them
-if [ ! -f vendor/autoload.php ]; then
-    echo "[entrypoint] installing composer dependencies..."
-    # Try composer install first (uses lock file). If the lock file is stale
-    # (doesn't match composer.json), fall back to composer update which
-    # regenerates the lock file with the packages from composer.json.
-    composer install --no-dev --no-interaction --no-progress --optimize-autoloader 2>&1 || {
-        echo "[entrypoint] composer install failed (stale lock file?) — running composer update..."
-        composer update --no-dev --no-interaction --no-progress --optimize-autoloader 2>&1 || {
-            echo "[entrypoint] WARNING: composer update also failed — app may not work correctly"
-        }
+# 3. ALWAYS install/sync composer deps — even if vendor/autoload.php exists,
+# new packages may have been added to composer.json since the last boot.
+# The anonymous volume persists vendor/ across restarts, so without this,
+# new packages (like predis/predis) are never installed.
+echo "[entrypoint] syncing composer dependencies..."
+composer install --no-dev --no-interaction --no-progress --optimize-autoloader 2>&1 || {
+    echo "[entrypoint] composer install failed (stale lock file?) — running composer update..."
+    composer update --no-dev --no-interaction --no-progress --optimize-autoloader 2>&1 || {
+        echo "[entrypoint] WARNING: composer update also failed — app may not work correctly"
     }
-fi
+}
 
 # 4. App key — ensure APP_KEY is set and non-empty
 # Always check and regenerate if missing (handles stale .env from before the fix)
