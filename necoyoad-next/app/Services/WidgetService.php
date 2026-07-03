@@ -144,7 +144,8 @@ class WidgetService
         // Cache bypass for admin users (Filament uses the 'web' guard).
         // Cache key includes all filtering dimensions to prevent cache poisoning.
         $languageId = $this->languageContext->id();
-        $cacheKey = "widgets:{$storeId}:{$position}:{$languageId}:{$route}:{$objectType}:{$objectId}";
+        $routeName = request()->route()?->getName() ?? 'all';
+        $cacheKey = "widgets:{$storeId}:{$position}:{$languageId}:{$routeName}:{$objectType}:{$objectId}";
         if (auth('web')->check()) {
             $rows = $rowsQuery->get();
         } else {
