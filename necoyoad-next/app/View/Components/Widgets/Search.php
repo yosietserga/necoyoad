@@ -12,7 +12,7 @@ use App\View\Components\WidgetComponent;
  */
 class Search extends WidgetComponent
 {
-    public function data(): array
+    public function widgetData(): array
     {
         return [
             'placeholder' => $this->settings['placeholder'] ?? 'Search...',

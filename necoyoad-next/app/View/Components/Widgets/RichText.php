@@ -12,7 +12,7 @@ use App\View\Components\WidgetComponent;
  */
 class RichText extends WidgetComponent
 {
-    public function data(): array
+    public function widgetData(): array
     {
         return [
             'content' => $this->settings['content'] ?? '',

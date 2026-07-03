@@ -28,7 +28,7 @@ use App\Services\AssetManifest;
  * @see v11 (widget engine preservation — Abstraction 5)
  * @see v12 (creating a new widget module guide)
  */
-abstract class WidgetComponent extends Component
+class WidgetComponent extends Component
 {
     public string $widgetName;
     public string $position;
@@ -51,9 +51,15 @@ abstract class WidgetComponent extends Component
      * The injection seam — each widget module overrides this to load its data.
      * Replaces the module:settings filter from the original.
      *
+     * Named widgetData() (not data()) because Laravel's Component base class
+     * already has a non-abstract data() method.
+     *
      * @return array Data to pass to the Blade template
      */
-    abstract public function data(): array;
+    public function widgetData(): array
+    {
+        return [];
+    }
 
     /**
      * Resolve the template to render.
@@ -93,7 +99,7 @@ abstract class WidgetComponent extends Component
     public function render()
     {
         return view($this->resolveTemplate(), array_merge(
-            $this->data(),
+            $this->widgetData(),
             [
                 'widgetName' => $this->widgetName,
                 'position' => $this->position,

@@ -12,7 +12,7 @@ use App\View\Components\WidgetComponent;
  */
 class ContactForm extends WidgetComponent
 {
-    public function data(): array
+    public function widgetData(): array
     {
         return [
             'heading' => $this->settings['title'] ?? '',

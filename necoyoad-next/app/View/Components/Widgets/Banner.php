@@ -20,7 +20,7 @@ use App\View\Components\WidgetComponent;
  */
 class Banner extends WidgetComponent
 {
-    public function data(): array
+    public function widgetData(): array
     {
         $storeId = app(StoreContext::class)->id();
 

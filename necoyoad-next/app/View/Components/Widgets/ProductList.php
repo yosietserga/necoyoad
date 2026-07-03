@@ -15,7 +15,7 @@ use App\View\Components\WidgetComponent;
  */
 class ProductList extends WidgetComponent
 {
-    public function data(): array
+    public function widgetData(): array
     {
         $storeId = app(StoreContext::class)->id();
         $langId = app(LanguageContext::class)->id();
