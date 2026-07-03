@@ -3,14 +3,11 @@
 	frankenphp {
 		document_root /var/www/html/public
 	}
-	# Caddy requires explicit ordering for php_server (it's not ordered by default)
-	order php_server before file_server
 }
 
 # Necoyoad — Laravel 11 on FrankenPHP
-# php_server executes .php files through FrankenPHP's PHP runtime.
-# file_server serves static files (CSS, JS, images) directly.
-# try_files rewrites non-existent paths to index.php (Laravel's front controller).
+# The route block gives explicit ordering: try_files → php_server → file_server.
+# This avoids the "not an ordered HTTP handler" error.
 
 :80 {
 	root * /var/www/html/public
@@ -18,14 +15,19 @@
 	# Enable compression
 	encode zstd gzip
 
-	# Security: block access to sensitive dotfiles (BEFORE serving files)
+	# Security: block access to sensitive dotfiles
 	@hidden path /.env /.git /.htaccess /.DS_Store
 	respond @hidden 404
 
-	# Serve static files first, fall back to index.php, execute PHP
-	try_files {path} /index.php?{query}
-	file_server
-	php_server
+	# Explicit route ordering — Caddy processes these top-to-bottom
+	route {
+		# Rewrite non-existent paths to index.php (Laravel's front controller)
+		try_files {path} /index.php?{query}
+		# Execute PHP files through FrankenPHP
+		php_server
+		# Serve static files (CSS, JS, images) directly
+		file_server
+	}
 
 	# Access logs to stdout (docker logs)
 	log {
