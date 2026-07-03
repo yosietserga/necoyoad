@@ -1,5 +1,8 @@
 #!/bin/sh
-set -e
+# IMPORTANT: Do NOT use `set -e` here. If any artisan command fails (e.g.,
+# DB not ready, migration error), the script must still reach `exec "$@"`
+# so FrankenPHP starts and the container doesn't enter a restart loop.
+# Docker's restart policy will keep restarting if the entrypoint exits non-zero.
 
 cd /var/www/html
 
@@ -10,38 +13,39 @@ if [ ! -f .env ]; then
 fi
 
 # 2. Force DB/Redis to the compose service names (overrides any localhost in .env)
-sed -i 's/^DB_HOST=.*/DB_HOST=mysql/'        .env 2>/dev/null || true
-sed -i 's/^DB_PORT=.*/DB_PORT=3306/'          .env 2>/dev/null || true
-sed -i 's/^DB_USERNAME=.*/DB_USERNAME=necoyoad/' .env 2>/dev/null || true
-sed -i 's/^DB_PASSWORD=.*/DB_PASSWORD=secret/'   .env 2>/dev/null || true
-sed -i 's/^REDIS_HOST=.*/REDIS_HOST=redis/'   .env 2>/dev/null || true
-# Use file-based session/cache for maximum dev stability (redis causes 500s
-# if the connection has any issue; switch to redis in production .env)
+sed -i 's/^DB_HOST=.*/DB_HOST=mysql/'            .env 2>/dev/null || true
+sed -i 's/^DB_PORT=.*/DB_PORT=3306/'              .env 2>/dev/null || true
+sed -i 's/^DB_USERNAME=.*/DB_USERNAME=necoyoad/'  .env 2>/dev/null || true
+sed -i 's/^DB_PASSWORD=.*/DB_PASSWORD=secret/'    .env 2>/dev/null || true
+sed -i 's/^REDIS_HOST=.*/REDIS_HOST=redis/'       .env 2>/dev/null || true
 sed -i 's/^SESSION_DRIVER=.*/SESSION_DRIVER=file/' .env 2>/dev/null || true
 sed -i 's/^CACHE_STORE=.*/CACHE_STORE=file/'       .env 2>/dev/null || true
 sed -i 's/^QUEUE_CONNECTION=.*/QUEUE_CONNECTION=sync/' .env 2>/dev/null || true
 
 # 2b. Ensure storage directory structure exists and is writable
 mkdir -p storage/framework/sessions storage/framework/views storage/framework/cache \
-         storage/logs bootstrap/cache
+         storage/logs bootstrap/cache storage/app/public/media/cache \
+         storage/app/public/media
 chmod -R 775 storage bootstrap/cache 2>/dev/null || true
 
 # 3. Install composer deps if the bind mount hid them
 if [ ! -f vendor/autoload.php ]; then
     echo "[entrypoint] installing composer dependencies..."
-    composer install --no-dev --no-interaction --no-progress --optimize-autoloader
+    composer install --no-dev --no-interaction --no-progress --optimize-autoloader 2>&1 || {
+        echo "[entrypoint] WARNING: composer install failed — app may not work correctly"
+    }
 fi
 
 # 4. App key
 if ! grep -q "^APP_KEY=.\+" .env; then
     echo "[entrypoint] generating APP_KEY..."
-    php artisan key:generate --force
+    php artisan key:generate --force 2>&1 || true
 fi
 
 # 5. Writable dirs + storage symlink (for media disk public URLs)
 chown -R www-data:www-data storage bootstrap/cache 2>/dev/null || true
 chmod -R 775 storage bootstrap/cache 2>/dev/null || true
-php artisan storage:link --force 2>/dev/null || true
+php artisan storage:link --force 2>&1 || true
 
 # 6. Wait for MySQL to accept connections before migrating
 echo "[entrypoint] waiting for MySQL..."
@@ -54,12 +58,18 @@ for i in $(seq 1 30); do
     sleep 2
 done
 
-# 7. Migrate + seed
+# 7. Migrate + seed (NON-FATAL — if these fail, the container still starts)
 echo "[entrypoint] running migrations..."
-php artisan migrate --force || echo "[entrypoint] migration skipped (DB not ready)"
+php artisan migrate --force 2>&1 || echo "[entrypoint] WARNING: migration failed — check logs"
 
 echo "[entrypoint] seeding database..."
-php artisan db:seed --force || echo "[entrypoint] seeding skipped (already seeded)"
+php artisan db:seed --force 2>&1 || echo "[entrypoint] WARNING: seeding failed — may already be seeded"
 
-# 8. Hand off to FrankenPHP / Caddy
+# 8. Clear any cached config that might be stale after code changes
+php artisan config:clear 2>&1 || true
+php artisan route:clear 2>&1 || true
+php artisan view:clear 2>&1 || true
+
+# 9. Hand off to FrankenPHP / Caddy (MUST always reach here)
+echo "[entrypoint] starting FrankenPHP..."
 exec "$@"

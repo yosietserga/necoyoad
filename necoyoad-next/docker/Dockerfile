@@ -19,10 +19,10 @@ RUN mkdir -p bootstrap/cache storage/logs
 # Copy application
 COPY . .
 
-# Install PHP dependencies, skipping problematic post-autoload-dump
-RUN composer install --no-dev --optimize-autoloader --no-interaction --no-scripts && \
-    mkdir -p bootstrap/cache && \
-    composer run-script post-autoload-dump || true
+# Install PHP dependencies (non-fatal — if composer.lock is stale or a package
+# can't be resolved, the entrypoint will retry at runtime)
+RUN composer install --no-dev --optimize-autoloader --no-interaction --no-scripts 2>&1 || \
+    echo "WARNING: composer install failed at build time — will retry at runtime"
 
 # Set final permissions
 RUN chown -R www-data:www-data /var/www/html \
