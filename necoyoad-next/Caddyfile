@@ -1,15 +1,14 @@
 {
-	# FrankenPHP global options — this enables PHP execution automatically
+	# FrankenPHP global options
 	frankenphp {
 		document_root /var/www/html/public
 	}
-	# Order php_server before file_server (required by Caddy)
-	order php_server before file_server
 }
 
 # Necoyoad — Laravel 11 on FrankenPHP
-# With frankenphp.document_root set + order directive, Caddy executes
-# .php files via FrankenPHP and serves static files via file_server.
+# file_server serves static files (CSS, JS, images) directly.
+# try_files rewrites non-existent paths to index.php (Laravel's front controller).
+# php_server executes index.php via FrankenPHP.
 
 :80 {
 	root * /var/www/html/public
@@ -19,10 +18,18 @@
 	@hidden path /.env /.git /.htaccess /.DS_Store
 	respond @hidden 404
 
-	# try_files rewrites to index.php, then php_server executes it
+	# Serve static files FIRST (CSS, JS, images) — if the file exists, serve it
+	# and stop. Only fall through to PHP if the file doesn't exist.
+	@static {
+		file {
+			try_files {path}
+		}
+	}
+	file_server @static
+
+	# Everything else goes to Laravel's front controller
 	try_files {path} /index.php?{query}
 	php_server
-	file_server
 
 	log {
 		output stdout

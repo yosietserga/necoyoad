@@ -110,6 +110,13 @@ php artisan migrate --force 2>&1 || echo "[entrypoint] WARNING: migration failed
 echo "[entrypoint] seeding database..."
 php artisan db:seed --force 2>&1 || echo "[entrypoint] WARNING: seeding failed — may already be seeded"
 
+# 7b. Publish Filament + Livewire assets (CSS/JS for admin panel)
+echo "[entrypoint] publishing assets..."
+php artisan vendor:publish --tag=filament-assets --force 2>&1 || true
+php artisan vendor:publish --tag=laravel-assets --force 2>&1 || true
+php artisan filament:assets 2>&1 || true
+php artisan storage:link --force 2>&1 || true
+
 # 8. Clear ALL caches (config, route, view, opcache) + delete cached files directly
 # This is CRITICAL: if bootstrap/cache/config.php exists from a previous boot,
 # Laravel uses the CACHED config (which may have SESSION_DRIVER=redis) instead
