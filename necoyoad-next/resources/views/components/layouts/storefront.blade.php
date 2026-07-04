@@ -183,7 +183,7 @@
 @endif
 
 {{-- Cart drawer (Livewire) — embedded in layout so it's available on every page --}}
-@livewire('cart-drawer')
+@livewire('storefront.cart-drawer')
 
 </body>
 </html>
