@@ -195,7 +195,7 @@ class BannerRendererService
 
         } catch (BannerRenderException $e) {
             $this->audit->logException($e, ['banner_id' => $banner->id]);
-            throw;
+            throw $e;
         } catch (\Throwable $e) {
             $this->audit->logException($e, ['banner_id' => $banner->id]);
             throw new BannerRenderException($banner->name ?? "ID:{$banner->id}", $e->getMessage(), 0, $e);
