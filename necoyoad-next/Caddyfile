@@ -3,12 +3,13 @@
 	frankenphp {
 		document_root /var/www/html/public
 	}
+	# Required: order php_server before file_server
+	order php_server before file_server
 }
 
 # Necoyoad — Laravel 11 on FrankenPHP
-# file_server serves static files (CSS, JS, images) directly.
-# try_files rewrites non-existent paths to index.php (Laravel's front controller).
-# php_server executes index.php via FrankenPHP.
+# try_files checks if the file exists first — if it does, file_server serves
+# it as static. If not, it rewrites to /index.php and php_server executes it.
 
 :80 {
 	root * /var/www/html/public
@@ -18,17 +19,10 @@
 	@hidden path /.env /.git /.htaccess /.DS_Store
 	respond @hidden 404
 
-	# Serve static files FIRST (CSS, JS, images) — if the file exists, serve it
-	# and stop. Only fall through to PHP if the file doesn't exist.
-	@static {
-		file {
-			try_files {path}
-		}
-	}
-	file_server @static
-
-	# Everything else goes to Laravel's front controller
+	# try_files: if {path} exists as a file, serve it via file_server.
+	# If not, rewrite to /index.php and let php_server execute it.
 	try_files {path} /index.php?{query}
+	file_server
 	php_server
 
 	log {
