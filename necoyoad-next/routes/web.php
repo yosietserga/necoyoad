@@ -17,6 +17,11 @@ use Illuminate\Support\Facades\Route;
 // Home page
 Route::get('/', [StorefrontController::class, 'home'])->name('common.home');
 
+// Demo login picker (dev mode only — shows all demo accounts with one-click login)
+Route::get('/demo-login', [\App\Http\Controllers\DemoLoginController::class, 'index'])->name('demo.login');
+Route::get('/demo-login/admin/{id}', [\App\Http\Controllers\DemoLoginController::class, 'loginAdmin'])->name('demo.login.admin');
+Route::get('/demo-login/customer/{id}', [\App\Http\Controllers\DemoLoginController::class, 'loginCustomer'])->name('demo.login.customer');
+
 // Search
 Route::get('/search', [StorefrontController::class, 'search'])->name('search');
 
